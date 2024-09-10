@@ -1,0 +1,10 @@
+answer: |-
+  ---
+  - hosts: all
+    vars:
+      custom_value_1: "default_value1"
+      custom_value_2: "default_value2"
+    tasks:
+      - name: Display custom values
+        debug:
+          msg: "Custom value 1 is {{ custom_value_1 }} and Custom value 2 is {{ custom_value_2 }}"
