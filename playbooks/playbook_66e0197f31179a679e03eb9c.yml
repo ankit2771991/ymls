@@ -1,0 +1,12 @@
+answer: |-
+  ---
+  - name: How should strace be used
+    hosts: localhost
+    tasks:
+      - name: Install strace
+        package:
+          name: strace
+          state: present
+
+      - name: Run strace on a specified command
+        command: strace -o /tmp/strace_output.txt -s 1024 -tt -T -ff {{ command_to_trace }}
