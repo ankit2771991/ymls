@@ -1,0 +1,15 @@
+answer: |-
+  ---
+  - name: Display specific lines in the middle of a file
+    hosts: localhost
+    tasks:
+      - name: Display specific lines in the middle of a file
+        ansible.builtin.shell: "head -n {{ head_lines }} {{ file_path }} | tail -n {{ tail_lines }}"
+        vars:
+          file_path: "/path/to/file.txt" 
+          head_lines: 10 
+          tail_lines: 5 
+        register: output
+
+      - debug:
+          msg: "{{ output.stdout }}"
