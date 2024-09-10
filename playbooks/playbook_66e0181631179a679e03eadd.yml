@@ -1,0 +1,9 @@
+answer: |-
+  ---
+  - hosts: localhost
+    tasks:
+      - name: Get file names using find command
+        command: "find {{ file_path }} -type f -exec basename {} \\;"
+        register: file_names
+      - debug:
+          var: file_names.stdout_lines
