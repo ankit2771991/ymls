@@ -1,0 +1,13 @@
+answer: |-
+  ---
+  - name: Get size of files and directories present in a particular folder
+    hosts: localhost
+    gather_facts: false
+    vars:
+      folder_path: "/path/to/folder"
+    tasks:
+      - name: Get size of files and directories in folder
+        command: "du -sh {{ folder_path }}"
+        register: folder_size
+      - debug:
+          msg: "{{ folder_size.stdout }}"
