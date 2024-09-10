@@ -1,0 +1,14 @@
+answer: |-
+  ---
+  - hosts: localhost
+    tasks:
+      - name: Find files using regex pattern
+        find:
+          paths: "{{ path }}"
+          patterns: "{{ pattern }}"
+          recurse: yes
+        register: files_found
+
+      - name: Display filenames found
+        debug:
+          var: files_found.files
