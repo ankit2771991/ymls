@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Install graphical DIFF programs for linux
     hosts: all
