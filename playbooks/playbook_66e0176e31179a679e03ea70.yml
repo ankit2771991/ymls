@@ -1,4 +1,4 @@
-answer: |-
+|-
   - name: Get line number while using grep
     hosts: localhost
     tasks:
