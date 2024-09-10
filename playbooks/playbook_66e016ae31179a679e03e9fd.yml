@@ -1,0 +1,22 @@
+answer: |-
+  ---
+  - name: Join multiple lines of filenames into one with custom delimiter
+    hosts: localhost
+    gather_facts: false
+
+    vars:
+      delimiter: "_"
+      file_list:
+        - file1.txt
+        - file2.txt
+        - file3.txt
+
+    tasks:
+      - name: Join multiple lines of filenames into one with custom delimiter
+        set_fact:
+          joined_files: "{{ file_list | join(delimiter) }}"
+        tags: 
+          - join_files
+
+    tags:
+      - join_files
