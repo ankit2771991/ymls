@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Sort array of objects by string property value
     hosts: localhost
