@@ -1,0 +1,11 @@
+answer: |-
+  ---
+  - name: Thinking in AngularJS if I have a jQuery background
+    hosts: localhost
+    vars:
+      custom_var_1: "{{ custom_value_1 }}"
+      custom_var_2: "{{ custom_value_2 }}"
+    
+    tasks:
+      - debug:
+          msg: "Custom Value 1: {{ custom_var_1 }}, Custom Value 2: {{ custom_var_2 }}"
