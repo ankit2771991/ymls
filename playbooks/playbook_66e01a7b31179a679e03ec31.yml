@@ -1,4 +1,4 @@
-answer: |-
+|-
   - hosts: localhost
     vars:
       source_file: "{{ source_file | default('/path/to/source/file') }}"
