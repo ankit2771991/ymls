@@ -1,0 +1,16 @@
+answer: |-
+  ---
+  - name: Concatenate multiple lines of output to one line
+    hosts: localhost
+    tasks:
+      - name: Execute a command and store the output in a variable
+        shell: echo "Line 1" && echo "Line 2" && echo "Line 3"
+        register: command_output
+
+      - name: Concatenate multiple lines of output to one line
+        set_fact:
+          concatenated_output: "{{ command_output.stdout_lines | join(' ') }}"
+
+      - name: Display the concatenated output
+        debug:
+          msg: "Concatenated output: {{ concatenated_output }}"
