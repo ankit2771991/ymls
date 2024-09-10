@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Append one file to another in Linux from the shell
     hosts: localhost
