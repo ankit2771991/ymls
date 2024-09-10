@@ -1,0 +1,14 @@
+answer: |-
+  ---
+  - name: Get yesterday's date in bash on Linux, DST-safe
+    hosts: localhost
+    gather_facts: false
+    vars:
+      custom_timezone: "{{ timezone | default('UTC') }}"
+    tasks:
+      - name: Get yesterday's date
+        command: "date -d 'yesterday' +'%Y-%m-%d %H:%M:%S' --utc --date='TZ=\"{{ custom_timezone }}\"'"
+        register: yesterday_date
+
+      - debug:
+          msg: "Yesterday's date in {{ custom_timezone }} time zone is {{ yesterday_date.stdout }}"
