@@ -1,0 +1,11 @@
+answer: |-
+  ---
+  - hosts: all
+    vars:
+      custom_value_1: "example_value_1"
+      custom_value_2: "example_value_2"
+    
+    tasks:
+      - name: Pseudo-terminal will not be allocated because stdin is not a terminal
+        debug:
+          msg: "Pseudo-terminal will not be allocated because stdin is not a terminal. Custom value 1: {{ custom_value_1 }}, Custom value 2: {{ custom_value_2 }}"
