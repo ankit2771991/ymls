@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: C fopen vs open playbook
     hosts: localhost
