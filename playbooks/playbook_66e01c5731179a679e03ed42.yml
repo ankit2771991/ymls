@@ -1,0 +1,14 @@
+answer: |-
+  ---
+  - name: Check if errno is thread-safe
+    hosts: localhost
+    gather_facts: false
+
+    vars:
+      custom_value1: "value1"
+      custom_value2: "value2"
+
+    tasks:
+      - name: Print custom values
+        debug:
+          msg: "Custom Value 1: {{ custom_value1 }}, Custom Value 2: {{ custom_value2 }}"
