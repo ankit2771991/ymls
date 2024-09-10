@@ -1,4 +1,4 @@
-answer: |-
+|-
   - name: How to compare arrays in JavaScript
     hosts: localhost
     vars:
