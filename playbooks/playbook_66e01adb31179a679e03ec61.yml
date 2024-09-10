@@ -1,0 +1,31 @@
+answer: |-
+  ---
+  - name: The difference between fork(), vfork(), exec() and clone()
+    hosts: localhost
+    gather_facts: false
+
+    vars:
+      parent_process_name: "parent_process"
+      child_process_name: "child_process"
+      exec_command: "ls -l"
+
+    tasks:
+      - name: Create parent process
+        command: echo "{{ parent_process_name }}"      
+        changed_when: false
+
+      - name: Use fork() to create child process
+        command: echo "{{ child_process_name }}"      
+        changed_when: false
+
+      - name: Use vfork() to create child process
+        command: echo "{{ child_process_name }}"      
+        changed_when: false
+
+      - name: Use exec() to replace process image
+        command: "{{ exec_command }}"
+        changed_when: false
+
+      - name: Use clone() to create child process
+        command: echo "{{ child_process_name }}"      
+        changed_when: false
