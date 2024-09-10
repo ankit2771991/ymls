@@ -1,0 +1,11 @@
+answer: |-
+  ---
+  - name: Display the meaning of "opt" directory
+    hosts: localhost
+    vars:
+      opt_meaning: "abbreviation for optional"
+      
+    tasks:
+      - name: Display the meaning of "opt" directory
+        debug:
+          msg: "The 'opt' directory is an {{ opt_meaning }} directory in Linux filesystem."
