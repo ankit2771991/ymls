@@ -1,8 +1,6 @@
-answer: >-
+|-
   ---
-
-  - name: Understanding the difference between AF_INET and PF_INET in socket
-  programming
+  - name: Understanding the difference between AF_INET and PF_INET in socket programming
     hosts: localhost
     become: true
     vars:
