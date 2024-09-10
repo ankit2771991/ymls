@@ -1,0 +1,18 @@
+answer: >-
+  ---
+
+  - name: Create a hex dump of file containing only the hex characters without
+  spaces
+    hosts: localhost
+    vars:
+      file_path: "/path/to/your/file"
+      output_path: "/path/to/output/hex_dump.txt"
+
+    tasks:
+      - name: Generate hex dump of file
+        shell: "xxd -p -c 9999 {{ file_path }} | tr -d ' ' > {{ output_path }}"
+        args:
+          executable: /bin/bash
+
+    tags:
+      - hex_dump
