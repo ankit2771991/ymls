@@ -1,0 +1,15 @@
+answer: |-
+  ---
+  - name: Set GOPATH environment variable on Ubuntu
+    hosts: localhost
+    gather_facts: false
+    vars:
+      gopath_dir: "{{ gopath_dir }}"
+    tasks:
+      - name: Set GOPATH environment variable
+        lineinfile:
+          path: ~/.bashrc
+          line: "export GOPATH={{ gopath_dir }}"
+          state: present
+          insertafter: EOF
+        changed_when: false
