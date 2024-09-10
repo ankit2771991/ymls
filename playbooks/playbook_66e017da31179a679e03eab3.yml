@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Handle UnicodeDecodeError
     hosts: localhost
