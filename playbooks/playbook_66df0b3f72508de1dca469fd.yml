@@ -1,0 +1,13 @@
+answer: |-
+  ---
+  - name: Understanding the yield keyword in Python
+    hosts: localhost
+    gather_facts: false
+
+    vars:
+      custom_value: "{{ user_input_custom_value }}"
+
+    tasks:
+      - name: Display the purpose of the yield keyword
+        debug:
+          msg: "The 'yield' keyword in Python is used in generator functions to return a value to the caller without destroying the state of the function. Custom value is: {{ custom_value }}"
