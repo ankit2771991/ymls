@@ -1,4 +1,4 @@
-answer: |-
+|-
   - name: Check if checkbox is checked using jQuery
     hosts: localhost
     tasks:
