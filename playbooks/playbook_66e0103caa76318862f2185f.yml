@@ -1,0 +1,15 @@
+answer: |-
+  ---
+  - name: Comparison of SO_REUSEADDR and SO_REUSEPORT
+    hosts: localhost
+    become: true
+    vars:
+      socket_option: "{{ so_option }}"
+    tasks:
+      - name: Set custom socket options
+        set_fact:
+          socket_option: "{{ socket_option | default('SO_REUSEADDR') }}"
+      
+      - name: Debug SO_REUSEADDR and SO_REUSEPORT differences
+        debug:
+          msg: "The socket option chosen by the user is {{ socket_option }}"
