@@ -1,0 +1,17 @@
+answer: |-
+  ---
+  - name: Create a large file on a Linux system
+    hosts: localhost
+    gather_facts: false
+
+    vars:
+      file_name: "large_file.txt"
+      file_size_mb: "{{ file_size | default(1000) }}"
+
+    tasks:
+      - name: Create a large file
+        command: "dd if=/dev/zero of={{ file_name }} bs=1M count={{ file_size_mb }}"
+        register: result
+
+      - debug:
+          msg: "File {{ file_name }} has been created with size {{ file_size_mb }} MB"
