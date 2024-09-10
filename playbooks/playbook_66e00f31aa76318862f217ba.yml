@@ -1,0 +1,21 @@
+answer: |-
+  ---
+  - name: Create an HTML button that acts like a link
+    hosts: localhost
+    gather_facts: false
+
+    vars:
+      button_text: "Click me"
+      button_link: "https://www.example.com"
+    
+    tasks:
+      - name: Create HTML file with button
+        copy:
+          content: |
+            <html>
+              <body>
+                <button onclick="location.href='{{ button_link }}'">{{ button_text }}</button>
+              </body>
+            </html>
+          dest: /path/to/your_html_file.html
+        tags: html_button
