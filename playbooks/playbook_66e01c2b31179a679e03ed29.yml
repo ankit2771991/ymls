@@ -1,0 +1,17 @@
+answer: |-
+  ---
+  - name: Analyze a program's core dump file with GDB
+    hosts: localhost
+    become: true
+    vars:
+      program_name: "your_program_name"
+      core_dump_file: "path/to/your/core_dump_file"
+
+    tasks:
+      - name: Install GDB
+        package:
+          name: gdb
+          state: present
+
+      - name: Analyze core dump file with GDB
+        command: "gdb {{ program_name }} {{ core_dump_file }}"
