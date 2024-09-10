@@ -1,0 +1,15 @@
+answer: |-
+  ---
+  - hosts: localhost
+    tasks:
+      - name: Run command and store output with line breaks in a variable
+        command: "{{ my_command }}"
+        register: command_output
+        changed_when: false
+
+      - name: Print the stored command output
+        debug:
+          var: command_output.stdout
+
+    vars:
+      my_command: "ls -lh"
