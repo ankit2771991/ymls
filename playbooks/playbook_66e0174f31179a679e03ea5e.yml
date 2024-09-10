@@ -1,4 +1,4 @@
-answer: |-
+|-
   - hosts: all
     tasks:
       - name: Determine if Linux system is 32-bit or 64-bit
