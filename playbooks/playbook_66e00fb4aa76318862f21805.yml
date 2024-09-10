@@ -1,0 +1,21 @@
+answer: |-
+  ---
+  - name: Test JavaScript comparison
+    hosts: localhost
+    vars_prompt:
+      - name: first_value
+        prompt: Enter first value
+      - name: second_value
+        prompt: Enter second value
+    tasks:
+      - name: Print the result of JavaScript comparison
+        shell: |
+          if [ "{{ first_value }}" -eq "{{ second_value }}" ]; then
+            echo "Use strict equality operator (===) in JavaScript comparisons."
+          elif [ "{{ first_value }}" -eq "{{ second_value }}" ]; then
+            echo "Use loose equality operator (==) in JavaScript comparisons."
+          else
+            echo "Values are not equal."
+          fi
+        tags: 
+          - javascript-comparisons
