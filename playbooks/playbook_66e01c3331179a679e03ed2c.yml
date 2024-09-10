@@ -1,0 +1,24 @@
+answer: |-
+  ---
+  - name: Looking for files NOT owned by a specific user
+    hosts: all
+    gather_facts: false
+
+    vars:
+      target_user: user_to_check
+      search_path: /path/to/search
+
+    tasks:
+      - name: Find files NOT owned by a specific user
+        find:
+          paths: "{{ search_path }}"
+          recurse: yes
+          file_type: file
+        register: files_found
+
+      - name: Filter files not owned by target user
+        set_fact:
+          files_not_owned_by_user: "{{ files_found.files | selectattr('uid', 'ne', lookup('pipe', 'getent passwd ' + target_user + ' | cut -d: -f3 | tr -d [\\n\\r]') | int) | list }}"
+
+      - debug:
+          var: files_not_owned_by_user
