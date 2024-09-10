@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Find files that have been changed in last 24 hours
     hosts: localhost
