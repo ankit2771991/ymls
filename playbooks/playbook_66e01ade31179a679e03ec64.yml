@@ -1,0 +1,10 @@
+answer: |-
+  ---
+  - name: Display error message
+    hosts: all
+    vars:
+      custom_error_message: "gradlew: command not found"
+    tasks:
+      - name: Display custom error message
+        debug:
+          msg: "{{ custom_error_message }}"
