@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Recursively find files based on wildcard matching
     hosts: localhost
