@@ -1,0 +1,12 @@
+answer: |-
+  ---
+  - name: Finding current executable's path without /proc/self/exe
+    hosts: localhost
+    gather_facts: false
+    vars:
+      custom_value: "{{ custom_value }}"
+      
+    tasks:
+      - name: Displaying custom value
+        debug:
+          msg: "Custom value is {{ custom_value }}"
