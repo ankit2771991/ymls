@@ -1,0 +1,15 @@
+answer: |-
+  ---
+  - name: Change the default shell in Linux
+    hosts: all
+    vars:
+      new_shell: /bin/bash
+    tasks:
+      - name: Check if the default shell is already set to the desired shell
+        shell: "echo $SHELL"
+        register: current_shell
+        changed_when: false
+        failed_when: false
+      - name: Change the default shell to the desired shell
+        command: "chsh -s {{ new_shell }} {{ ansible_user }}"
+        when: current_shell.stdout != "{{ new_shell }}"
