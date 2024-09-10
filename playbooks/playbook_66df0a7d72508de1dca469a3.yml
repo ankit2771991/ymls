@@ -1,0 +1,21 @@
+answer: |-
+  ---
+  - name: Determine which JSON content type to use
+    hosts: localhost
+    gather_facts: no
+    vars:
+      custom_value_1: "{{ custom_value_1 | default('default_value_1') }}"
+      custom_value_2: "{{ custom_value_2 | default('default_value_2') }}"
+
+    tasks:
+      - name: Debug custom values
+        debug:
+          msg: "Custom Value 1: {{ custom_value_1 }}, Custom Value 2: {{ custom_value_2 }}"
+      
+      - name: Determine JSON content type based on custom values
+        set_fact:
+          json_content_type: "application/{{ custom_value_1 }}+{{ custom_value_2 }}"
+        
+      - name: Display JSON content type
+        debug:
+          msg: "JSON Content Type: {{ json_content_type }}"
