@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Test a weekly cron job
     hosts: localhost
