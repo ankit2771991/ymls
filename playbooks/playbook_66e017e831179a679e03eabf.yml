@@ -1,0 +1,10 @@
+answer: |-
+  ---
+  - hosts: localhost
+    vars:
+      hex_editor: "xxd"
+    tasks:
+      - name: Install the hex editor
+        apt:
+          name: "{{ hex_editor }}"
+          state: present
