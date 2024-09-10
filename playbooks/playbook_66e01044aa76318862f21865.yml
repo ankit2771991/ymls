@@ -1,0 +1,12 @@
+answer: |-
+  ---
+  - hosts: localhost
+    tasks:
+      - name: Get the list of processes with given partial name
+        command: "pgrep -f '{{ partial_name }}'"
+        register: process_ids
+        failed_when: process_ids.rc != 0
+
+      - name: Kill all processes with given partial name
+        shell: "kill -9 {{ item }}"
+        with_items: "{{ process_ids.stdout_lines }}"
