@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Get most recent file in a directory on Linux
     hosts: localhost
