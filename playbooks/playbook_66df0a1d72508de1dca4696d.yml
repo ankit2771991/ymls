@@ -1,0 +1,17 @@
+answer: |-
+  - hosts: all
+    vars:
+      output_file_path: "/path/to/output_file.txt"
+    tasks:
+      - name: Redirect output to file
+        command: echo 'your_command_output_here' > {{ output_file_path }}
+        register: command_output
+        ignore_errors: true
+        
+      - name: Print output to stdout
+        debug:
+          msg: "{{ command_output.stdout }}"
+      
+      - name: Print custom message to stdout
+        debug:
+          msg: "Output has been redirected to {{ output_file_path }}"
