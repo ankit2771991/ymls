@@ -1,0 +1,10 @@
+answer: |-
+  ---
+  - name: Remove a symlink to a directory
+    hosts: localhost
+    tasks:
+      - name: Remove symlink
+        file:
+          path: "{{ symlink_path }}"
+          state: absent
+          force: yes
