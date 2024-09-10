@@ -1,0 +1,8 @@
+answer: |-
+  - name: Output coloured text to a Linux terminal
+    hosts: localhost
+    become: false
+    tasks:
+      - name: Set custom colored text
+        debug:
+          msg: "\033[33mThis text is yellow\033[0m"
