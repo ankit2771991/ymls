@@ -1,4 +1,4 @@
-answer: |-
+|-
   - name: Explanation of the !! operator in JavaScript
     hosts: localhost
     vars:
