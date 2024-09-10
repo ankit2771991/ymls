@@ -1,4 +1,4 @@
-answer: |-
+|-
   - name: Assign custom value to a variable
     hosts: all
     vars:
