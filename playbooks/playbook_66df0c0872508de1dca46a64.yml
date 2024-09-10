@@ -1,0 +1,27 @@
+answer: |-
+  ---
+  - name: Change HTML input's placeholder color with CSS
+    hosts: localhost
+    vars:
+      input_id: "input_id_here"
+      placeholder_color: "#ff0000"
+    tasks:
+      - name: Check if HTML file exists
+        stat:
+          path: "index.html"
+        register: file_check
+
+      - name: Modify HTML file with new CSS style
+        replace:
+          path: "index.html"
+          regexp: "<input id='{{ input_id }}'"
+          replace: "<input id='{{ input_id }}' style='color: {{ placeholder_color }}'"
+          backup: yes
+        when: file_check.stat.exists == true
+        ignore_errors: yes
+
+      - name: Print error message if HTML file does not exist
+        debug:
+          msg: "Path index.html does not exist! Please fix the error and provide a valid path."
+
+        when: file_check.stat.exists == false
