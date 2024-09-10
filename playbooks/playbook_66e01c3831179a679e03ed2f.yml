@@ -1,0 +1,16 @@
+answer: |-
+  ---
+  - name: Compile C++ code with ifdef switch on Windows and Linux
+    hosts: localhost
+    vars:
+      source_file_path: "path/to/your/source_file.cpp"
+      output_file_path: "path/to/save/output_file"
+
+    tasks:
+      - name: Compile C++ code on Windows
+        win_command: g++ -DWINDOWS -o {{ output_file_path }} {{ source_file_path }}
+        when: ansible_os_family == 'Windows'
+
+      - name: Compile C++ code on Linux
+        shell: g++ -DLINUX -o {{ output_file_path }} {{ source_file_path }}
+        when: ansible_os_family == 'Linux'
