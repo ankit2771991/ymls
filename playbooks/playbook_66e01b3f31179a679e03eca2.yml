@@ -1,0 +1,23 @@
+answer: |-
+  ---
+  - name: Tar archiving that takes input from a list of files
+    hosts: localhost
+    vars:
+      output_dir: "/tmp"
+      archive_name: "archive"
+      files_to_archive: []
+
+    tasks:
+      - name: Check if files_to_archive is not empty
+        fail:
+          msg: "Please provide a list of files to archive"
+        when: files_to_archive | length == 0
+
+      - name: Create output directory if it does not exist
+        file:
+          path: "{{ output_dir }}"
+          state: directory
+
+      - name: Archive files using tar
+        command: tar czf "{{ output_dir }}/{{ archive_name }}.tar.gz" {{ item }}
+        with_items: "{{ files_to_archive }}"
