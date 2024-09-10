@@ -1,0 +1,21 @@
+answer: |-
+  ---
+  - name: Link to a specific glibc version
+    hosts: localhost
+    become: true
+    vars:
+      target_glibc_version: "2.34"
+
+    tasks:
+      - name: Check if glibc version is already linked
+        command: "ldd --version | grep {{ target_glibc_version }}"
+        register: glibc_check
+        failed_when: false
+
+      - name: Create symbolic link to specific glibc version
+        command: "ln -sf /lib/x86_64-linux-gnu/libc-{{ target_glibc_version }}.so /lib/x86_64-linux-gnu/libc.so.6"
+        when: glibc_check.rc != 0
+
+      - name: Display success message
+        debug:
+          msg: "Linked to glibc version {{ target_glibc_version }}"
