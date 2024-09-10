@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Run dos2unix on an entire directory
     hosts: localhost
