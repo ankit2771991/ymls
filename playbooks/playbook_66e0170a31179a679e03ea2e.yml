@@ -1,0 +1,8 @@
+answer: |-
+  ---
+  - hosts: localhost
+    tasks:
+      - name: Delete empty lines using sed
+        shell: "sed -i '/^$/d' {{ file_path }}"
+        vars:
+          file_path: "/path/to/your/file.txt"
