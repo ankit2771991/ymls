@@ -1,0 +1,19 @@
+answer: |-
+  ---
+  - hosts: localhost
+    tasks:
+      - name: Loop over directories in Linux
+        ansible.builtin.find:
+          paths: "{{ directory_path }}"
+          file_type: directory
+        register: directories
+
+      - name: Debug directories
+        ansible.builtin.debug:
+          msg: "{{ item.path }}"
+        loop: "{{ directories.files }}"
+        loop_control:
+          label: "{{ item.path }}"
+        
+    vars:
+      directory_path: "/path/to/directory"
