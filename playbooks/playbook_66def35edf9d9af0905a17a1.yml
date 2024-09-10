@@ -1,0 +1,18 @@
+answer: |-
+  ---
+  - name: Recursively find files based on wildcard matching
+    hosts: localhost
+    gather_facts: false
+
+    tasks:
+      - name: List all files based on wildcard matching
+        find:
+          paths: "{{ search_dir }}"
+          patterns: "{{ wildcard }}"
+          recurse: yes
+        register: found_files
+
+      - name: Display found files
+        debug:
+          msg: "{{ item.path }}"
+        with_items: "{{ found_files.files }}"
