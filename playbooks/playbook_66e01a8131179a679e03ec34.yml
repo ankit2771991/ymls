@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Find and execute a shell function in Linux
     hosts: all
