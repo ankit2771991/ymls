@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Serializing to JSON in jQuery
     hosts: localhost
