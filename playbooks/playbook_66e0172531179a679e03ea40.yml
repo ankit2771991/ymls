@@ -1,0 +1,10 @@
+answer: |-
+  ---
+  - hosts: all
+    vars:
+      rss_value: "{{ rss_value | default(1024) }}"
+      vsz_value: "{{ vsz_value | default(2048) }}"
+    tasks:
+      - name: Display RSS and VSZ values in Linux memory management
+        debug:
+          msg: "RSS (Resident Set Size): {{ rss_value }} MB, VSZ (Virtual Memory Size): {{ vsz_value }} MB"
