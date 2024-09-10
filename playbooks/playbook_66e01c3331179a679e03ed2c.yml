@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Looking for files NOT owned by a specific user
     hosts: all
