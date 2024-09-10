@@ -1,0 +1,13 @@
+answer: |-
+  ---
+  - name: How can I select an element with multiple classes in jQuery?
+    hosts: localhost
+    tasks:
+      - name: Set custom values
+        set_fact:
+          element_class_1: "{{ element_class_1 | default('class1') }}"
+          element_class_2: "{{ element_class_2 | default('class2') }}"
+      
+      - name: Display selected element with multiple classes
+        debug:
+          msg: "Selected element with classes {{ element_class_1 }} and {{ element_class_2 }} in jQuery"
