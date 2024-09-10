@@ -1,0 +1,21 @@
+answer: |-
+  - hosts: localhost
+    vars:
+      global_variable: "Hello World"
+      
+    tasks:
+      - name: Display global variable
+        debug:
+          msg: "{{ global_variable }}"
+          
+      - name: Function using global variable
+        block:
+          - name: Creating a function
+            set_fact:
+              local_variable: "{{ global_variable }}"
+          
+          - name: Display local variable
+            debug:
+              msg: "{{ local_variable }}"
+        
+    tags: ['global_variable']
