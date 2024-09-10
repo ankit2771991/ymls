@@ -1,0 +1,14 @@
+answer: |-
+  ---
+  - name: Setting environment variables for crontab
+    hosts: localhost
+    become: true
+    tasks:
+      - name: Set environment variables in crontab file
+        lineinfile:
+          dest: '/etc/crontab'
+          line: '{{ item.key }}={{ item.value }}'
+          insertafter: 'SHELL=/bin/bash'
+        with_items:
+          - { key: 'CUSTOM_VAR', value: '{{ custom_var }}' }
+        when: custom_var is defined
