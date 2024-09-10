@@ -1,0 +1,16 @@
+answer: |-
+  ---
+  - name: "Keep environment variables when using sudo"
+    hosts: all
+    become: yes
+    tasks:
+      - name: "Set custom environment variables"
+        set_fact:
+          custom_value: "{{ custom_value | default('default_value') }}"
+      
+      - name: "Print current value"
+        debug:
+          msg: "Current custom_value is {{ custom_value }}"
+      
+      - name: "Run sudo command with environment variables"
+        shell: "sudo -E echo 'Custom value is {{ custom_value }}' >> /tmp/output.txt"
