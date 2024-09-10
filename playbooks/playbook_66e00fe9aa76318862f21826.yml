@@ -1,0 +1,10 @@
+answer: |-
+  ---
+  - name: How to round to at most 2 decimal places, if necessary
+    hosts: localhost
+    vars:
+      number_to_round: 12.3456
+    tasks:
+      - name: Round the number to at most 2 decimal places
+        debug:
+          msg: "{{ number_to_round | round(2) }}"
