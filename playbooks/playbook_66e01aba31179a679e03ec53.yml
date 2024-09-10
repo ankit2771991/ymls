@@ -1,0 +1,8 @@
+answer: |-
+  - hosts: localhost
+    tasks:
+      - name: Append line to file if not already present
+        lineinfile:
+          path: "{{ file_path }}"
+          line: "{{ line_to_append }}"
+          create: yes
