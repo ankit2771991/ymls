@@ -1,0 +1,15 @@
+answer: |-
+  ---
+  - name: How to write multiple line string using Bash with variables
+    hosts: localhost
+    vars:
+      multiline_string: >
+        This is a 
+        multiple line 
+        string with 
+        variables
+
+    tasks:
+      - name: Print the multiline string
+        debug:
+          msg: "{{ multiline_string }}"
