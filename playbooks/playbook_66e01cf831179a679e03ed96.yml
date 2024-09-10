@@ -1,0 +1,14 @@
+answer: |-
+  ---
+  - hosts: localhost
+    vars:
+      install_directory: "/path/to/custom/directory"
+    tasks:
+      - name: Clone the repository
+        git:
+          repo: "https://github.com/example/repo.git"
+          dest: "/tmp/repo"
+      - name: Run the make install command with custom directory
+        command: make install DESTDIR={{ install_directory }}
+        args:
+          chdir: "/tmp/repo"
