@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Link to a specific glibc version
     hosts: localhost
