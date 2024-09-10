@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Exclude a directory when using `find`
     hosts: localhost
