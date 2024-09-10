@@ -1,0 +1,14 @@
+answer: |-
+  - name: Execute bash script with "cat << EOF" command
+    hosts: localhost
+    tasks:
+      - name: Run bash script
+        shell: |
+          echo 'cat << EOF' > script.sh
+          echo "echo 'Hello, World!'" >> script.sh
+          echo 'EOF' >> script.sh
+          bash script.sh
+        register: output
+
+      - debug:
+          msg: "{{ output.stdout }}"
