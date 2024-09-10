@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: What's the difference between nohup and ampersand?
     hosts: localhost
