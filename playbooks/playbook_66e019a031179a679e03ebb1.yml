@@ -1,0 +1,14 @@
+answer: |-
+  ---
+  - name: Check the operating system in Python
+    hosts: localhost
+    vars:
+      custom_value: "custom value"
+    tasks:
+      - name: Display the operating system
+        debug:
+          msg: "The operating system is {{ ansible_distribution }} {{ ansible_distribution_version }}"
+
+      - name: Parameterised custom value
+        debug:
+          msg: "The custom value is {{ custom_value }}"
