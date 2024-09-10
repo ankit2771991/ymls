@@ -1,0 +1,8 @@
+answer: |-
+  - hosts: localhost
+    tasks:
+      - name: Check if element is hidden in jQuery
+        command: "echo 'Check if element is hidden in jQuery'"
+        vars:
+          custom_value_1: "{{ custom_value_1 }}"
+          custom_value_2: "{{ custom_value_2 }}"
