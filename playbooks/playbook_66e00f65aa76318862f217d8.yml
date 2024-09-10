@@ -1,0 +1,16 @@
+answer: |-
+  ---
+  - name: Vertically align text next to an image
+    hosts: localhost
+    vars:
+      image_path: "{{ custom_image_path }}"
+      text: "{{ custom_text }}"
+      alignment: "{{ custom_alignment }}"
+    tasks:
+      - name: Display the image
+        debug:
+          msg: "Displaying image at {{ image_path }}"
+      
+      - name: Display text next to image
+        debug:
+          msg: "Text {{ alignment }} aligned next to the image: {{ text }}"
