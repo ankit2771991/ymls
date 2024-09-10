@@ -1,0 +1,11 @@
+answer: |-
+  ---
+  - name: "Least Astonishment and the Mutable Default Argument playbook"
+    hosts: localhost
+    vars:
+      custom_var: "custom_value"
+
+    tasks:
+      - name: "Print custom variable value"
+        debug:
+          msg: "{{ custom_var }}"
