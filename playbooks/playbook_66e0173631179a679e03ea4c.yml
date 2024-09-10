@@ -1,0 +1,16 @@
+answer: |-
+  ---
+  - hosts: all
+    gather_facts: yes
+    tasks:
+      - name: Get PID of the process
+        shell: ps aux | grep {{ process_name }} | grep -v grep | awk '{print $2}'
+        register: process_pid
+
+      - name: Get peak memory usage of the process
+        shell: ps -p {{ process_pid.stdout }} -o %mem,rss | sort -k 1 -nr | head -1
+        register: peak_memory_usage
+
+      - name: Display peak memory usage of the process
+        debug:
+          msg: "Peak memory usage of {{ process_name }} is {{ peak_memory_usage.stdout }}"
