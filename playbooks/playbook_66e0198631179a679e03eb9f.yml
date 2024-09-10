@@ -1,0 +1,24 @@
+answer: |-
+  ---
+  - hosts: localhost
+    vars_prompt:
+      - name: crontab_minute
+        prompt: "Enter the minute for the crontab job"
+        default: "0"
+      - name: crontab_hour
+        prompt: "Enter the hour for the crontab job"
+        default: "0"
+      - name: crontab_day_of_week
+        prompt: "Enter the day of the week (0-7, where 0 and 7 represent Sunday)"
+        default: "*"
+      - name: crontab_command
+        prompt: "Enter the command to be executed by the crontab job"
+
+    tasks:
+      - name: Add crontab entry for specified day of the week
+        cron:
+          name: "{{ crontab_command }}"
+          minute: "{{ crontab_minute }}"
+          hour: "{{ crontab_hour }}"
+          weekday: "{{ crontab_day_of_week }}"
+          job: "{{ crontab_command }}"
