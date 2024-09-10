@@ -1,0 +1,13 @@
+answer: |-
+  ---
+  - hosts: localhost
+    vars:
+      directory_path: "/path/to/directory"
+    tasks:
+      - name: List all files of a directory
+        command: ls {{ directory_path }}
+        register: files_list
+        ignore_errors: yes  # Ignore any non-zero return code
+
+      - debug: 
+          msg: "{{ files_list.stdout_lines }}"
