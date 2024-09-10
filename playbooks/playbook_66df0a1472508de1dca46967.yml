@@ -1,0 +1,26 @@
+answer: |-
+  ---
+  - hosts: localhost
+    vars_prompt:
+      - name: user_input
+        prompt: "Please enter your choice (Yes/No/Cancel):"
+    
+    tasks:
+      - name: Check user input
+        debug:
+          msg: "You have chosen {{ user_input }}"
+
+      - name: Perform action based on user input
+        when: user_input == "Yes"
+        debug:
+          msg: "Performing action for Yes"
+
+      - name: Perform action based on user input
+        when: user_input == "No"
+        debug:
+          msg: "Performing action for No"
+
+      - name: Cancel task
+        when: user_input == "Cancel"
+        debug:
+          msg: "Cancelling task"
