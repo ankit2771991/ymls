@@ -1,0 +1,23 @@
+answer: |-
+  ---
+  - name: Set $PATH permanently on Linux/Unix
+    hosts: all
+    vars:
+      custom_path: "/usr/local/bin:/usr/bin:/bin"
+
+    tasks:
+      - name: Update PATH variable in /etc/environment
+        lineinfile:
+          path: /etc/environment
+          regexp: "^PATH="
+          line: "PATH={{ custom_path }}"
+          backup: yes
+          state: present
+
+      - name: Update PATH variable in /etc/profile
+        lineinfile:
+          path: /etc/profile
+          regexp: "^export PATH="
+          line: "export PATH={{ custom_path }}"
+          backup: yes
+          state: present
