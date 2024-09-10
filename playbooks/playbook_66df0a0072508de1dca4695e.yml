@@ -1,0 +1,20 @@
+answer: |-
+  ---
+  - name: Set permissions for a folder and its subfolders/files
+    hosts: localhost
+    tasks:
+      - name: Set permissions for the folder and its subfolders/files
+        file:
+          path: "{{ folder_path }}"
+          recurse: yes
+          state: directory
+          mode: "{{ folder_permissions }}"
+          owner: "{{ folder_owner }}"
+          group: "{{ folder_group }}"
+        delegate_to: localhost
+
+    vars:
+      folder_path: "/path/to/folder"
+      folder_permissions: "0755"
+      folder_owner: "root"
+      folder_group: "root"
