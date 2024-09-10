@@ -1,0 +1,16 @@
+answer: |-
+  ---
+  - name: Find files that have been changed in last 24 hours
+    hosts: localhost
+    gather_facts: false
+
+    vars:
+      search_path: "/path/to/search"
+    
+    tasks:
+      - name: Find files that have been changed in last 24 hours
+        command: find {{ search_path }} -type f -mtime -1
+        register: changed_files
+
+      - debug:
+          var: changed_files.stdout_lines
