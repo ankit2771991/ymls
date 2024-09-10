@@ -1,0 +1,14 @@
+answer: |-
+  ---
+  - name: How do JavaScript closures work?
+    hosts: localhost
+    gather_facts: false
+
+    vars:
+      custom_value_1: default_value_1
+      custom_value_2: default_value_2
+
+    tasks:
+      - name: Display custom values
+        debug:
+          msg: "Custom Value 1: {{ custom_value_1 }}, Custom Value 2: {{ custom_value_2 }}"
