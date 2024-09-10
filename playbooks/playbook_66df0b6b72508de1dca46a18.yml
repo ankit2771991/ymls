@@ -1,0 +1,15 @@
+answer: |-
+  ---
+  - name: Create a flat list from a list of lists
+    hosts: localhost
+    gather_facts: false
+    vars:
+      list_of_lists: []
+    tasks:
+      - name: Generate flat list
+        set_fact:
+          flat_list: "{{ flat_list | default([]) + item }}"
+        with_items: "{{ list_of_lists }}"
+    
+      - debug:
+          var: flat_list
