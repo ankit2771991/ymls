@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Get yesterday's date in bash on Linux, DST-safe
     hosts: localhost
