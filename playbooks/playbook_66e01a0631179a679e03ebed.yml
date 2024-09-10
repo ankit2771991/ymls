@@ -1,0 +1,17 @@
+answer: |-
+  ---
+  - name: C fopen vs open playbook
+    hosts: localhost
+    gather_facts: false
+    vars:
+      file_path: "/new/path/to/file.txt"
+      mode: "w"
+      
+    tasks:
+      - name: Use fopen in C
+        debug:
+          msg: "Using fopen in C to open file {{ file_path }} in mode {{ mode }}"
+      
+      - name: Use open in C
+        debug:
+          msg: "Using open in C to open file {{ file_path }} in mode {{ mode }}"
