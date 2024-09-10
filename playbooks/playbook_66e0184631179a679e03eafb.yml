@@ -1,0 +1,18 @@
+answer: |-
+  - name: Get last dirname/filename in a file path argument in Bash
+    hosts: localhost
+    gather_facts: false
+    vars:
+      file_path: "/path/to/your/file" 
+    tasks:
+      - name: Get last directory name in file path
+        set_fact:
+          last_dirname: "{{ file_path | dirname | basename }}"
+
+      - name: Get filename in file path
+        set_fact:
+          filename: "{{ file_path | basename }}"
+
+      - name: Print last dirname and filename
+        debug:
+          msg: "Last Dirname: {{ last_dirname }}, Filename: {{ filename }}"
