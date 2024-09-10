@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Check the operating system in Python
     hosts: localhost
