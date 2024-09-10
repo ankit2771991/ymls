@@ -1,0 +1,12 @@
+answer: |-
+  ---
+  - name: Horizontally center an element
+    hosts: localhost
+    tasks:
+      - name: Set custom values
+        set_fact:
+          element_width: "{{ element_width | default(200) }}"
+          parent_width: "{{ parent_width | default(400) }}"
+      
+      - debug:
+          msg: "Element width is {{ element_width }} and parent width is {{ parent_width }}"
