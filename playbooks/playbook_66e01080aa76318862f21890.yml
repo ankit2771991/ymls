@@ -1,0 +1,11 @@
+answer: |-
+  ---
+  - name: Why does ENOENT mean "No such file or directory"? Playbook
+    hosts: localhost
+    vars:
+      custom_message: "{{ default_custom_message }}"
+    tasks:
+      - name: Display custom message with file not found error
+        debug:
+          msg: "{{ custom_message }}"
+  ...
