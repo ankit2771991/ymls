@@ -1,0 +1,15 @@
+answer: |-
+  ---
+  - hosts: localhost
+    vars:
+      array: []
+      item_to_insert: "new_item"
+      index_to_insert: 2
+      
+    tasks:
+      - name: Insert an item into the array at a specific index
+        set_fact:
+          new_array: "{{ array[:index_to_insert] + [item_to_insert] + array[index_to_insert:] }}"
+      
+      - debug:
+          msg: "Updated array: {{ new_array }}"
