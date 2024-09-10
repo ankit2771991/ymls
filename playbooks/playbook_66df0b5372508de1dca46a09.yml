@@ -1,0 +1,18 @@
+answer: |-
+  ---
+  - name: Check if a file exists without exceptions
+    hosts: localhost
+    gather_facts: false
+
+    vars:
+      file_path: "{{ file_to_check }}"
+    
+    tasks:
+      - name: Check if file exists
+        stat:
+          path: "{{ file_path }}"
+        register: file_stat
+
+      - name: Print the result
+        debug:
+          msg: "File {{ file_path }} exists: {{ file_stat.stat.exists }}"
