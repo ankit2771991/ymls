@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Remove a symlink to a directory
     hosts: localhost
