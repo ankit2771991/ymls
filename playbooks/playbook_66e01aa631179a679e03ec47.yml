@@ -1,0 +1,18 @@
+answer: >-
+  ---
+
+  - name: Understanding the difference between AF_INET and PF_INET in socket
+  programming
+    hosts: localhost
+    become: true
+    vars:
+      socket_type: "{{ custom_socket_type }}"
+      custom_ip_address: "{{ custom_ip_address }}"
+    
+    tasks:
+      - name: Displaying the difference between AF_INET and PF_INET in socket programming
+        debug:
+          msg: "In socket programming, AF_INET and PF_INET are used to indicate the address family for the socket. AF_INET is used to specify an IPv4 address family, while PF_INET is used to specify a protocol family (such as IPv4). The two are often interchangeable, but technically AF_INET is used for socket creation and PF_INET is used for protocol selection. Custom socket type: {{ socket_type }}, Custom IP Address: {{ custom_ip_address }}"
+        tags:
+          - socket_programming
+          - difference_between_AF_INET_PF_INET
