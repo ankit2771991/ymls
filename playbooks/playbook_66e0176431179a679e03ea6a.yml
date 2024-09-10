@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Keep SSH session alive
     hosts: all
