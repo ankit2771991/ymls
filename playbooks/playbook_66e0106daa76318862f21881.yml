@@ -1,0 +1,9 @@
+answer: |-
+  ---
+  - name: Write standard error to a file using "tee" with a pipe
+    hosts: localhost
+    tasks:
+      - name: Run command with tee to capture standard output and error
+        shell: "sample_command 2>&1 | tee {{ output_file }}"
+        vars:
+          output_file: "{{ output_file_path }}"
