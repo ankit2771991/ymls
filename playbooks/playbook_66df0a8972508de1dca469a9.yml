@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Google JSON response customization
     hosts: localhost
