@@ -1,0 +1,10 @@
+answer: |
+
+  ---
+  - hosts: localhost
+    tasks:
+      - name: Execute command with sudo and redirect output to a location without write permission
+        command: "echo 'Hello, World!' > {{ output_location }}"
+        vars:
+          output_location: "/tmp/output.txt"
+        become: true
