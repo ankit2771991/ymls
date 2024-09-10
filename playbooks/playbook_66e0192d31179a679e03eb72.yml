@@ -1,0 +1,19 @@
+answer: |-
+  ---
+  - name: Execute a command and exit if it fails
+    hosts: localhost
+    gather_facts: false
+    
+    vars:
+      command_to_execute: "{{ command }}"
+    
+    tasks:
+      - name: Execute the command
+        shell: "{{ command_to_execute }}"
+        register: command_result
+        ignore_errors: yes
+
+      - name: Fail the playbook if the command fails
+        fail:
+          msg: "The command failed: {{ command_result.stdout }}"
+        when: command_result.failed
