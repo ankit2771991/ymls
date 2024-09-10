@@ -1,0 +1,8 @@
+answer: |-
+  - name: Assign custom value to a variable
+    hosts: all
+    vars:
+      custom_value: "{{ custom_value }}"
+    tasks:
+      - debug:
+          msg: "{{ custom_value }}"
