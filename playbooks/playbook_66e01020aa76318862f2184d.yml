@@ -1,0 +1,10 @@
+answer: |-
+  ---
+  - name: Get current time in seconds since the Epoch on Linux, Bash
+    hosts: localhost
+    tasks:
+      - name: Get current time in seconds since the Epoch
+        command: date +%s
+        register: current_time_seconds
+      - debug:
+          msg: "Current time in seconds since the Epoch is {{ current_time_seconds.stdout }}"
