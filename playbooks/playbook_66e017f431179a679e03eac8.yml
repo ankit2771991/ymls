@@ -1,0 +1,8 @@
+answer: |-
+  ---
+  - name: Explain the meaning of $@ in a shell script
+    hosts: localhost
+    tasks:
+      - name: Print out the explanation
+        debug:
+          msg: "In a shell script, $@ represents all the command-line arguments passed to the script as individual parameters"
