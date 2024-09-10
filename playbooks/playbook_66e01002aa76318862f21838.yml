@@ -1,4 +1,4 @@
-answer: |
+|
   ---
   - name: Get full path of a file
     hosts: localhost
