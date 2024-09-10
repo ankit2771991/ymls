@@ -1,0 +1,14 @@
+answer: |-
+  ---
+  - hosts: localhost
+    tasks:
+      - name: How slicing works in Python
+        debug:
+          msg: "Slicing in Python allows you to extract a specific subset of elements from a list or string. You can specify the start and end index of the subset you want to extract using the colon (:) operator."
+      - name: Custom slicing example
+        debug:
+          msg: "Custom slicing example: {{ my_list[start_index:end_index] }}"
+        vars:
+          my_list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+          start_index: "{{ start_index | default(1) }}"
+          end_index: "{{ end_index | default(5) }}"
