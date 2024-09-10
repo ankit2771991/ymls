@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: The difference between fork(), vfork(), exec() and clone()
     hosts: localhost
