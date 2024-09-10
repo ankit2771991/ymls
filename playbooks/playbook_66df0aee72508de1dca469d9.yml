@@ -1,0 +1,11 @@
+answer: |-
+  ---
+  - name: How can I overcome "datetime.datetime not JSON serializable"??
+    hosts: localhost
+    gather_facts: false
+    vars:
+      custom_datetime: "{{ custom_datetime_var }}"
+    tasks:
+      - name: Displaying JSON serializable datetime
+        debug:
+          msg: "JSON serializable datetime is {{ custom_datetime }}"
