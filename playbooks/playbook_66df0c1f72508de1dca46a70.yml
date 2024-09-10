@@ -1,0 +1,13 @@
+answer: |-
+  - name: Disable browser autocomplete on web form field / input tags
+    hosts: localhost
+    tasks:
+      - name: Update HTML files with autocomplete attribute
+        replace:
+          path: "{{ item }}"
+          regexp: '<input'
+          replace: '<input autocomplete="{{ autocomplete }}"'
+        with_fileglob:
+          - "/path/to/your/html/files/*.html"
+        vars:
+          autocomplete: "{{ autocomplete_value }}"
