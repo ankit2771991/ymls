@@ -1,0 +1,16 @@
+answer: |-
+  ---
+  - name: Install graphical DIFF programs for linux
+    hosts: all
+    vars:
+      diff_program1: meld
+      diff_program2: kdiff3
+    tasks:
+      - name: Install {{ diff_program1 }}
+        apt:
+          name: "{{ diff_program1 }}"
+          state: present
+      - name: Install {{ diff_program2 }}
+        apt:
+          name: "{{ diff_program2 }}"
+          state: present
