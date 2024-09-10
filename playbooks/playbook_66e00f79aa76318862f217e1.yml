@@ -1,0 +1,17 @@
+answer: |-
+  ---
+  - name: Remove specific item from array in JavaScript
+    hosts: localhost
+    become: no
+
+    vars:
+      array_to_modify: []
+      item_to_remove: null
+
+    tasks:
+      - name: Remove specific item from array
+        set_fact:
+          modified_array: "{{ array_to_modify | reject('search', item_to_remove) | list }}"
+        vars:
+          array_to_modify: [1, 2, 3, 4, 5]
+          item_to_remove: 3
