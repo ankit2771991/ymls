@@ -1,0 +1,15 @@
+answer: |-
+  - hosts: localhost
+    vars:
+      source_file: "{{ source_file | default('/path/to/source/file') }}"
+      destination_file: "{{ destination_file | default('/path/to/destination/file') }}"
+      
+    tasks:
+      - name: Check if the destination file already exists
+        stat:
+          path: "{{ destination_file }}"
+        register: file_status
+
+      - name: Continue scp command if destination file exists
+        command: "scp -C {{ source_file }} {{ destination_file }}"
+        when: file_status.stat.exists
