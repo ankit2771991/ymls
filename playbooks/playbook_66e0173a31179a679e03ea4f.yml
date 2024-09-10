@@ -1,0 +1,16 @@
+answer: |-
+  ---
+  - name: Find out line-endings in a text file
+    hosts: localhost
+    gather_facts: false
+
+    vars:
+      file_path: "/path/to/your/text/file.txt"
+
+    tasks:
+      - name: Display line-endings in the text file
+        shell: cat -A {{ file_path }}
+        register: file_content
+
+      - debug:
+          msg: "{{ file_content.stdout }}"
