@@ -1,0 +1,31 @@
+answer: |-
+  ---
+  - hosts: localhost
+    tasks:
+      - name: Install required Python modules
+        pip:
+          name: "{{ item }}"
+        with_items:
+          - simplejson
+          - pydantic
+
+      - name: Create Python script to make class JSON serializable
+        copy:
+          dest: "{{ playbook_dir }}/make_class_json_serializable.py"
+          content: |
+            from pydantic import BaseModel
+            from simplejson import dumps
+
+            class SerializableClass(BaseModel):
+                custom_value: str
+
+                def json(self):
+                    return dumps(self.dict())
+
+            example_class = SerializableClass(custom_value="example")
+
+            with open("example.json", "w") as f:
+                f.write(example_class.json())
+
+      - name: Run Python script
+        command: python3 "{{ playbook_dir }}/make_class_json_serializable.py"
