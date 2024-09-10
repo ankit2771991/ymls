@@ -1,0 +1,26 @@
+answer: |-
+  ---
+  - name: Automatically redirect HTTP to HTTPS on Apache servers
+    hosts: apache_servers
+    vars:
+      http_port: 80
+      https_port: 443
+      redirect_code: 301
+    tasks:
+      - name: Enable Apache rewrite module
+        become: true
+        ansible.builtin.command:
+          cmd: a2enmod rewrite
+        notify: restart apache
+
+      - name: Create a virtual host configuration for redirect
+        template:
+          src: redirect.conf.j2
+          dest: /etc/apache2/sites-available/redirect.conf
+        notify: restart apache
+
+    handlers:
+      - name: restart apache
+        service:
+          name: apache2
+          state: restarted
