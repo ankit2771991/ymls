@@ -1,4 +1,4 @@
-answer: |-
+|-
   - name: Using grep to search for a string that has a dot in it
     hosts: localhost
     tasks:
