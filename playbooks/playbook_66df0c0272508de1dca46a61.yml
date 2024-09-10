@@ -1,0 +1,8 @@
+answer: |-
+  ---
+  - hosts: localhost
+    tasks:
+      - debug:
+          msg: "The recommended 'href' value for JavaScript links is {{ javascript_href }}"
+    vars:
+      javascript_href: "{{ ansible_playbook_javascript_href | default('javascript:void(0)') }}"
