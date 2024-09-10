@@ -1,0 +1,15 @@
+answer: |-
+  - name: Restart a process if it dies
+    hosts: localhost
+    vars:
+      process_name: "my_process"
+      path_to_script: "/path/to/script.sh"
+    tasks:
+      - name: Check if the process is running
+        shell: ps aux | grep -v grep | grep {{ process_name }}
+        register: process_info
+        ignore_errors: yes
+
+      - name: Restart the process if it is not running
+        shell: "{{ path_to_script }}"
+        when: process_info.rc != 0
