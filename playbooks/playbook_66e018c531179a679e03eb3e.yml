@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: How to write multiple line string using Bash with variables
     hosts: localhost
