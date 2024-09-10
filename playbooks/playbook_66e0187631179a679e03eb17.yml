@@ -1,0 +1,8 @@
+answer: |-
+  ---
+  - name: Initialize Linux machine
+    hosts: localhost
+    tasks:
+      - name: Display error message
+        debug:
+          msg: "{{ error_message }}"
