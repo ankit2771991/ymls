@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Validate an email address in JavaScript
     hosts: localhost
