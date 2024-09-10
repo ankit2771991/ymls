@@ -1,0 +1,10 @@
+answer: |-
+  ---
+  - name: Use cat command to write text to file
+    hosts: localhost
+    tasks:
+      - name: Write text to file using cat command
+        command: "echo '{{ custom_text }}' | cat > {{ custom_file }}"
+        vars:
+          custom_text: "{{ ansible_user }}"
+          custom_file: "/path/to/{{ custom_filename }}"
