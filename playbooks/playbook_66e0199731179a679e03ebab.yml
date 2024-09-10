@@ -1,0 +1,8 @@
+answer: |-
+  ---
+  - hosts: localhost
+    tasks:
+      - name: Normalize file path in Bash
+        command: "echo {{ file_path | regex_replace('([^/]+)/', '\\1/') }}"
+        vars:
+          file_path: "{{ file_path }}"
