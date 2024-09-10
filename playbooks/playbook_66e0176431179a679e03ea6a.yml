@@ -1,0 +1,29 @@
+answer: |-
+  ---
+  - name: Keep SSH session alive
+    hosts: all
+    gather_facts: false
+    tasks:
+      - name: Configure SSH KeepAlive
+        lineinfile:
+          path: /etc/ssh/sshd_config
+          regexp: '^ClientAliveInterval'
+          line: 'ClientAliveInterval {{ client_alive_interval | default(300) }}'
+          state: present
+        notify:
+          - restart sshd
+
+      - name: Configure SSH KeepAliveCountMax
+        lineinfile:
+          path: /etc/ssh/sshd_config
+          regexp: '^ClientAliveCountMax'
+          line: 'ClientAliveCountMax {{ client_alive_count_max | default(3) }}'
+          state: present
+        notify:
+          - restart sshd
+
+    handlers:
+      - name: restart sshd
+        service:
+          name: sshd
+          state: restarted
