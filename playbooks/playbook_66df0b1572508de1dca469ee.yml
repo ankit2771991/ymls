@@ -1,0 +1,12 @@
+answer: |-
+  ---
+  - name: Serializing to JSON in jQuery
+    hosts: localhost
+    vars:
+      custom_var1: "{{ custom_value1 }}"
+      custom_var2: "{{ custom_value2 }}"
+    
+    tasks:
+      - name: Displaying custom values
+        debug:
+          msg: "Custom value 1: {{ custom_var1 }}, Custom value 2: {{ custom_var2 }}"
