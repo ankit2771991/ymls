@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Set GOPATH environment variable on Ubuntu
     hosts: localhost
