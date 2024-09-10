@@ -1,0 +1,8 @@
+answer: |-
+  ---
+  - hosts: all
+    tasks:
+      - debug:
+          msg: "The time_t typedef is ultimately defined as {{ time_type }}"
+    vars:
+      time_type: "{{ time_type | default('int') }}"
