@@ -1,0 +1,15 @@
+answer: |-
+  - name: Get line number while using grep
+    hosts: localhost
+    tasks:
+      - name: Use grep to find a specific line in a file
+        shell: grep -n "{{ search_text }}" "{{ file_path }}"
+        register: grep_output
+        changed_when: false
+
+      - debug: 
+          msg: "{{ grep_output.stdout_lines }}" 
+
+    vars:
+      search_text: "example_text"
+      file_path: "/path/to/file.txt"
