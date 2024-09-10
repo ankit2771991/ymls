@@ -1,0 +1,10 @@
+answer: |-
+  ---
+  - hosts: localhost
+    become: true
+    tasks:
+      - name: Execute combine multiple Linux commands in one line
+        command: "echo custom_value_variable1 && echo custom_value_variable2"
+        register: combined_output
+      - debug:
+          msg: "{{ combined_output.stdout }}"
