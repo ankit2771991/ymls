@@ -1,0 +1,15 @@
+answer: |-
+  ---
+  - name: Recursively look for files with a specific extension
+    hosts: localhost
+    tasks:
+      - name: Find files with specific extension recursively
+        find:
+          paths: "{{ search_path }}"
+          patterns: "*{{ file_extension }}"
+          recurse: yes
+        register: found_files
+
+      - name: Display found files
+        debug:
+          var: found_files.files
