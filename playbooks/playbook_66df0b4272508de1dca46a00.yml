@@ -1,0 +1,8 @@
+answer: |-
+  ---
+  - name: Ansible playbook to demonstrate if __name__ == "__main__"
+    hosts: localhost
+    tasks:
+      - name: Display message if __name__ == "__main__"
+        debug:
+          msg: "This code block will run only if __name__ == '__main'"
