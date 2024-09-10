@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Delete file with size 0
     hosts: localhost
