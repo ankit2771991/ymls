@@ -1,0 +1,9 @@
+answer: |-
+  - hosts: all
+    tasks:
+      - name: Determine if Linux system is 32-bit or 64-bit
+        command: "getconf LONG_BIT"
+        register: long_bit_output
+
+      - debug:
+          msg: "The system is {{ long_bit_output.stdout }}-bit."
