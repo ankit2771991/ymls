@@ -1,0 +1,38 @@
+answer: |
+
+  ---
+  - name: Iterate over rows in a Pandas DataFrame
+    hosts: localhost
+    tasks:
+      - name: Load the Pandas module
+        pip:
+          name: pandas
+
+      - name: Create a basic Pandas DataFrame
+        set_fact: 
+          data:
+            - name: John
+              age: 30
+            - name: Jane
+              age: 25
+            - name: Bob
+              age: 35
+        when: custom_data is not defined
+
+      - name: Create a custom Pandas DataFrame
+        set_fact: 
+          data:
+            - name: "{{ custom_name }}"
+              age: "{{ custom_age }}"
+        when: custom_data is defined
+
+      - name: Create a Pandas DataFrame from the data
+        set_fact:
+          df: "{{ data }}"
+
+      - name: Iterate over rows in the DataFrame
+        debug:
+          msg: "Name: {{ item.name }}, Age: {{ item.age }}"
+        with_items: "{{ df }}"
+        loop_control:
+          label: "{{ item.name }}"
