@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Test JavaScript comparison
     hosts: localhost
