@@ -1,0 +1,15 @@
+answer: |-
+  ---
+  - name: Can you Run Xcode in Linux?
+    hosts: localhost
+    vars:
+      custom_value_1: "default_value1"
+      custom_value_2: "default_value2"
+    tasks:
+      - name: Task 1
+        debug:
+          msg: "{{ custom_value_1 }} is set for custom_value_1"
+          
+      - name: Task 2
+        debug:
+          msg: "{{ custom_value_2 }} is set for custom_value_2"
