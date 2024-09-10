@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Remove folders with a certain name
     hosts: all
