@@ -1,0 +1,20 @@
+answer: |
+
+  ---
+  - name: What is JSONP, and why was it created?
+    hosts: localhost
+    vars:
+      jsonp_url: "http://example.com/jsonp"
+    
+    tasks:
+      - name: Explain JSONP
+        debug:
+          msg: "JSONP stands for JSON with Padding. It is a technique used in web development to overcome the same-origin policy restrictions. JSONP allows cross-domain requests by adding a callback function to the JSON response, which can be executed by the client-side script."
+
+      - name: Why JSONP was created
+        debug:
+          msg: "JSONP was created to facilitate cross-domain data exchange in a way that was not possible with standard AJAX requests due to the same-origin policy. It allows websites to retrieve data from external APIs or servers without being blocked by browsers."
+
+      - name: Use JSONP in a sample request
+        debug:
+          msg: "To use JSONP, you can make a GET request to a server that supports JSONP by adding a callback parameter to the URL. For example, GET {{ jsonp_url }}?callback=myCallbackFunction."
