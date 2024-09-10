@@ -1,4 +1,4 @@
-answer: |-
+|-
   - hosts: localhost
     tasks:
       - name: Check if element is hidden in jQuery
