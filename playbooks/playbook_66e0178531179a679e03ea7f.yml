@@ -1,0 +1,6 @@
+answer: |-
+  - name: Run sed command with -i option
+    hosts: localhost
+    tasks:
+      - name: Run sed command with -i option
+        command: "sed -i 's/{{old_value}}/{{new_value}}/g' {{file_path}}"
