@@ -1,0 +1,15 @@
+answer: |-
+  ---
+  - name: Define an alias in fish shell
+    hosts: localhost
+    tasks:
+      - name: Set an alias in fish shell
+        ansible.builtin.lineinfile:
+          dest: ~/.config/fish/config.fish
+          line: 'alias {{ alias_name }}="{{ command }}"'
+          create: yes
+        vars:
+          alias_name: "{{ alias_name }}"
+          command: "{{ command }}"
+        tags: 
+          - alias_define
