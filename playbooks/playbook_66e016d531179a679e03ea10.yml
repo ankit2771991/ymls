@@ -1,0 +1,14 @@
+answer: >-
+  ---
+
+  - name: Ansible playbook to handle undefined reference to pthread_create in
+  Linux
+    hosts: localhost
+    vars:
+      custom_value1: "{{ custom_value1 | default('default_custom_value1') }}"
+      custom_value2: "{{ custom_value2 | default('default_custom_value2') }}"
+    
+    tasks:
+      - name: Display custom values
+        debug:
+          msg: "Custom value 1: {{ custom_value1 }}, Custom value 2: {{ custom_value2 }}"
