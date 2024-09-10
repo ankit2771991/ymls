@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Can you Run Xcode in Linux?
     hosts: localhost
