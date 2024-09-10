@@ -1,0 +1,27 @@
+answer: |-
+  ---
+  - name: Insert text at the beginning of a file
+    hosts: localhost
+    vars:
+      file_path: "/path/to/your/file.txt"
+      text_to_insert: "The text you want to insert"
+    tasks:
+      - name: Read the content of the original file
+        shell: "cat {{ file_path }}"
+        register: original_content
+
+      - name: Insert text at the beginning of the file
+        lineinfile:
+          path: "{{ file_path }}"
+          line: "{{ text_to_insert }}"
+          insertbefore: BOF
+          state: present
+        when: "'{{ text_to_insert }}' not in original_content.stdout"
+
+      - name: Display the modified file content
+        shell: "cat {{ file_path }}"
+        register: modified_content
+        changed_when: false
+
+      - debug:
+          msg: "{{ modified_content.stdout }}"
