@@ -1,0 +1,7 @@
+answer: |-
+  - name: How do I know the script file name in a Bash script?
+    hosts: localhost
+    tasks:
+      - name: Print the script file name
+        debug:
+          msg: "The script file name is {{ script_filename }}"
