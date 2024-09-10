@@ -1,0 +1,10 @@
+answer: >-
+  - name: How to use "/" (directory separator) in both Linux and Windows in
+  Python
+    hosts: localhost
+    vars:
+      custom_value: "/path/to/directory"
+    tasks:
+      - name: Display the directory separator in Python
+        debug:
+          msg: "The directory separator in Python is {{ '/' }}"
