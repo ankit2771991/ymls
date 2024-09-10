@@ -1,0 +1,15 @@
+answer: |-
+  ---
+  - hosts: localhost
+    become: yes
+    vars:
+      username: testuser
+      password: testpassword
+    tasks:
+      - name: Add user account
+        user:
+          name: "{{ username }}"
+          password: "{{ password | password_hash('sha512') }}"
+      - name: Display new user account details
+        debug:
+          msg: "User account added - Username: {{ username }}, Password: {{ password }}"
