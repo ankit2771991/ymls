@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Find all distinct file extensions in a folder hierarchy
     hosts: localhost
