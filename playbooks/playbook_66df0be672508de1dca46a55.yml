@@ -1,0 +1,9 @@
+answer: |-
+  - hosts: localhost
+    vars:
+      html_color: "{{ html_color | default('chucknorris') }}"
+    
+    tasks:
+      - name: Display the HTML color value
+        debug:
+          msg: "HTML thinks '{{ html_color }}' is a color."
