@@ -1,0 +1,10 @@
+answer: |-
+  - name: Check php.ini location
+    hosts: localhost
+    vars:
+      php_ini_path: "/etc/php/7.0/cli/php.ini"
+      
+    tasks:
+      - name: Print php.ini location
+        debug:
+          msg: "The php.ini file is located at {{ php_ini_path }}"
