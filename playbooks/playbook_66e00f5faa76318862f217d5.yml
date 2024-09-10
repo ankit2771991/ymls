@@ -1,0 +1,10 @@
+answer: |-
+  ---
+  - name: RegEx match open tags except XHTML self-contained tags
+    hosts: localhost
+    vars:
+      custom_regex: "<([a-zA-Z1-6]+)([^>]*)>([^<]*)<\\/\\1>"
+
+    tasks:
+      - debug:
+          msg: "{{ custom_regex }}"
