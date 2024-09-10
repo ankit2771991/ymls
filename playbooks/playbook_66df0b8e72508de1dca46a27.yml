@@ -1,4 +1,4 @@
-answer: |
+|
 
   ---
   - name: Iterate over rows in a Pandas DataFrame
