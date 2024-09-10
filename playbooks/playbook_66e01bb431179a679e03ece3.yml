@@ -1,8 +1,6 @@
-answer: >-
+|-
   ---
-
-  - name: Create a hex dump of file containing only the hex characters without
-  spaces
+  - name: Create a hex dump of file containing only the hex characters without spaces
     hosts: localhost
     vars:
       file_path: "/path/to/your/file"
