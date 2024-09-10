@@ -1,0 +1,18 @@
+answer: |-
+  ---
+  - name: How to Free Inode Usage
+    hosts: all
+    vars:
+      custom_directory: "/path/to/directory"
+    tasks:
+      - name: Find files with high inode usage
+        find:
+          paths: "{{ custom_directory }}"
+          size: 0
+        register: high_inode_files
+
+      - name: Remove high inode usage files
+        file:
+          path: "{{ item.path }}"
+          state: absent
+        with_items: "{{ high_inode_files.files }}"
