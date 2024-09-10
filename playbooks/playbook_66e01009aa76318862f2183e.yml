@@ -1,0 +1,9 @@
+answer: |-
+  ---
+  - name: Get current date and time in the terminal
+    hosts: localhost
+    tasks:
+      - name: Set custom command in terminal to get current date and time
+        command: "echo '{{ custom_command }}'"
+    vars:
+      custom_command: "date"
