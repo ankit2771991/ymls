@@ -1,0 +1,11 @@
+answer: |-
+  ---
+  - name: Print the difference between @staticmethod and @classmethod in Python
+    hosts: localhost
+    tasks:
+      - name: Print custom message with custom values
+        debug:
+          msg: "The difference between @staticmethod and @classmethod in Python is that @staticmethod is a decorator that defines a method that is bound to the class, not the instance. On the other hand, @classmethod is a decorator that defines a method that receives the class itself as the first argument, allowing you to access class variables and methods. Custom value 1: {{ custom_value_1 }} Custom value 2: {{ custom_value_2 }}"
+    vars:
+      custom_value_1: "Custom Value 1"
+      custom_value_2: "Custom Value 2"
