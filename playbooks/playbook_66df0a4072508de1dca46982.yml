@@ -1,0 +1,9 @@
+answer: |-
+  ---
+  - name: Close specific port on Linux
+    hosts: all
+    vars:
+      port_to_close: "{{ port_to_close }}"
+    tasks:
+      - name: Close specified port
+        command: "iptables -A INPUT -p tcp --dport {{ port_to_close }} -j DROP"
