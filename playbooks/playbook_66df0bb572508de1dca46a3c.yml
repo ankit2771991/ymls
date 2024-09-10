@@ -1,0 +1,10 @@
+answer: |-
+  ---
+  - name: Difference between __str__ and __repr__?
+    hosts: localhost
+    vars:
+      custom_value: "{{ custom_value }}"
+    tasks:
+      - debug:
+          msg: "Custom value is: {{ custom_value }}"
+          verbosity: 1
