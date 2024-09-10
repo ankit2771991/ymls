@@ -1,0 +1,25 @@
+answer: |-
+  ---
+  - name: Create a file using open() in Python if it doesn't exist
+    hosts: localhost
+    gather_facts: no
+    
+    vars:
+      file_name: "example.txt"
+      file_content: "This is an example file content."
+    
+    tasks:
+      - name: Check if file exists
+        stat:
+          path: "{{ file_name }}"
+        register: file_stat
+    
+      - name: Create file if it doesn't exist
+        ansible.builtin.command: touch "{{ file_name }}"
+        when: file_stat.stat.exists == False
+        
+      - name: Write content to the file
+        ansible.builtin.copy:
+          content: "{{ file_content }}"
+          dest: "{{ file_name }}"
+        when: file_stat.stat.exists == False
