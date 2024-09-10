@@ -1,0 +1,10 @@
+answer: |-
+  ---
+  - name: Check if Windows containers can be hosted on Linux
+    hosts: localhost
+    gather_facts: false
+
+    tasks:
+      - name: Print custom message with user-defined value
+        debug:
+          msg: "{{ custom_message }}"
