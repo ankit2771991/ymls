@@ -1,6 +1,5 @@
-answer: >-
-  - name: How to use "/" (directory separator) in both Linux and Windows in
-  Python
+|-
+  - name: How to use "/" (directory separator) in both Linux and Windows in Python
     hosts: localhost
     vars:
       custom_value: "/path/to/directory"
