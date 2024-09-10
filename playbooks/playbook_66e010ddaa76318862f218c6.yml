@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Recursively look for files with a specific extension
     hosts: localhost
