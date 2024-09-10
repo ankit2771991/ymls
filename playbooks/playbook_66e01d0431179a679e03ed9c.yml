@@ -1,0 +1,12 @@
+answer: |-
+  - name: CD into directory without having permission
+    hosts: localhost
+    tasks:
+      - name: Attempt to change directory without permission
+        shell: cd {{ directory_path }}
+        register: cd_output
+        ignore_errors: yes
+        changed_when: false
+
+      - debug:
+          msg: "Attempted to change directory. Command output: {{ cd_output.stdout }}"
