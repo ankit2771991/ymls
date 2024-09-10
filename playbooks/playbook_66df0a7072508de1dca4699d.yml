@@ -1,0 +1,17 @@
+answer: |-
+  ---
+  - name: Recursively counting files in a Linux directory
+    hosts: localhost
+    gather_facts: false
+
+    vars:
+      target_directory: "{{ ansible_user_directory }}"
+
+    tasks:
+      - name: Recursively count files in the specified directory
+        shell: |
+          find {{ target_directory }} -type f | wc -l
+        register: file_count
+
+      - debug:
+          msg: "Total number of files in {{ target_directory }}: {{ file_count.stdout }}"
