@@ -1,0 +1,12 @@
+answer: |-
+  ---
+  - name: Handle UnicodeDecodeError
+    hosts: localhost
+    vars_prompt:
+      - name: custom_value
+        prompt: "Enter custom value:"
+    
+    tasks:
+      - name: Print custom value
+        debug:
+          msg: "Custom value is: {{ custom_value }}"
