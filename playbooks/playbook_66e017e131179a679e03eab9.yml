@@ -1,0 +1,9 @@
+answer: |-
+  ---
+  - hosts: localhost
+    vars:
+      custom_value: "{{ custom_value | default('default_value') }}"
+    tasks:
+      - name: Check if there are any standard exit status codes in Linux
+        debug:
+          msg: "The custom value is {{ custom_value }}"
