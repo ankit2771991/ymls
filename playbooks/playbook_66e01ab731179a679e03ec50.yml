@@ -1,0 +1,14 @@
+answer: |-
+  ---
+  - name: Finding which process was killed by Linux OOM killer
+    hosts: localhost
+    vars:
+      oom_message_file: "/var/log/syslog"
+    
+    tasks:
+      - name: Find the process killed by OOM killer
+        shell: grep -E "Killed process [0-9]+" {{ oom_message_file }} | tail -1 | awk '{print $6}'
+        register: killed_process
+
+      - debug:
+          msg: "The process killed by OOM killer was {{ killed_process.stdout }}"
