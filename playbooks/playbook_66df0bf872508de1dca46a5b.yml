@@ -1,0 +1,26 @@
+answer: |-
+  - name: Check if checkbox is checked using jQuery
+    hosts: localhost
+    tasks:
+      - name: Set custom variables
+        set_fact:
+          checkbox_id: "{{ checkbox_id | default('checkbox-id') }}"
+        
+      - name: Run jQuery script to check if checkbox is checked
+        shell: |
+          echo "<html><head></head><body><input type='checkbox' id='{{ checkbox_id }}' checked></body></html>" > index.html
+          echo "<script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>" >> index.html
+          echo "<script>" >> index.html
+          echo "if ($('#{{ checkbox_id }}').prop('checked')) {" >> index.html
+          echo "  console.log('Checkbox is checked');" >> index.html
+          echo "} else {" >> index.html
+          echo "  console.log('Checkbox is not checked');" >> index.html
+          echo "}" >> index.html
+          echo "</script>" >> index.html
+        args:
+          executable: /bin/bash
+
+      - name: Remove temporary index.html file
+        file:
+          path: index.html
+          state: absent
