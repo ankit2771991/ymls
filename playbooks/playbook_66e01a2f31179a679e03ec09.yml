@@ -1,0 +1,8 @@
+answer: |-
+  - hosts: localhost
+    tasks:
+      - name: Add a cron job to run every 30 minutes
+        cron:
+          name: "{{ cron_job_name }}"
+          minute: "*/30"
+          job: "your_command_here"
