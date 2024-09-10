@@ -1,0 +1,12 @@
+answer: |-
+  - name: Recursively grep all directories and subdirectories
+    hosts: localhost
+    gather_facts: false
+      
+    vars:
+      search_directory: "{{ search_directory_name }}"
+      search_term: "{{ search_term_to_find }}"
+
+    tasks:
+      - name: Recurively grep all directories
+        command: find {{ search_directory }} -type f -exec grep -H "{{ search_term }}" {} \;
