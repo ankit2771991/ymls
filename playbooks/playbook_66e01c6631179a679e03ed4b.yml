@@ -1,0 +1,18 @@
+answer: |-
+  ---
+  - name: Create a file with a given size in Linux
+    hosts: localhost
+    gather_facts: false
+
+    vars:
+      file_name: "{{ file_name | default('example.txt') }}"
+      file_size: "{{ file_size | default('1MB') }}"
+
+    tasks:
+      - name: Create a file with a given size
+        shell: "dd if=/dev/zero of={{ file_name }} bs=1 count=0 seek={{ file_size }}"
+        register: result
+
+      - debug:
+          msg: "File '{{ file_name }}' created with size '{{ file_size }}'"
+  ...
