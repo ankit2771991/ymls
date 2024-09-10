@@ -1,4 +1,4 @@
-answer: |-
+|-
   - name: Test if comments can be used in JSON
     hosts: localhost
     tasks:
