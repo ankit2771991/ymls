@@ -1,0 +1,14 @@
+answer: |-
+  ---
+  - hosts: localhost
+    tasks:
+      - name: Replace string in multiple files
+        replace:
+          path: "{{ item }}"
+          regexp: "{{ old_string }}"
+          replace: "{{ new_string }}"
+        with_fileglob:
+          - "path/to/files/*.txt"
+        vars:
+          old_string: "{{ default_old_string | default('old_value') }}"
+          new_string: "{{ default_new_string | default('new_value') }}"
