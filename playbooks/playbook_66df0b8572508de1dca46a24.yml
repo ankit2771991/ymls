@@ -1,4 +1,4 @@
-answer: |-
+|-
   - name: Iterating over dictionaries using 'for' loops
     hosts: localhost
     gather_facts: false
