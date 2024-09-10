@@ -1,0 +1,12 @@
+answer: |-
+  ---
+  - name: Generate a SHA-256 hash from the Linux command line
+    hosts: localhost
+    tasks:
+      - name: Generate SHA-256 hash
+        shell: echo -n "{{ my_custom_message }}" | sha256sum | awk '{print $1}'
+        register: sha256_output
+        vars:
+          my_custom_message: "Change this message to generate a different SHA-256 hash"
+      - debug:
+          msg: "SHA-256 hash of '{{ my_custom_message }}' is {{ sha256_output.stdout }}"
