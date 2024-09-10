@@ -1,0 +1,3 @@
+answer: >-
+  Failed to create tar archive, the following error occurred: non-zero return
+  code. Please fix the error and provide a new playbook.
