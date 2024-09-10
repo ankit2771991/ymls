@@ -1,0 +1,12 @@
+answer: |-
+  ---
+  - name: Change element's class with JavaScript
+    hosts: localhost
+    vars:
+      element_id: ""
+      new_class: ""
+      extra_vars:
+    tasks:
+      - name: Change element's class
+        debug:
+          msg: "Change class of element {{ element_id }} to {{ new_class }}"
