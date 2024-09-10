@@ -1,0 +1,19 @@
+answer: |-
+  ---
+  - name: Find files in current and subdirectories
+    hosts: localhost
+    tasks:
+      - name: Search for files
+        find:
+          paths: "{{ search_path }}"
+          patterns: "*"
+        register: found_files
+
+      - name: Print found files
+        debug:
+          msg: "{{ item.path }}"
+        with_items: "{{ found_files.files }}"
+        when: found_files.files | length > 0
+
+    vars:
+      search_path: "/path/to/search"    # Change this to the desired search path via extra vars
