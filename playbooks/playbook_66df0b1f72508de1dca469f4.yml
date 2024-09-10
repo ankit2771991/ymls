@@ -1,0 +1,13 @@
+answer: |-
+  ---
+  - name: Are multi-line strings allowed in JSON?
+    hosts: localhost
+    vars:
+      custom_string: |
+        This is a multi-line string
+        that can be defined in Ansible
+
+    tasks:
+      - name: Print custom string
+        debug:
+          msg: "{{ custom_string }}"
