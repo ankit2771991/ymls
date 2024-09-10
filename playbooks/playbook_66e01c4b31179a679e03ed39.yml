@@ -1,0 +1,12 @@
+answer: |-
+  ---
+  - name: Get Docker container information from within the container
+    hosts: all
+    tasks:
+      - name: Display Docker container ID
+        debug:
+          msg: "Docker container ID: {{ ansible_env.CONTAINER_ID }}"
+
+      - name: Display Docker container name
+        debug:
+          msg: "Docker container name: {{ ansible_env.CONTAINER_NAME }}"
