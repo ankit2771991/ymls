@@ -1,0 +1,10 @@
+answer: |-
+  ---
+  - hosts: all
+    tasks:
+      - name: Change permissions of a folder and all contents
+        command: "chmod -R {{ item.mode }} {{ item.path }}"
+        with_items: "{{ folders }}"
+    vars:
+      folders:
+        - { path: "/path/to/folder", mode: "777" }
