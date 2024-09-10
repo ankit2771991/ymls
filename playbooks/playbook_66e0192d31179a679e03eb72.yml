@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Execute a command and exit if it fails
     hosts: localhost
