@@ -1,0 +1,18 @@
+answer: |-
+  ---
+  - name: Parse JSON in JavaScript
+    hosts: localhost
+    tasks:
+      - name: Load JSON data into a variable
+        set_fact:
+          json_data: "{{ custom_json_data }}"
+        
+      - name: Use JSON.parse() method to parse JSON
+        shell: "node -e 'console.log(JSON.parse(\"{{ json_data }}\"))'"
+        register: parsed_json
+        
+      - debug:
+          msg: "Parsed JSON: {{ parsed_json.stdout }}"
+    
+    vars:
+      custom_json_data: {}
