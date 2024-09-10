@@ -1,0 +1,10 @@
+answer: |-
+  - hosts: localhost
+    gather_facts: no
+    tasks:
+      - name: Get full absolute path of a symlink
+        command: "readlink -f {{ symlink_path }}"
+        register: symlink_output
+
+      - debug:
+          msg: "The full absolute path of the symlink is {{ symlink_output.stdout }}"
