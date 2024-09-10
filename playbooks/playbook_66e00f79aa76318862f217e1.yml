@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Remove specific item from array in JavaScript
     hosts: localhost
