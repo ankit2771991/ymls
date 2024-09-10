@@ -1,4 +1,4 @@
-answer: |-
+|-
   - name: Disable browser autocomplete on web form field / input tags
     hosts: localhost
     tasks:
