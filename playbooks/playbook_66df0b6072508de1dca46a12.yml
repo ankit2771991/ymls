@@ -1,0 +1,12 @@
+answer: |-
+  ---
+  - hosts: localhost
+    vars:
+      directory_path: "/path/to/directory"
+
+    tasks:
+      - name: Create a directory and any missing parent directories
+        file:
+          path: "{{ directory_path }}"
+          state: directory
+          mode: 0775
