@@ -1,0 +1,8 @@
+answer: |-
+  ---
+  - hosts: localhost
+    gather_facts: no
+    tasks:
+      - name: Display the meaning of 'set -e' in a Bash script
+        debug:
+          msg: "The 'set -e' command in a Bash script means to exit immediately if a command exits with a non-zero status."
