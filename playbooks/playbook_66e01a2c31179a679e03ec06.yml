@@ -1,0 +1,10 @@
+answer: |-
+  ---
+  - name: Remove folders with a certain name
+    hosts: all
+    tasks:
+      - name: Remove folders with a certain name
+        command: >
+          rm -rf {{ folder_name }}
+        vars:
+          folder_name: "{{ folder_name }}"
