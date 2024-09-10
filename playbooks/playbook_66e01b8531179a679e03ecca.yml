@@ -1,0 +1,14 @@
+answer: |-
+  ---
+  - name: How to scroll up/down on the console of a Linux VM
+    hosts: localhost
+    gather_facts: false
+
+    tasks:
+      - name: Set custom scroll up/down key
+        set_fact:
+          scroll_up_key: "{{ scroll_up_key | default('\u001B[B') }}"
+          scroll_down_key: "{{ scroll_down_key | default('\u001B[A') }}"
+
+      - debug:
+          msg: "To scroll up, press: {{ scroll_up_key }}. To scroll down, press: {{ scroll_down_key }}"
