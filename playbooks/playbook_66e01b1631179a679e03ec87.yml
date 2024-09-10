@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Display specific lines in the middle of a file
     hosts: localhost
