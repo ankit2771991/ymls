@@ -1,0 +1,23 @@
+answer: |-
+  ---
+  - name: Convert the first letter of a string to uppercase in JavaScript
+    hosts: localhost
+    tasks:
+      - name: Set custom string
+        set_fact:
+          input_string: "{{ input_string | default('sample string', true) }}" 
+
+      - name: Display the input string
+        debug:
+          msg: "The input string is: {{ input_string }}"
+
+      - name: Run JavaScript code to convert the first letter to uppercase
+        shell: |
+          node -e "var string = '{{ input_string }}'; \
+                   var result = string.charAt(0).toUpperCase() + string.slice(1); \
+                   console.log(result);"
+        register: output
+
+      - name: Display the output
+        debug:
+          msg: "The output string with the first letter in uppercase is: {{ output.stdout }}"
