@@ -1,0 +1,16 @@
+answer: |-
+  - name: Send a file as an email attachment using Linux command line
+    hosts: localhost
+    gather_facts: false
+    vars:
+      email_address: "recipient@example.com"
+      email_subject: "Attachment from Ansible Playbook"
+      email_body: "Please find the attached file."
+      attachment_path: "/path/to/attachment/file.txt"
+      smtp_server: "smtp.example.com"
+      smtp_port: 587
+      smtp_username: "sender@example.com"
+      smtp_password: "password123"
+    tasks:
+      - name: Send email with attachment
+        command: "echo '{{ email_body }}' | mailx -s '{{ email_subject }}' -a '{{ attachment_path }}' -r '{{ smtp_username }}' -S smtp='{{ smtp_server }}:{{ smtp_port }}' -S smtp-use-starttls -S smtp-auth=login -S smtp-auth-user='{{ smtp_username }}' -S smtp-auth-password='{{ smtp_password }}' {{ email_address }}"
