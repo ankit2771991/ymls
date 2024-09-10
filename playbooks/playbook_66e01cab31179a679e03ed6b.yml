@@ -1,0 +1,23 @@
+answer: |-
+  ---
+
+  - name: Configure Java memory settings
+    hosts: all
+    tasks:
+      - name: Set custom memory values
+        set_fact:
+          java_xmx: "{{ java_xmx | default('2g') }}"
+          java_xms: "{{ java_xms | default('1g') }}"
+    
+      - name: Update Java memory settings
+        block:
+          - name: Update JAVA_OPTS
+            lineinfile:
+              path: /etc/profile.d/java_opts.sh
+              line: "export JAVA_OPTS=\"$JAVA_OPTS -Xmx{{ java_xmx }} -Xms{{ java_xms }}\""
+              state: present
+              create: yes
+              owner: root
+              group: root
+              mode: '0755'
+        when: java_xmx|int > java_xms|int
