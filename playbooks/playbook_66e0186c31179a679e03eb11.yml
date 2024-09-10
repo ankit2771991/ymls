@@ -1,0 +1,17 @@
+answer: |-
+  ---
+  - name: Check if a file is empty in Bash
+    hosts: localhost
+    gather_facts: false
+    
+    vars:
+      file_path: "/path/to/your/file"
+
+    tasks:
+      - name: Check if file is empty
+        command: "[ -s {{ file_path }} ]"
+        register: file_empty
+
+      - name: Print result
+        debug:
+          msg: "The file is {{ 'not ' if file_empty.rc != 0 else '' }}empty"
