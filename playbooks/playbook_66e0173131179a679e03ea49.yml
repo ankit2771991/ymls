@@ -1,0 +1,11 @@
+answer: |-
+  ---
+  - name: Display Linux's native GUI API
+    hosts: localhost
+    vars:
+      gui_api: "GTK"
+    tasks:
+      - name: Print Linux's native GUI API
+        debug:
+          msg: "Linux's native GUI API is {{ gui_api }}"
+        tags: ['display_gui_api']
