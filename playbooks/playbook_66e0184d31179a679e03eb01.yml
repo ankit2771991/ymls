@@ -1,0 +1,9 @@
+answer: |-
+  ---
+  - hosts: localhost
+    tasks:
+      - name: Add default include path for GCC
+        lineinfile:
+          path: /etc/profile
+          line: 'export C_INCLUDE_PATH={{ custom_include_path }}'
+        when: custom_include_path is defined
