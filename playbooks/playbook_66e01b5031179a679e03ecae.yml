@@ -1,0 +1,15 @@
+answer: |-
+  ---
+  - hosts: localhost
+    tasks:
+      - name: Negate if condition in bash script
+        shell: |
+          if [ "{{ custom_variable }}" == "true" ]; then
+            echo "Condition is true, negating it."
+          else
+            echo "Condition is false."
+          fi
+        vars:
+          custom_variable: "{{ custom_value }}"
+        tags: 
+          - negate_condition
