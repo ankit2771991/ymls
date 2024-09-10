@@ -1,0 +1,15 @@
+answer: |-
+  ---
+  - name: Google JSON response customization
+    hosts: localhost
+    vars:
+      json_prefix: "while(1);"
+      custom_value1_var: "value1"
+      custom_value2_var: "value2"
+      custom_value1: "{{ custom_value1_var }}"
+      custom_value2: "{{ custom_value2_var }}"
+      
+    tasks:
+      - name: Modify JSON response
+        debug:
+          msg: "{{ json_prefix }} { \"custom_value1\": \"{{ custom_value1 }}\", \"custom_value2\": \"{{ custom_value2 }}\" }"
