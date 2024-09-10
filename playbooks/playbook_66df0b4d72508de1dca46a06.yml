@@ -1,0 +1,12 @@
+answer: |-
+  ---
+  - name: Ansible playbook for understanding metaclasses in Python
+    hosts: localhost
+    vars:
+      custom_value_1: "custom_value_1"
+      custom_value_2: "custom_value_2"
+    tasks:
+      - name: Display the custom values
+        debug:
+          msg: "Custom Value 1: {{ custom_value_1 }}, Custom Value 2: {{ custom_value_2 }}"
+        tags: debug
