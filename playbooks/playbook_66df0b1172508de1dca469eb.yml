@@ -1,0 +1,15 @@
+answer: |-
+  ---
+  - name: How do I turn a C# object into a JSON string in .NET?
+    hosts: localhost
+    gather_facts: false
+    
+    vars_prompt:
+      - name: custom_value
+        prompt: "Enter custom value"
+        private: no
+
+    tasks:
+      - name: Convert C# object to JSON string
+        debug:
+          msg: "{{ custom_value }}"
