@@ -1,4 +1,4 @@
-answer: |-
+|-
   - name: CD into directory without having permission
     hosts: localhost
     tasks:
