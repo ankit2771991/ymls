@@ -1,0 +1,25 @@
+answer: |-
+  ---
+  - name: Get the size of the screen, current web page and browser window
+    hosts: localhost
+    gather_facts: false
+    tasks:
+      - name: Get screen size
+        debug:
+          msg: "Screen size - height: {{ screen_height }}, width: {{ screen_width }}"
+        vars:
+          screen_height: "{{ screen_height | default('1280') }}"
+          screen_width: "{{ screen_width | default('1024') }}"
+      
+      - name: Get current web page
+        debug:
+          msg: "Current web page: {{ current_web_page }}"
+        vars:
+          current_web_page: "{{ current_web_page | default('https://www.google.com') }}"
+      
+      - name: Get browser window size
+        debug:
+          msg: "Browser window size - height: {{ browser_window_height }}, width: {{ browser_window_width }}"
+        vars:
+          browser_window_height: "{{ browser_window_height | default('800') }}"
+          browser_window_width: "{{ browser_window_width | default('600') }}"
