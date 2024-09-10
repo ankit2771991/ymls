@@ -1,0 +1,16 @@
+answer: |-
+  ---
+  - name: Find and copy files
+    hosts: localhost
+    tasks:
+      - name: Find files
+        find:
+          paths: "{{ source_directory }}"
+          patterns: "{{ file_pattern }}"
+        register: found_files
+
+      - name: Copy files
+        copy:
+          src: "{{ item.path }}"
+          dest: "{{ destination_directory }}"
+        with_items: "{{ found_files.files }}"
