@@ -1,0 +1,19 @@
+answer: |-
+  - hosts: all
+    become: true
+    tasks:
+      - name: Check for zombie processes
+        shell: ps aux | grep defunct | grep -v grep
+        register: zombie_processes
+        ignore_errors: true
+
+      - name: Kill zombie processes
+        shell: kill -9 {{ item.split()[1] }}
+        loop: "{{ zombie_processes.stdout_lines }}"
+        when: zombie_processes.stdout_lines is defined and zombie_processes.stdout_lines | length > 0
+
+      - name: Print killed zombie processes
+        debug:
+          msg: "Killed zombie process {{ item.split()[1] }}"
+        loop: "{{ zombie_processes.stdout_lines }}"
+        when: zombie_processes.stdout_lines is defined and zombie_processes.stdout_lines | length > 0
