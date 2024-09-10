@@ -1,0 +1,18 @@
+answer: |-
+  ---
+  - name: Omitting the first line from any Linux command output
+    hosts: all
+    tasks:
+      - name: Execute custom Linux command
+        command: "{{ custom_command }}"
+        register: command_output
+        
+      - name: Omit the first line from command output
+        set_fact:
+          trimmed_output: "{{ command_output.stdout_lines[1:] }}"
+        
+      - debug:
+          msg: "Output after omitting first line: {{ trimmed_output }}"
+        
+    vars:
+      custom_command: "ls -l"
