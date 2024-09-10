@@ -1,0 +1,19 @@
+answer: |-
+  ---
+  - name: Copy file without overwriting
+    hosts: localhost
+    gather_facts: false
+    vars:
+      source_file: "/path/to/source/file"
+      destination_file: "/path/to/destination/file"
+    tasks:
+      - name: Check if the destination file already exists
+        stat:
+          path: "{{ destination_file }}"
+        register: file_stat
+
+      - name: Copy the file if it doesn't already exist
+        copy:
+          src: "{{ source_file }}"
+          dest: "{{ destination_file }}"
+        when: not file_stat.stat.exists
