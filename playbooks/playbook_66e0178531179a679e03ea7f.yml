@@ -1,4 +1,4 @@
-answer: |-
+|-
   - name: Run sed command with -i option
     hosts: localhost
     tasks:
