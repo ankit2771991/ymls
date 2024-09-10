@@ -1,0 +1,49 @@
+answer: |-
+  ---
+  - name: Validate an email address in JavaScript
+    hosts: localhost
+    gather_facts: false
+
+    tasks:
+      - name: Install Node.js
+        apt:
+          name: nodejs
+          state: present
+
+      - name: Install npm
+        apt:
+          name: npm
+          state: latest
+
+      - name: Create directory for JavaScript file
+        file:
+          path: "/tmp/email-validation"
+          state: directory
+
+      - name: Copy JavaScript file for email validation
+        copy:
+          content: |
+            function validateEmail(email) {
+              var re = /\S+@\S+\.\S+/;
+              return re.test(email);
+            }
+
+            var email = "{{ email_var }}";
+            console.log(validateEmail(email));
+          dest: "/tmp/email-validation/emailValidation.js"
+
+      - name: Run JavaScript file for email validation
+        command: "node /tmp/email-validation/emailValidation.js"
+        register: email_validation_output
+
+      - name: Display email validation result
+        debug:
+          msg: "Email validation result: {{ email_validation_output.stdout }}"
+      
+    vars:
+      email_var: "{{ default_email_var }}"
+      
+    vars_prompt:
+      - name: default_email_var
+        prompt: "Enter an email address to validate"
+        private: no
