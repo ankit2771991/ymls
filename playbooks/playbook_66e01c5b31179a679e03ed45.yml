@@ -1,0 +1,19 @@
+answer: |-
+  ---
+  - name: Delete file with size 0
+    hosts: localhost
+    become: yes
+    vars:
+      file_path: "/path/to/file.txt"
+
+    tasks:
+      - name: Check if file exists and has size 0
+        stat:
+          path: "{{ file_path }}"
+        register: file_stats
+
+      - name: Delete file if it has size 0
+        file:
+          path: "{{ file_path }}"
+          state: absent
+        when: file_stats.stat.size == 0
