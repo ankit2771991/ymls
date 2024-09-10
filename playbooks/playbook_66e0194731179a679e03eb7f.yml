@@ -1,0 +1,8 @@
+answer: |-
+  ---
+  - name: Check for "goto" statement in bash
+    hosts: localhost
+    tasks:
+      - name: Print message
+        debug:
+          msg: "There is no 'goto' statement in bash"
