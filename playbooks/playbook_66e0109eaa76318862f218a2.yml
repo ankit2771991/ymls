@@ -1,0 +1,16 @@
+answer: |-
+  ---
+  - hosts: localhost
+    vars:
+      shell_path1: "/usr/bin/env"
+      shell_path2: "/usr/bin"
+      shell_command1: "bash"
+      shell_command2: "bash"
+    tasks:
+      - name: Display the difference between "#!/usr/bin/env bash" and "#!/usr/bin/bash"
+        debug:
+          msg: >
+            The main difference between "{{ shell_path1 }}/bash" and "{{ shell_path2 }}/bash" is that
+            using "{{ shell_path1 }}" allows the script to search for the appropriate bash interpreter
+            based on the user's environment, whereas "{{ shell_path2 }}" specifies the exact path to the
+            bash interpreter on the system.
