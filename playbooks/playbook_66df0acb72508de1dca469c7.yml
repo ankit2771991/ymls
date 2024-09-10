@@ -1,0 +1,10 @@
+answer: |-
+  ---
+  - name: Set custom date format in JSON
+    hosts: localhost
+    vars:
+      json_date_format: "{{ custom_date_format }}"
+    tasks:
+      - name: Print JSON date format
+        debug:
+          msg: "The JSON date format is {{ json_date_format }}"
