@@ -1,0 +1,9 @@
+answer: |-
+  ---
+  - name: Install tkinter for Python
+    hosts: localhost
+    tasks:
+      - name: Install tkinter for Python
+        package:
+          name: "{{ tkinter_package }}"
+          state: present
