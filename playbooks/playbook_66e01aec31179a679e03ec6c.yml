@@ -1,0 +1,15 @@
+answer: >-
+  ---
+
+  - name: List files recursively in Linux CLI with path relative to the current
+  directory
+    hosts: localhost
+    gather_facts: false
+
+    tasks:
+      - name: List files recursively in Linux CLI
+        shell: "find . -type f"
+        register: files_output
+
+      - debug:
+          msg: "{{ files_output.stdout_lines }}"
