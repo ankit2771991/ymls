@@ -1,0 +1,12 @@
+answer: |-
+  ---
+  - name: What's the difference between .so, .la and .a library files?
+    hosts: localhost
+    vars:
+      custom_value_1: "{{ custom_value_1 | default('insert_default_value_here') }}"
+      custom_value_2: "{{ custom_value_2 | default('insert_default_value_here') }}"
+      custom_value_3: "{{ custom_value_3 | default('insert_default_value_here') }}"
+    tasks:
+      - name: Display custom values
+        debug:
+          msg: "Custom Value 1: {{ custom_value_1 }}, Custom Value 2: {{ custom_value_2 }}, Custom Value 3: {{ custom_value_3 }}"
