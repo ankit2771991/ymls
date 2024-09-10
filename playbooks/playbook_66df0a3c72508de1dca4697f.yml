@@ -1,0 +1,14 @@
+answer: |-
+  ---
+  - name: Find out which version of PostgreSQL is running
+    hosts: localhost
+    tasks:
+      - name: Install PostgreSQL client
+        apt:
+          name: postgresql-client
+          state: present
+      - name: Get PostgreSQL version
+        command: psql --version
+        register: postgresql_version
+      - debug:
+          msg: "The version of PostgreSQL is {{ postgresql_version.stdout }}"
