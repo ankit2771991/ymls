@@ -1,0 +1,15 @@
+answer: |-
+  ---
+  - name: Check if there is a WinSCP equivalent for Linux
+    hosts: localhost
+    tasks:
+      - name: Debug message
+        debug:
+          msg: "Checking for WinSCP equivalent for Linux"
+      - name: Check if WinSCP equivalent exists
+        shell: "echo '{{ winscp_equivalent }}'"
+        register: winscp_result
+
+      - name: Display result
+        debug:
+          msg: "WinSCP equivalent for Linux: {{ winscp_result.stdout }}"
