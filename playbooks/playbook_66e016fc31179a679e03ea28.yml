@@ -1,0 +1,15 @@
+answer: |-
+  ---
+  - name: Append one file to another in Linux from the shell
+    hosts: localhost
+    tasks:
+      - name: Read content of first file
+        command: "cat {{ source_file }}"
+        register: file_content
+
+      - name: Append content of first file to second file
+        command: "echo '{{ file_content.stdout }}' >> {{ destination_file }}"
+        
+    vars:
+      source_file: "/path/to/source/file"
+      destination_file: "/path/to/destination/file"
