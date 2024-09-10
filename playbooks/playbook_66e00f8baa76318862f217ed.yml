@@ -1,0 +1,13 @@
+answer: |-
+  ---
+  - name: Compare var functionName = function() {} vs function functionName() {}
+    hosts: localhost
+    gather_facts: false
+
+    vars:
+      var_name: "functionName"
+      function_name: "function"
+
+    tasks:
+      - debug:
+          msg: "var {{var_name}} = {{function_name}}() {} vs function {{var_name}}() {}"
