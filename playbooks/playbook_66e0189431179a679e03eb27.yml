@@ -1,0 +1,8 @@
+answer: |-
+  - name: Update a Python package
+    hosts: localhost
+    tasks:
+      - name: Update Python package
+        pip:
+          name: "{{ package_name }}"
+          state: latest
