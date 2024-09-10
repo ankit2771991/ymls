@@ -1,0 +1,20 @@
+answer: |-
+  ---
+  - name: Get most recent file in a directory on Linux
+    hosts: localhost
+    gather_facts: false
+
+    vars:
+      directory_path: "/path/to/directory"
+
+    tasks:
+      - name: Get list of files in directory
+        shell: ls -t {{ directory_path }}
+        register: files_list
+
+      - name: Get most recent file
+        set_fact:
+          most_recent_file: "{{ files_list.stdout_lines | first }}"
+
+      - debug:
+          msg: "Most recent file in {{ directory_path }} is {{ most_recent_file }}"
