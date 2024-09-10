@@ -1,0 +1,22 @@
+answer: |-
+  ---
+  - name: Find all distinct file extensions in a folder hierarchy
+    hosts: localhost
+    gather_facts: false
+    vars:
+      root_folder: "/path/to/root/folder"
+
+    tasks: 
+      - name: List all files in the specified folder hierarchy
+        find:
+          paths: "{{ root_folder }}"
+          recurse: yes
+          file_type: file
+        register: file_list
+
+      - name: Extract file extensions from the file paths
+        set_fact:
+          file_extensions: "{{ file_list.files | map(attribute='path') | map('regex_replace', '.*\\.(\\w+)$', '\\1') | select('string') | unique | list }}"
+
+      - debug:
+          var: file_extensions
