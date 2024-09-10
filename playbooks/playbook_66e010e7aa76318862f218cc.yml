@@ -1,0 +1,19 @@
+answer: |-
+  ---
+  - name: Restarting cron after changing crontab file
+    hosts: localhost
+    gather_facts: no
+
+    vars:
+      crontab_path: "/etc/crontab"
+
+    tasks:
+      - name: Update crontab file
+        copy:
+          src: "{{ crontab_path }}"
+          dest: "{{ crontab_path }}"
+        notify: restart cron
+
+    handlers:
+      - name: restart cron
+        command: systemctl restart cron
