@@ -1,4 +1,4 @@
-answer: |-
+|-
   - name: Update a Python package
     hosts: localhost
     tasks:
