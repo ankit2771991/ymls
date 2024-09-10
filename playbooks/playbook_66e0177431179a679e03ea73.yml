@@ -1,0 +1,30 @@
+answer: |-
+  ---
+  - name: Add a prefix string to the beginning of each line
+    hosts: localhost
+    gather_facts: false
+
+    tasks:
+      - name: Read content of file
+        ansible.builtin.slurp:
+          src: "{{ file_path }}"
+        register: file_content
+
+      - name: Convert file content to string
+        set_fact:
+          original_content: "{{ file_content.content | b64decode }}"
+
+      - name: Add prefix string to each line
+        set_fact:
+          updated_content: "{{ original_content.split('\n') | map('regex_replace', '^', prefix_string) | list | join('\n') }}"
+
+      - name: Write updated content to file
+        ansible.builtin.copy:
+          content: "{{ updated_content }}"
+          dest: "{{ file_path }}"
+          mode: 0644
+          force: yes
+
+    vars:
+      file_path: "/path/to/your/file.txt"
+      prefix_string: "PREFIX-"
