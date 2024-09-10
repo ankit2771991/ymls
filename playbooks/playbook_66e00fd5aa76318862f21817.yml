@@ -1,0 +1,10 @@
+answer: |-
+  ---
+  - hosts: localhost
+    tasks:
+      - name: Get timestamp in JavaScript
+        command: node -e "console.log(Date.now())"
+        register: current_timestamp_output
+
+      - debug:
+          msg: "Current timestamp in JavaScript is {{ current_timestamp_output.stdout }}"
