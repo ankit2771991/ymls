@@ -1,0 +1,12 @@
+answer: |-
+  ---
+  - hosts: localhost
+    vars:
+      value_to_cut: "/path/to/file/filename.txt"
+      delimiter: "/"
+    tasks:
+      - name: Find the last field using 'cut'
+        command: "echo {{ value_to_cut }} | cut -d {{ delimiter }} -f $(($(tr -dc '{{ delimiter }}' <<< '{{ value_to_cut }}' | wc -c)+1))"
+        register: last_field
+      - debug:
+          msg: "Last field is {{ last_field.stdout }}"
