@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Serialize enum as string using JavaScriptSerializer
     hosts: localhost
