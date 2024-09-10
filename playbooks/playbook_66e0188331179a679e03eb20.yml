@@ -1,0 +1,13 @@
+answer: |-
+  ---
+  - name: List one filename per output line in Linux
+    hosts: localhost
+    tasks:
+      - name: List filenames with one per line
+        command: ls -1
+        register: list_output
+
+      - name: Display filenames one per line
+        debug:
+          msg: "{{ item }}"
+        with_items: "{{ list_output.stdout_lines }}"
