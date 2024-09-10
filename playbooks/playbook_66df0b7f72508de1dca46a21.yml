@@ -1,0 +1,14 @@
+answer: |-
+  ---
+  - name: Find index of given item in list
+    hosts: localhost
+    gather_facts: false
+
+    vars:
+      list_to_search: [1, 2, 3, 4, 5]
+      item_to_find: 3
+
+    tasks:
+      - name: Find index of given item
+        debug:
+          msg: "Index of {{ item_to_find }} in list is {{ list_to_search.index(item_to_find) }}"
