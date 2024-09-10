@@ -1,4 +1,4 @@
-answer: |-
+|-
   - name: Change permissions recursively
     hosts: all
     become: true
