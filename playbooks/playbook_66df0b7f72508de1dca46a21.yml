@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Find index of given item in list
     hosts: localhost
