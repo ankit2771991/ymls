@@ -1,0 +1,10 @@
+answer: |-
+  ---
+  - name: Create a file in Linux from terminal window
+    hosts: localhost
+    tasks:
+      - name: Create a file with custom content
+        command: echo "{{ file_content }}" > {{ file_path }}
+        vars:
+          file_content: "{{ file_content_var }}"
+          file_path: "{{ file_path_var }}"
