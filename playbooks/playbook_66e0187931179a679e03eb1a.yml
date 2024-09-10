@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Install tkinter for Python
     hosts: localhost
