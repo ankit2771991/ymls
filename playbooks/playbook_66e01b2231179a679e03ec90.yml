@@ -1,0 +1,7 @@
+answer: |-
+  ---
+  - name: What is the difference between arm64 and armhf?
+    hosts: localhost
+    tasks:
+      - debug:
+          msg: "The main difference between arm64 and armhf is that arm64 is designed for 64-bit architectures, while armhf is designed for 32-bit architectures."
