@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Display the meaning of "opt" directory
     hosts: localhost
