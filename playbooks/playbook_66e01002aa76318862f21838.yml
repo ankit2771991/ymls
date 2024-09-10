@@ -1,0 +1,13 @@
+answer: |
+  ---
+  - name: Get full path of a file
+    hosts: localhost
+    vars:
+      file_name: "example_file.txt"
+    tasks:
+      - name: Find full path of the file
+        shell: "readlink -f {{ file_name }}"
+        register: path_result
+
+      - debug:
+          msg: "Full path of {{ file_name }} is {{ path_result.stdout }}"
