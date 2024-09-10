@@ -1,0 +1,11 @@
+answer: |-
+  - name: Using grep to search for a string that has a dot in it
+    hosts: localhost
+    tasks:
+      - name: Search for a string with a dot using grep
+        command: grep -r "{{ search_string }}" "{{ directory }}"
+        register: grep_output
+            
+    vars:
+      search_string: "example.com"
+      directory: "/path/to/directory"
