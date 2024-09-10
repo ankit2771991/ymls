@@ -1,0 +1,14 @@
+answer: |-
+  ---
+  - name: Run dos2unix on an entire directory
+    hosts: localhost
+    tasks:
+      - name: Check if directory exists
+        stat:
+          path: "{{ directory_path }}"
+        register: dir_exists
+
+      - name: Run dos2unix on files in directory if it exists
+        command: dos2unix "{{ item.path }}"
+        with_fileglob: "{{ directory_path }}/*"
+        when: dir_exists.stat.exists == True
