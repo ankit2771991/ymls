@@ -1,0 +1,13 @@
+answer: |-
+  - name: Change permissions recursively
+    hosts: all
+    become: true
+    vars:
+      target_directory: /path/to/directory
+      mode: "0755"
+    tasks:
+      - name: Change permissions recursively
+        file:
+          path: "{{ target_directory }}"
+          recurse: yes
+          mode: "{{ mode }}"
