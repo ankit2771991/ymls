@@ -1,0 +1,11 @@
+answer: |-
+  ---
+  - name: Find Java SDK location in Linux
+    hosts: localhost
+    gather_facts: false
+    vars:
+      java_sdk_path: "{{ java_sdk_path | default('/usr/lib/jvm/java-11-openjdk-amd64') }}"
+    tasks:
+      - name: Display Java SDK location
+        debug:
+          msg: "Java SDK is located at {{ java_sdk_path }}"
