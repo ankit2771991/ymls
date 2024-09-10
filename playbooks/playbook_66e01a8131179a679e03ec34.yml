@@ -1,0 +1,11 @@
+answer: |-
+  ---
+  - name: Find and execute a shell function in Linux
+    hosts: all
+    gather_facts: false
+    vars:
+      shell_function: your_shell_function_name
+
+    tasks:
+      - name: Find files and execute shell function
+        command: find /path/to/directory -type f -exec sh -c '[[ $(grep -R "$1" {}) ]] && {{ shell_function }}' _ {} \;
