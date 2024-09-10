@@ -1,0 +1,10 @@
+answer: |-
+  ---
+  - hosts: localhost
+    vars:
+      threads: "{{ threads | default(2) }}"
+      processes: "{{ processes | default(4) }}"
+    tasks:
+      - name: Display number of threads and processes
+        debug:
+          msg: "Number of threads: {{ threads }}, Number of processes: {{ processes }}"
