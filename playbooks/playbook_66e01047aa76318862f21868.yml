@@ -1,0 +1,6 @@
+answer: |-
+  ---
+  - hosts: all
+    tasks:
+      - name: Kill detached screen session
+        shell: "screen -ls | grep detached | cut -d. -f1 | awk '{print $1}' | xargs -I{} screen -X -S {} quit"
