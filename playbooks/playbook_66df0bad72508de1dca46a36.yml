@@ -1,0 +1,15 @@
+answer: |-
+  - name: What is __init__.py for? Playbook
+    hosts: localhost
+    tasks:
+      - name: Print a message explaining the use of __init__.py
+        debug:
+          msg: "The __init__.py file in a Python package is used to define the package's namespace and specify initialization code that should be run when the package is imported."
+
+      - name: Custom message with parameter
+        debug:
+          msg: "This is a custom message that can be changed via extra vars. Value: {{ custom_message }}"
+        when: custom_message is defined
+
+    vars:
+      custom_message: "Hello, World!"
