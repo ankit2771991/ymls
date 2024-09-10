@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Sort a file in-place
     hosts: localhost
