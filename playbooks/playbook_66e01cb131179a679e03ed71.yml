@@ -1,0 +1,8 @@
+answer: |-
+  - hosts: all
+    become: true
+    vars:
+      ps_command: "{{ ps_command | default('ps aux') }}"
+    tasks:
+      - name: Execute PS command
+        command: "{{ ps_command }}"
