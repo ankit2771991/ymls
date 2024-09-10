@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Change the default shell in Linux
     hosts: all
