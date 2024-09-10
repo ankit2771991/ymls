@@ -1,0 +1,11 @@
+answer: |-
+  ---
+  - hosts: localhost
+    vars:
+      git_repo_url: "https://example.com/repo.git"
+      destination_dir: "/path/to/destination/dir"
+    tasks:
+      - name: Clone Git repository
+        git:
+          repo: "{{ git_repo_url }}"
+          dest: "{{ destination_dir }}"
