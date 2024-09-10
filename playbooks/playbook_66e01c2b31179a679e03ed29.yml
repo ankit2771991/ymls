@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Analyze a program's core dump file with GDB
     hosts: localhost
