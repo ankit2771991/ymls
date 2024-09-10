@@ -1,4 +1,4 @@
-answer: |-
+|-
   - name: Permanently export a variable in Linux
     hosts: localhost
     tasks:
