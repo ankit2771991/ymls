@@ -1,0 +1,10 @@
+answer: |-
+  ---
+  - hosts: all
+    gather_facts: false
+
+    tasks:
+      - name: Clear the terminal screen
+        shell: "clear"
+        args:
+          executable: /bin/bash
