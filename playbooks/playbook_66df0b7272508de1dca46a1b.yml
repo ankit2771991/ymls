@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Print the difference between @staticmethod and @classmethod in Python
     hosts: localhost
