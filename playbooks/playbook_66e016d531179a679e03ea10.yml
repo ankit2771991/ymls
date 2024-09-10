@@ -1,8 +1,6 @@
-answer: >-
+|-
   ---
-
-  - name: Ansible playbook to handle undefined reference to pthread_create in
-  Linux
+  - name: Ansible playbook to handle undefined reference to pthread_create in Linux
     hosts: localhost
     vars:
       custom_value1: "{{ custom_value1 | default('default_custom_value1') }}"
