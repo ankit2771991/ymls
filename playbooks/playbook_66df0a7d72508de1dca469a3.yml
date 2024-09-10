@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Determine which JSON content type to use
     hosts: localhost
