@@ -1,0 +1,22 @@
+answer: |-
+  ---
+  - hosts: localhost
+    tasks:
+      - name: Explanation of "use strict" in Javascript
+        debug:
+          msg: >
+            "use strict" is a statement in Javascript that enables strict mode. 
+            Strict mode makes it easier to write secure, maintainable code by preventing certain actions and marking common bugs as errors. 
+            It catches common programming bugs and throws exceptions.
+
+      - name: Default parameter to enable strict mode
+        debug:
+          msg: >
+            By default, "use strict" is not enabled in Javascript. 
+            To enable strict mode in a script, include the statement "use strict"; at the beginning of the file or within a function.
+
+      - name: Custom value for enabling strict mode
+        debug:
+          msg: >
+            You can set a custom value to enable or disable strict mode using extra vars in the Ansible playbook. 
+            For example, you can pass a boolean value like use_strict: true to enable strict mode dynamically.
