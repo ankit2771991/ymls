@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Explain the meaning of $@ in a shell script
     hosts: localhost
