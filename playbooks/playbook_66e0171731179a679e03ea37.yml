@@ -1,0 +1,16 @@
+answer: |-
+  ---
+  - hosts: localhost
+    vars:
+      port: "{{ port_number | default(80) }}"
+    tasks:
+      - name: Check if the user is in sudo group
+        fail:
+          msg: "User must be in sudo group to bind to privileged ports"
+        when: not ansible_user_id | int == 0 and item not in (0, "{{ sudo_gid }}")
+        with_items: "{{ groups['sudo'] }}"
+    
+      - name: Allow non-root processes to bind to privileged ports
+        become: yes
+        command: setcap 'cap_net_bind_service=+ep' /path/to/your/executable
+        when: port == 80
