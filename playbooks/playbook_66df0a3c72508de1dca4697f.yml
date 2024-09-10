@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Find out which version of PostgreSQL is running
     hosts: localhost
