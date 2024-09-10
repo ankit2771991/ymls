@@ -1,0 +1,18 @@
+answer: |-
+  - name: Iterating over dictionaries using 'for' loops
+    hosts: localhost
+    gather_facts: false
+
+    vars:
+      custom_dictionary:
+        key1: value1
+        key2: value2
+        key3: value3
+
+    tasks:
+      - name: Iterate over the custom_dictionary
+        debug:
+          msg: "Key: {{ item.key }}, Value: {{ item.value }}"
+        loop: "{{ query('dict', custom_dictionary) }}"
+        loop_control:
+          loop_var: item
