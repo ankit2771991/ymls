@@ -1,0 +1,21 @@
+answer: |-
+  - name: Permanently export a variable in Linux
+    hosts: localhost
+    tasks:
+      - name: Add custom variable to bashrc file
+        lineinfile:
+          path: ~/.bashrc
+          line: "export {{ custom_variable }}={{ custom_value }}"
+        become: yes
+
+      - name: Source the bashrc file
+        command: source ~/.bashrc
+        args:
+          creates: "~/.bashrc"
+
+      - name: Display the exported variable
+        command: echo ${{ custom_variable }}
+        register: variable_output
+
+      - debug:
+          msg: "The exported variable is {{ variable_output.stdout }}"
