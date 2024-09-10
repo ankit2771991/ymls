@@ -1,0 +1,12 @@
+answer: |-
+  ---
+  - name: Serialize enum as string using JavaScriptSerializer
+    hosts: localhost
+    vars:
+      custom_enum: "CUSTOM_ENUM_VALUE"
+    tasks:
+      - name: Serialize enum to JSON using JavaScriptSerializer
+        debug:
+          msg: "Serialized enum value: {{ custom_enum }}" 
+        when: false
+        delegate_to: localhost
