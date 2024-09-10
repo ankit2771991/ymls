@@ -1,0 +1,25 @@
+answer: |-
+  ---
+  - name: Change the output color of echo in Linux
+    hosts: localhost
+    gather_facts: false
+
+    vars:
+      echo_color: "{{ echo_color | default('red') }}"
+
+    tasks:
+      - name: Set the ANSI color codes for echo
+        set_fact:
+          color_codes:
+            reset: "\033[0m"
+            red: "\033[0;31m"
+            green: "\033[0;32m"
+            yellow: "\033[0;33m"
+            blue: "\033[0;34m"
+            purple: "\033[0;35m"
+            cyan: "\033[0;36m"
+            white: "\033[0;37m"
+        
+      - name: Display echo with custom color
+        debug:
+          msg: "{{ color_codes[echo_color] }}This is a custom colored message!{{ color_codes['reset'] }}"
