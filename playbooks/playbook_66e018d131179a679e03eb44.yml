@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Insert text at the beginning of a file
     hosts: localhost
