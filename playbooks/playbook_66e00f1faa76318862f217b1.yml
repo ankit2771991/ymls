@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Create an unordered list without any bullets
     hosts: localhost
