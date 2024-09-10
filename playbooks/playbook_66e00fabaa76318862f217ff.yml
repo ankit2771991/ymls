@@ -1,0 +1,15 @@
+answer: |-
+  ---
+  - name: Display the difference between "let" and "var"
+    hosts: localhost
+    tasks:
+      - name: Print the value of "let" variable
+        debug:
+          msg: "The value of 'let' is {{ let }}"
+      
+      - name: Print the value of "var" variable
+        debug:
+          msg: "The value of 'var' is {{ var }}"
+    vars:
+      let: "{{ let_value }}"
+      var: "{{ var_value }}"
