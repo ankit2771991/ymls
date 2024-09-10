@@ -1,0 +1,24 @@
+answer: |-
+  ---
+  - name: What's the difference between nohup and ampersand?
+    hosts: localhost
+    gather_facts: false
+
+    tasks:
+      - name: Run a command with nohup
+        shell: "nohup {{ command }} &"
+        args:
+          executable: /bin/bash
+        when: nohup
+        register: nohup_result
+
+      - name: Run a command with ampersand
+        shell: "{{ command }} &"
+        args:
+          executable: /bin/bash
+        when: not nohup
+        register: ampersand_result
+
+    vars:
+      command: "{{ command_var }}"
+      nohup: "{{ nohup_var | default(false) }}"
