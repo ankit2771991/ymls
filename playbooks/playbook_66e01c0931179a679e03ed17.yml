@@ -1,0 +1,12 @@
+answer: |-
+  - hosts: localhost
+    tasks:
+      - name: Map hostname and port with /etc/hosts
+        lineinfile:
+          path: /etc/hosts
+          state: present
+          line: "{{ host_ip }} {{ host_name }}:{{ host_port }}"
+        vars:
+          host_ip: "{{ hostip | default('127.0.0.1') }}"
+          host_name: "{{ hostname }}"
+          host_port: "{{ port }}"
