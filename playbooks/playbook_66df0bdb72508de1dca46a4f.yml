@@ -1,0 +1,10 @@
+answer: |-
+  ---
+  - name: Use double and single star/asterisk in parameters
+    hosts: localhost
+    vars:
+      custom_param_1: "{{ custom_param_1 | default('default_value_1') }}"
+      custom_param_2: "{{ custom_param_2 | default('default_value_2') }}"
+    tasks:
+      - debug:
+          msg: "Custom Param 1: {{ custom_param_1 }}, Custom Param 2: {{ custom_param_2 }}"
