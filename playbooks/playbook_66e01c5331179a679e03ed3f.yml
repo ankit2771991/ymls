@@ -1,0 +1,10 @@
+answer: |-
+  ---
+  - hosts: localhost
+    vars:
+      var1: custom_value_1
+      var2: custom_value_2
+      custom_command: echo "$var1 and $var2"
+    tasks:
+      - name: Set multiple environment variables for a bash command
+        shell: "{{ custom_command }}"
