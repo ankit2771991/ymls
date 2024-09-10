@@ -1,0 +1,23 @@
+answer: |-
+  - name: Test if comments can be used in JSON
+    hosts: localhost
+    tasks:
+      - name: Set a variable with a value
+        set_fact:
+          custom_value: "{{ custom_param | default('This is a custom value') }}"
+      
+      - name: Debug the custom value
+        debug:
+          msg: "Custom value is {{ custom_value }}"
+        
+      - name: Display a JSON object
+        debug:
+          msg: |
+            {
+              "key1": "value1",
+              "key2": "value2",
+              "custom_key": "{{ custom_value }}"
+            }
+    
+    vars:
+      custom_param: "{{ user_input | default('Default user input') }}"
