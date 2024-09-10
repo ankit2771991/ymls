@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: How to scroll up/down on the console of a Linux VM
     hosts: localhost
