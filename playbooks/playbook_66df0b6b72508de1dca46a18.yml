@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Create a flat list from a list of lists
     hosts: localhost
