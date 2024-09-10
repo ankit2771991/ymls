@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Check if Windows containers can be hosted on Linux
     hosts: localhost
