@@ -1,0 +1,13 @@
+answer: |-
+  ---
+  - name: Gzip all files in all sub-directories into one compressed file in bash
+    hosts: localhost
+    vars:
+      target_dir: "/path/to/directory"
+      compressed_file: "compressed_files.tar.gz"
+    tasks:
+      - name: Create a compressed file of all files in sub-directories
+        command: "find {{ target_dir }} -type f -exec tar -rvf {{ compressed_file }} {} +"
+      
+      - name: Compress the tar file
+        command: "gzip {{ compressed_file }}"
