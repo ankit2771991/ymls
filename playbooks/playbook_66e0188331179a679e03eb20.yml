@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: List one filename per output line in Linux
     hosts: localhost
