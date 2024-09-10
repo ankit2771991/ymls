@@ -1,4 +1,4 @@
-answer: |-
+|-
   - name: Restart a process if it dies
     hosts: localhost
     vars:
