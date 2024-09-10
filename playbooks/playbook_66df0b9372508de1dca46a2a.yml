@@ -1,4 +1,4 @@
-answer: |-
+|-
   - hosts: localhost
     vars:
       global_variable: "Hello World"
