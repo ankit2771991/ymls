@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: What is the difference between arm64 and armhf?
     hosts: localhost
