@@ -1,0 +1,9 @@
+answer: |-
+  ---
+  - hosts: localhost
+    tasks:
+      - name: Execute a command without keeping it in history
+        shell: "{{ command }}"
+        no_log: true
+        vars:
+          command: "ls -l"
