@@ -1,0 +1,17 @@
+answer: |-
+  ---
+  - name: Sort array of objects by string property value
+    hosts: localhost
+    gather_facts: false
+    vars:
+      array_of_objects:
+        - { name: "John", age: 30 }
+        - { name: "Alice", age: 25 }
+        - { name: "Bob", age: 35 }
+      string_property: "name"
+    tasks:
+      - name: Sort array of objects by string property value
+        set_fact:
+          sorted_array_of_objects: "{{ array_of_objects | sort(attribute=string_property) }}"
+      - debug:
+          var: sorted_array_of_objects
