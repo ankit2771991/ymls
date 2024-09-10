@@ -1,0 +1,14 @@
+answer: |-
+  ---
+  - name: Is there a way to 'uniq' by column?
+    hosts: localhost
+    gather_facts: false
+
+    tasks:
+      - name: Display custom value from extra vars
+        debug:
+          msg: "{{ custom_value }}"
+        when: custom_value is defined
+
+    vars:
+      custom_value: "{{ ansible_user }}"
