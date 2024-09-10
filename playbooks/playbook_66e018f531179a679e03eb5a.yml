@@ -1,0 +1,17 @@
+answer: |-
+  ---
+
+  - name: Diff to Output Only the File Names
+    hosts: localhost
+    vars:
+      file1: "/path/to/first/file"
+      file2: "/path/to/second/file"
+    
+    tasks:
+      - name: Run diff command to compare files
+        shell: diff {{ file1 }} {{ file2 }} | awk '{print $2}'
+        register: diff_output
+        
+      - name: Print only the file names
+        debug:
+          var: diff_output.stdout_lines
