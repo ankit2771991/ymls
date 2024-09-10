@@ -1,0 +1,9 @@
+answer: |-
+  ---
+  - name: Sort a file in-place
+    hosts: localhost
+    tasks:
+      - name: Sort the file in-place
+        shell: "sort -o {{ file_path }} {{ file_path }}"
+        vars:
+          file_path: "/path/to/file/filename.txt"
