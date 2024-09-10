@@ -1,0 +1,24 @@
+answer: |-
+  ---
+  - name: Test a weekly cron job
+    hosts: localhost
+    gather_facts: false
+    vars:
+      cron_job_command: /path/to/your/script.sh
+      cron_job_schedule: "0 0 * * 0"
+    
+    tasks:
+      - name: Add weekly cron job
+        cron:
+          name: "Weekly Cron Job"
+          minute: "{{ cron_job_schedule.split()[0] }}"
+          hour: "{{ cron_job_schedule.split()[1] }}"
+          day: "{{ cron_job_schedule.split()[2] }}"
+          month: "{{ cron_job_schedule.split()[3] }}"
+          weekday: "{{ cron_job_schedule.split()[4] }}"
+          job: "{{ cron_job_command }}"
+        register: cron_result
+
+      - name: Display cron job status
+        debug:
+          msg: "Cron job was {{ 'added' if cron_result.changed else 'skipped' }}"
