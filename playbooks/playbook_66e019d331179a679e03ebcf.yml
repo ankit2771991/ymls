@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: What's the difference between .so, .la and .a library files?
     hosts: localhost
