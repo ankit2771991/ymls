@@ -1,4 +1,4 @@
-answer: |-
+|-
   ---
   - name: Set custom date format in JSON
     hosts: localhost
