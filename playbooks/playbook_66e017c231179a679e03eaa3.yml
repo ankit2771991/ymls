@@ -1,0 +1,13 @@
+answer: |-
+  ---
+  - hosts: localhost
+    tasks:
+      - name: Display tabular file such as CSV from command line
+        command: cat {{ file_path }}
+        register: file_contents
+
+      - debug:
+          msg: "{{ file_contents.stdout_lines }}"
+
+    vars:
+      file_path: "/path/to/your/tabular/file.csv"
