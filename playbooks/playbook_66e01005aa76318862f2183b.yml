@@ -1,4 +1,4 @@
-answer: |-
+|-
   - name: Execute bash script with "cat << EOF" command
     hosts: localhost
     tasks:
