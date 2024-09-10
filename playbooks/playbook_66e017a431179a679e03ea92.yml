@@ -1,0 +1,8 @@
+answer: |-
+  ---
+  - name: Define the meaning of "rc" in dot files
+    hosts: localhost
+    tasks:
+      - name: Display the meaning of "rc" in dot files
+        debug:
+          msg: "The 'rc' in dot files stands for 'run commands' and are used to define settings or configurations for a particular program or script."
