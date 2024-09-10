@@ -1,0 +1,9 @@
+answer: |-
+  ---
+
+  - name: Check if there is a C++ gdb GUI available for Linux
+    hosts: localhost
+    tasks:
+      - name: Print message with custom value
+        debug:
+          msg: "The custom value is {{ custom_value }}"
