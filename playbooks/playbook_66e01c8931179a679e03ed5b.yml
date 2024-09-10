@@ -1,0 +1,19 @@
+answer: |-
+  ---
+  - name: Monitor thread count of a process on Linux
+    hosts: localhost
+    gather_facts: false
+
+    vars:
+      process_name: "{{ default_process_name }}"
+      threshold: "{{ default_threshold }}"
+
+    tasks:
+      - name: Get thread count of the specified process
+        shell: ps huH p $(pgrep {{ process_name }}) | wc -l
+        register: thread_count
+        
+      - name: Check if thread count exceeds threshold
+        fail:
+          msg: "Thread count of process {{ process_name }} exceeds threshold ({{ threshold }})"
+        when: thread_count.stdout | int > threshold
