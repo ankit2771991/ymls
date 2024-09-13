@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: How can I overcome "datetime.datetime not JSON serializable"??
     hosts: localhost
     gather_facts: false

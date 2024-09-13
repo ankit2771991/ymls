@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Define the meaning of "rc" in dot files
     hosts: localhost
     tasks:

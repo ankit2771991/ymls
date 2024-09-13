@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - hosts: localhost
     vars:
       directory_path: "/path/to/directory"

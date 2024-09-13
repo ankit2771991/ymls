@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Finding which process was killed by Linux OOM killer
     hosts: localhost
     vars:

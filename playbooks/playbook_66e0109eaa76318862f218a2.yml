@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - hosts: localhost
     vars:
       shell_path1: "/usr/bin/env"

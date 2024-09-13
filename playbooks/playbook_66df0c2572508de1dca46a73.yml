@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Apply CSS to half of a character
     hosts: localhost
     vars:

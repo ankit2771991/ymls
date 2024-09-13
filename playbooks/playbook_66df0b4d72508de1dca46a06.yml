@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Ansible playbook for understanding metaclasses in Python
     hosts: localhost
     vars:

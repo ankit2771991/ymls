@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Link to a specific glibc version
     hosts: localhost
     become: true

@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Get current time in seconds since the Epoch on Linux, Bash
     hosts: localhost
     tasks:

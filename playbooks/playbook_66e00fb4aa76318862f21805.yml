@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Test JavaScript comparison
     hosts: localhost
     vars_prompt:

@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Set permissions for a folder and its subfolders/files
     hosts: localhost
     tasks:

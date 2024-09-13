@@ -1,5 +1,4 @@
-|-
-  - hosts: localhost
+- hosts: localhost
     vars:
       html_color: "{{ html_color | default('chucknorris') }}"
     

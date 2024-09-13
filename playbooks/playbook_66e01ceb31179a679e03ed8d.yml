@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Find and copy files
     hosts: localhost
     tasks:

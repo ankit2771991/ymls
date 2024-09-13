@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Keep SSH session alive
     hosts: all
     gather_facts: false

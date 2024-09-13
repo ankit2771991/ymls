@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Find out line-endings in a text file
     hosts: localhost
     gather_facts: false

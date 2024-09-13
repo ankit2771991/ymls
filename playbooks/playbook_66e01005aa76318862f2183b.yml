@@ -1,5 +1,4 @@
-|-
-  - name: Execute bash script with "cat << EOF" command
+- name: Execute bash script with "cat << EOF" command
     hosts: localhost
     tasks:
       - name: Run bash script

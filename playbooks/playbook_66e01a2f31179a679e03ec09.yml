@@ -1,5 +1,4 @@
-|-
-  - hosts: localhost
+- hosts: localhost
     tasks:
       - name: Add a cron job to run every 30 minutes
         cron:

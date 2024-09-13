@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Create a hex dump of file containing only the hex characters without spaces
     hosts: localhost
     vars:

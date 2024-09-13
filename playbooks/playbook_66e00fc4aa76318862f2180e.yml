@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Convert the first letter of a string to uppercase in JavaScript
     hosts: localhost
     tasks:

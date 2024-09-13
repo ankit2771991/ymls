@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Recursively find files based on wildcard matching
     hosts: localhost
     gather_facts: false

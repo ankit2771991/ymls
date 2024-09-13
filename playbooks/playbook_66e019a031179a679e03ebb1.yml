@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Check the operating system in Python
     hosts: localhost
     vars:

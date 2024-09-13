@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: How should strace be used
     hosts: localhost
     tasks:

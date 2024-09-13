@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Copy file without overwriting
     hosts: localhost
     gather_facts: false

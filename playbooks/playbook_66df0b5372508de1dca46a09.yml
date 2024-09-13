@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Check if a file exists without exceptions
     hosts: localhost
     gather_facts: false

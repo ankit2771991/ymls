@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - hosts: all
     tasks:
       - name: Kill detached screen session

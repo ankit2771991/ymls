@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Find Java SDK location in Linux
     hosts: localhost
     gather_facts: false

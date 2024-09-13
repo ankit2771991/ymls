@@ -1,5 +1,4 @@
-|-
-  ---
+---
 
   - name: Configure Java memory settings
     hosts: all

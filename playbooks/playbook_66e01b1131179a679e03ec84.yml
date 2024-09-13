@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Omitting the first line from any Linux command output
     hosts: all
     tasks:

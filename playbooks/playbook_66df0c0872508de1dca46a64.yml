@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Change HTML input's placeholder color with CSS
     hosts: localhost
     vars:

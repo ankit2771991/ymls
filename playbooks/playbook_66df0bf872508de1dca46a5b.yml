@@ -1,5 +1,4 @@
-|-
-  - name: Check if checkbox is checked using jQuery
+- name: Check if checkbox is checked using jQuery
     hosts: localhost
     tasks:
       - name: Set custom variables

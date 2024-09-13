@@ -1,5 +1,4 @@
-|-
-  - hosts: localhost
+- hosts: localhost
     vars:
       global_variable: "Hello World"
       

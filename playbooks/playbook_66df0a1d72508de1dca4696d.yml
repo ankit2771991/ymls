@@ -1,5 +1,4 @@
-|-
-  - hosts: all
+- hosts: all
     vars:
       output_file_path: "/path/to/output_file.txt"
     tasks:

@@ -1,5 +1,4 @@
-|-
-  - name: Output coloured text to a Linux terminal
+- name: Output coloured text to a Linux terminal
     hosts: localhost
     become: false
     tasks:

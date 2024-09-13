@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - hosts: localhost
     tasks:
       - name: Loop over directories in Linux

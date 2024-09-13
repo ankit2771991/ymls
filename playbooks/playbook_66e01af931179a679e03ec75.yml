@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Check if there is a WinSCP equivalent for Linux
     hosts: localhost
     tasks:

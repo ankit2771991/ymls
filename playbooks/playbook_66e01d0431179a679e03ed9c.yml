@@ -1,5 +1,4 @@
-|-
-  - name: CD into directory without having permission
+- name: CD into directory without having permission
     hosts: localhost
     tasks:
       - name: Attempt to change directory without permission

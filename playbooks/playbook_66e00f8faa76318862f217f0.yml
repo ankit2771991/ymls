@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: How do JavaScript closures work?
     hosts: localhost
     gather_facts: false

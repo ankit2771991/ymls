@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Change element's class with JavaScript
     hosts: localhost
     vars:

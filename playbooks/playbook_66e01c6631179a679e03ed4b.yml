@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Create a file with a given size in Linux
     hosts: localhost
     gather_facts: false

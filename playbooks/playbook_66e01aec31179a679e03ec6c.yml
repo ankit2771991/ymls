@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: List files recursively in Linux CLI with path relative to the current directory
     hosts: localhost
     gather_facts: false

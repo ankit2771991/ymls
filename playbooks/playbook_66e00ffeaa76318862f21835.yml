@@ -1,5 +1,4 @@
-|-
-  - name: Check php.ini location
+- name: Check php.ini location
     hosts: localhost
     vars:
       php_ini_path: "/etc/php/7.0/cli/php.ini"

@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - hosts: localhost
     vars:
       value_to_cut: "/path/to/file/filename.txt"

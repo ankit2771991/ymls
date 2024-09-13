@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: "Least Astonishment and the Mutable Default Argument playbook"
     hosts: localhost
     vars:

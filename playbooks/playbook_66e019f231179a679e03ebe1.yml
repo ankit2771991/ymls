@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - hosts: localhost
     vars:
       git_repo_url: "https://example.com/repo.git"

@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Automatically redirect HTTP to HTTPS on Apache servers
     hosts: apache_servers
     vars:

@@ -1,5 +1,4 @@
-|-
-  ---
+---
 
   - name: Check if there is a C++ gdb GUI available for Linux
     hosts: localhost

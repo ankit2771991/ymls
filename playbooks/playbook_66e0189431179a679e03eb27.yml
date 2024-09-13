@@ -1,5 +1,4 @@
-|-
-  - name: Update a Python package
+- name: Update a Python package
     hosts: localhost
     tasks:
       - name: Update Python package

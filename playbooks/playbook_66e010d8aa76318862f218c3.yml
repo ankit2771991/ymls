@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Create a large file on a Linux system
     hosts: localhost
     gather_facts: false

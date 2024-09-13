@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Check for "goto" statement in bash
     hosts: localhost
     tasks:

@@ -1,5 +1,4 @@
-|-
-  - hosts: localhost
+- hosts: localhost
     tasks:
       - name: Check if element is hidden in jQuery
         command: "echo 'Check if element is hidden in jQuery'"

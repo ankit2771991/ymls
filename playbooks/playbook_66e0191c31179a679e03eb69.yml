@@ -1,5 +1,4 @@
-|-
-  - name: Restart a process if it dies
+- name: Restart a process if it dies
     hosts: localhost
     vars:
       process_name: "my_process"

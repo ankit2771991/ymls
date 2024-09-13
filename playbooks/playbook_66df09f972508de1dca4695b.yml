@@ -1,5 +1,4 @@
-|-
-  - name: Recursively grep all directories and subdirectories
+- name: Recursively grep all directories and subdirectories
     hosts: localhost
     gather_facts: false
       

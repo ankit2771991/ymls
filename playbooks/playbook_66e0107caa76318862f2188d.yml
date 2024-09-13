@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - hosts: all
     tasks:
       - name: Change permissions of a folder and all contents

@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: How do I turn a C# object into a JSON string in .NET?
     hosts: localhost
     gather_facts: false

@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Difference between __str__ and __repr__?
     hosts: localhost
     vars:

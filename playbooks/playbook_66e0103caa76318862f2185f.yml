@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Comparison of SO_REUSEADDR and SO_REUSEPORT
     hosts: localhost
     become: true

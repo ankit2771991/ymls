@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Is there a way to 'uniq' by column?
     hosts: localhost
     gather_facts: false

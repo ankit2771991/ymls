@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Initialize Linux machine
     hosts: localhost
     tasks:

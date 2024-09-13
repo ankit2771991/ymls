@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Get size of files and directories present in a particular folder
     hosts: localhost
     gather_facts: false

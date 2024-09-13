@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Display error message
     hosts: all
     vars:

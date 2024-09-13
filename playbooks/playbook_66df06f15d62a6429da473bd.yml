@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Change the output color of echo in Linux
     hosts: localhost
     gather_facts: false

@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Recursively counting files in a Linux directory
     hosts: localhost
     gather_facts: false

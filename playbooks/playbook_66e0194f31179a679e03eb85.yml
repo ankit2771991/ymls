@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Find files in current and subdirectories
     hosts: localhost
     tasks:

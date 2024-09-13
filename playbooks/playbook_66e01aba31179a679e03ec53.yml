@@ -1,5 +1,4 @@
-|-
-  - hosts: localhost
+- hosts: localhost
     tasks:
       - name: Append line to file if not already present
         lineinfile:

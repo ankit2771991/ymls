@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Understanding the yield keyword in Python
     hosts: localhost
     gather_facts: false

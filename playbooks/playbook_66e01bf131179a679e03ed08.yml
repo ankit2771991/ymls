@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Use cat command to write text to file
     hosts: localhost
     tasks:

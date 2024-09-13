@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Why does the C preprocessor interpret the word "linux" as the constant "1"?
     hosts: localhost
     vars:

@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - hosts: localhost
     tasks:
       - name: Run command and store output with line breaks in a variable

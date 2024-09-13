@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Create a file in Linux from terminal window
     hosts: localhost
     tasks:

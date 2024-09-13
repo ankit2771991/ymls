@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Close specific port on Linux
     hosts: all
     vars:

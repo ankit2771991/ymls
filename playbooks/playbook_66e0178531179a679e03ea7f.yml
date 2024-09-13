@@ -1,5 +1,4 @@
-|-
-  - name: Run sed command with -i option
+- name: Run sed command with -i option
     hosts: localhost
     tasks:
       - name: Run sed command with -i option

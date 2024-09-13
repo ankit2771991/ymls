@@ -1,5 +1,4 @@
-|-
-  - name: Disable browser autocomplete on web form field / input tags
+- name: Disable browser autocomplete on web form field / input tags
     hosts: localhost
     tasks:
       - name: Update HTML files with autocomplete attribute

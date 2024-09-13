@@ -1,5 +1,4 @@
-|-
-  - hosts: all
+- hosts: all
     become: true
     vars:
       ps_command: "{{ ps_command | default('ps aux') }}"

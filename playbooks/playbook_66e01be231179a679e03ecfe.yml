@@ -1,5 +1,4 @@
-|-
-  - name: Permanently export a variable in Linux
+- name: Permanently export a variable in Linux
     hosts: localhost
     tasks:
       - name: Add custom variable to bashrc file

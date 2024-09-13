@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Vertically align text next to an image
     hosts: localhost
     vars:

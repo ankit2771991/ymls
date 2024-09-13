@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Write standard error to a file using "tee" with a pipe
     hosts: localhost
     tasks:

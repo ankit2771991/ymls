@@ -1,5 +1,4 @@
-|-
-  - hosts: localhost
+- hosts: localhost
     gather_facts: no
     tasks:
       - name: Get full absolute path of a symlink

@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - hosts: localhost
     vars:
       var1: custom_value_1

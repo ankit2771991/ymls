@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Restarting cron after changing crontab file
     hosts: localhost
     gather_facts: no

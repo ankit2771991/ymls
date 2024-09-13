@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - hosts: localhost
     tasks:
       - name: Add default include path for GCC

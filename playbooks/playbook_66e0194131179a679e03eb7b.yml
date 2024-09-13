@@ -1,5 +1,4 @@
-|-
-  - name: Send a file as an email attachment using Linux command line
+- name: Send a file as an email attachment using Linux command line
     hosts: localhost
     gather_facts: false
     vars:

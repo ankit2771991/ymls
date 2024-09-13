@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Setting environment variables for crontab
     hosts: localhost
     become: true

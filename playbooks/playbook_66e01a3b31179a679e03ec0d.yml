@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Concatenate multiple lines of output to one line
     hosts: localhost
     tasks:

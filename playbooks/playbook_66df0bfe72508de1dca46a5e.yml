@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Horizontally center an element
     hosts: localhost
     tasks:

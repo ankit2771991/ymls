@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Display Linux's native GUI API
     hosts: localhost
     vars:

@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Check if errno is thread-safe
     hosts: localhost
     gather_facts: false

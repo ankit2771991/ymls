@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Parse JSON in JavaScript
     hosts: localhost
     tasks:

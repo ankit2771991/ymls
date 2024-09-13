@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Use double and single star/asterisk in parameters
     hosts: localhost
     vars:

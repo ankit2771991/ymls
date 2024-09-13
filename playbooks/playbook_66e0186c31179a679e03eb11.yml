@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Check if a file is empty in Bash
     hosts: localhost
     gather_facts: false

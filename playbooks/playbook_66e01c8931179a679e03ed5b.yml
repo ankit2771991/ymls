@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Monitor thread count of a process on Linux
     hosts: localhost
     gather_facts: false

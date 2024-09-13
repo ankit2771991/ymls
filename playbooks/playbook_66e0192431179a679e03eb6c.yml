@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Get process ID to kill a nohup process
     hosts: all
     tasks:

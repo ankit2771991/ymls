@@ -1,5 +1,4 @@
-|-
-  - name: Test if comments can be used in JSON
+- name: Test if comments can be used in JSON
     hosts: localhost
     tasks:
       - name: Set a variable with a value

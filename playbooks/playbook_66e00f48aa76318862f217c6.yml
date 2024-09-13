@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Get the size of the screen, current web page and browser window
     hosts: localhost
     gather_facts: false

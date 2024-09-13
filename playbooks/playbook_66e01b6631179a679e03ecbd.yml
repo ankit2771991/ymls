@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - hosts: all
     vars:
       custom_value_1: "default_value1"

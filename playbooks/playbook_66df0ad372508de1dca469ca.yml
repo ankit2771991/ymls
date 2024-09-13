@@ -1,5 +1,4 @@
-|-
-  - name: How to compare arrays in JavaScript
+- name: How to compare arrays in JavaScript
     hosts: localhost
     vars:
       array1: "{{ array1 }}"    

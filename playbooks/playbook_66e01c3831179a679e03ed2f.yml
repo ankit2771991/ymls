@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Compile C++ code with ifdef switch on Windows and Linux
     hosts: localhost
     vars:

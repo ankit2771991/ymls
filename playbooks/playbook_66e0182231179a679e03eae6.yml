@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Set GOPATH environment variable on Ubuntu
     hosts: localhost
     gather_facts: false

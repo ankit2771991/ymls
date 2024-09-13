@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Create an HTML button that acts like a link
     hosts: localhost
     gather_facts: false

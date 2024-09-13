@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - hosts: localhost
     tasks:
       - name: How slicing works in Python

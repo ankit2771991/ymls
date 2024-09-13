@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Create a file using open() in Python if it doesn't exist
     hosts: localhost
     gather_facts: no

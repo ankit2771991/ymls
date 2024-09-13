@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Ansible playbook to handle undefined reference to pthread_create in Linux
     hosts: localhost
     vars:

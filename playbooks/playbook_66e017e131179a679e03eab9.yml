@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - hosts: localhost
     vars:
       custom_value: "{{ custom_value | default('default_value') }}"

@@ -1,5 +1,4 @@
-|-
-  - name: Get line number while using grep
+- name: Get line number while using grep
     hosts: localhost
     tasks:
       - name: Use grep to find a specific line in a file

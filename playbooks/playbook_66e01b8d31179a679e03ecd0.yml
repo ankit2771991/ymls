@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Gzip all files in all sub-directories into one compressed file in bash
     hosts: localhost
     vars:

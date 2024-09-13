@@ -1,5 +1,4 @@
-|-
-  - name: What is __init__.py for? Playbook
+- name: What is __init__.py for? Playbook
     hosts: localhost
     tasks:
       - name: Print a message explaining the use of __init__.py

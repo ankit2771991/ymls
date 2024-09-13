@@ -1,5 +1,4 @@
-|-
-  - name: Iterating over dictionaries using 'for' loops
+- name: Iterating over dictionaries using 'for' loops
     hosts: localhost
     gather_facts: false
 

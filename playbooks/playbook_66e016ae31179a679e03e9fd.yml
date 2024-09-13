@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Join multiple lines of filenames into one with custom delimiter
     hosts: localhost
     gather_facts: false

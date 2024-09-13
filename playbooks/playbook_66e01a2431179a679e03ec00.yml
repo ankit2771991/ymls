@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - hosts: localhost
     tasks:
       - name: Execute a command without keeping it in history

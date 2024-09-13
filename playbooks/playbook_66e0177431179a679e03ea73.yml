@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Add a prefix string to the beginning of each line
     hosts: localhost
     gather_facts: false

@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Handle UnicodeDecodeError
     hosts: localhost
     vars_prompt:

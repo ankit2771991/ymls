@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: How to Free Inode Usage
     hosts: all
     vars:

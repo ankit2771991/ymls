@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Compare var functionName = function() {} vs function functionName() {}
     hosts: localhost
     gather_facts: false

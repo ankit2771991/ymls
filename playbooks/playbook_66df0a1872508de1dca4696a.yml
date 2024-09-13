@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Ansible Playbook to demonstrate the use of ':-!!' in C
     hosts: localhost
     vars:

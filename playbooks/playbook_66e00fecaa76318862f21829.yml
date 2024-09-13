@@ -1,5 +1,4 @@
-|-
-  - name: Explanation of the !! operator in JavaScript
+- name: Explanation of the !! operator in JavaScript
     hosts: localhost
     vars:
       custom_value: true # Replace with your desired custom value

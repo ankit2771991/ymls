@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Sort array of objects by string property value
     hosts: localhost
     gather_facts: false

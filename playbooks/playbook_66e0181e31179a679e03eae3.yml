@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Generate a SHA-256 hash from the Linux command line
     hosts: localhost
     tasks:

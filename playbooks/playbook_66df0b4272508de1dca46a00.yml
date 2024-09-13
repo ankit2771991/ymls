@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Ansible playbook to demonstrate if __name__ == "__main__"
     hosts: localhost
     tasks:

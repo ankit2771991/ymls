@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Thinking in AngularJS if I have a jQuery background
     hosts: localhost
     vars:

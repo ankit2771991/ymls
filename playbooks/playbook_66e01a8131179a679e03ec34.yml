@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Find and execute a shell function in Linux
     hosts: all
     gather_facts: false

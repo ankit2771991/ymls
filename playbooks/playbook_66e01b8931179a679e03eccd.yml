@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Finding current executable's path without /proc/self/exe
     hosts: localhost
     gather_facts: false

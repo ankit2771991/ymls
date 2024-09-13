@@ -1,5 +1,4 @@
-|-
-  - hosts: localhost
+- hosts: localhost
     vars:
       source_file: "{{ source_file | default('/path/to/source/file') }}"
       destination_file: "{{ destination_file | default('/path/to/destination/file') }}"

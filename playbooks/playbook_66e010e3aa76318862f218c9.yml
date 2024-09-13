@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: "Keep environment variables when using sudo"
     hosts: all
     become: yes

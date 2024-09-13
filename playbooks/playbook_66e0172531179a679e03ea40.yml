@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - hosts: all
     vars:
       rss_value: "{{ rss_value | default(1024) }}"

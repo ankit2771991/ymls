@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Define an alias in fish shell
     hosts: localhost
     tasks:

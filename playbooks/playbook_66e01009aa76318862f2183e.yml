@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Get current date and time in the terminal
     hosts: localhost
     tasks:

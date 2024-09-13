@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Set $PATH permanently on Linux/Unix
     hosts: all
     vars:

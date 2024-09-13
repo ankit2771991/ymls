@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Get Docker container information from within the container
     hosts: all
     tasks:

@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Display the difference between "let" and "var"
     hosts: localhost
     tasks:

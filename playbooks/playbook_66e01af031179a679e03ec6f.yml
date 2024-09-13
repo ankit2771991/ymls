@@ -1,5 +1,4 @@
-|-
-  - name: Change permissions recursively
+- name: Change permissions recursively
     hosts: all
     become: true
     vars:

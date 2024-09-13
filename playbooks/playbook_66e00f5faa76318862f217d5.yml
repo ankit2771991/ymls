@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: RegEx match open tags except XHTML self-contained tags
     hosts: localhost
     vars:

@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: C fopen vs open playbook
     hosts: localhost
     gather_facts: false

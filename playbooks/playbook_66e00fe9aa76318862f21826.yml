@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: How to round to at most 2 decimal places, if necessary
     hosts: localhost
     vars:

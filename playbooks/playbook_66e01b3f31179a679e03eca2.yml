@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Tar archiving that takes input from a list of files
     hosts: localhost
     vars:

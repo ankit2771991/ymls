@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Are multi-line strings allowed in JSON?
     hosts: localhost
     vars:

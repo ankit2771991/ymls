@@ -1,5 +1,4 @@
-|-
-  - name: How do I know the script file name in a Bash script?
+- name: How do I know the script file name in a Bash script?
     hosts: localhost
     tasks:
       - name: Print the script file name

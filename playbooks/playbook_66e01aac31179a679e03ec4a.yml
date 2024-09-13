@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Test a weekly cron job
     hosts: localhost
     gather_facts: false

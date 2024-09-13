@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - name: Why does ENOENT mean "No such file or directory"? Playbook
     hosts: localhost
     vars:

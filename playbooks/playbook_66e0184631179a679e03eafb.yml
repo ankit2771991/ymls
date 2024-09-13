@@ -1,5 +1,4 @@
-|-
-  - name: Get last dirname/filename in a file path argument in Bash
+- name: Get last dirname/filename in a file path argument in Bash
     hosts: localhost
     gather_facts: false
     vars:

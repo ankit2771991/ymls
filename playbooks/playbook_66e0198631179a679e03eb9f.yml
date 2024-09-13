@@ -1,5 +1,4 @@
-|-
-  ---
+---
   - hosts: localhost
     vars_prompt:
       - name: crontab_minute
