@@ -1,0 +1,22 @@
+---
+- name: Install and Start Nginx
+  hosts: webservers
+  become: yes  # Use sudo privileges
+  tasks:
+    - name: Install Nginx
+      ansible.builtin.yum:
+        name: nginx
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: Install Nginx (for Debian-based systems)
+      ansible.builtin.apt:
+        name: nginx
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Start and Enable Nginx Service
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: yes
