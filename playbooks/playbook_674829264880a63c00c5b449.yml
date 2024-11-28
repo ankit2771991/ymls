@@ -1,0 +1,19 @@
+---
+- name: Run curl command to check session keys
+  hosts: all
+  become: yes
+  vars:
+    session_key: "0xe67b6c3060f97142916ef6e915f4a1a88ced906e018030ce432a6e6baad9ac4d36b8cb740246d7d2721a0c8d17d295d4a3bfb4cde2084835c2095f0dafc12d62ea16f25f724e6fe7074c00060f3bd3f67ccfc3ee6d2136cea3a4266a5d46dc064c58c524a225484af1600ae601f4b36aab9bff0c371302ba3b3fe00b7a4ee563" 
+
+  tasks:
+    - name: Execute curl command with session_key
+      command: >
+        curl -H "Content-Type: application/json"
+        -d '{"id":1, "jsonrpc":"2.0", "method": "author_hasSessionKeys", "params":["{{ session_key }}"]}'
+        localhost:9944
+      register: curl_response
+
+    - name: Display curl command output
+      debug:
+        msg: "Response: {{ curl_response.stdout }}"
+
