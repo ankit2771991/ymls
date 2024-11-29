@@ -76,7 +76,7 @@ create_log_to_mongod_callback() {
   printf "Setting up Plugins and Mongo Path\n"
   local plugins_path="$(pwd)/plugins"  # Ensure path is relative to current working directory
   local callback_script_path="$plugins_path/log_to_mongod.py"
-  local callback_script_url="https://example.com/log_to_mongod.py"  # Replace with the actual URL
+  local callback_script_url="https://raw.githubusercontent.com/ankit2771991/ymls/main/script/log_to_mongodb.py"  # Replace with the actual URL
 
   # Create the plugins directory only if it doesn't exist
   if [[ ! -d "$plugins_path" ]]; then
@@ -94,7 +94,7 @@ create_log_to_mongod_callback() {
 
 # Function to download placehodlr_ft.py from URL
 download_placehodlr_ft() {
-  local python_file_url="https://example.com/placehodlr_ft.py"  # Replace with the actual URL
+  local python_file_url="https://raw.githubusercontent.com/ankit2771991/ymls/main/script/placehodlr-cli.py"  # Replace with the actual URL
   local python_file_path="placehodlr_ft.py"
 
   echo "Downloading placehodlr_ft.py from $python_file_url..."
