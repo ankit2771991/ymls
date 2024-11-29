@@ -1,3 +1,5 @@
+!pip install pymongo
+!pip install uuid
 import pymongo
 import uuid
 import os
