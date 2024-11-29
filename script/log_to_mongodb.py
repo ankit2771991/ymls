@@ -13,7 +13,7 @@ class CallbackModule(CallbackBase):
   def __init__(self):
     super().__init__()
     # Get MongoDB URI from environment variable
-    mongodb_uri = os.getenv("MONGODB_URI")
+    mongodb_uri = "mongodb+srv://test-db-user:i1jpdXlY7rLplhmf@cluster1.zlvr2lu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1" #os.getenv("MONGODB_URI")
     if not mongodb_uri:
       raise ValueError("MONGODB_URI environment variable not set or is empty.")
     self.mongo_client = pymongo.MongoClient(mongodb_uri)
