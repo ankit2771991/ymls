@@ -17,7 +17,7 @@ class CallbackModule(CallbackBase):
     if not mongodb_uri:
       raise ValueError("MONGODB_URI environment variable not set or is empty.")
     self.mongo_client = pymongo.MongoClient(mongodb_uri)
-    self.db = self.mongo_client["ansible_logs"]
+    self.db = self.mongo_client["availcc"]
     self.collection = self.db["logs"]
     self.execution_id = None
 
@@ -50,12 +50,13 @@ class CallbackModule(CallbackBase):
   def v2_playbook_on_play_start(self, play):
     try:
       extra_vars = play.get_variable_manager().extra_vars if play.get_variable_manager() else {}
-      answer_id = extra_vars.get("answerId", None)
+      scriptVersionId = extra_vars.get("scriptVersionId", None)
+      userId = extra_vars.get("userId", None)
 
-      if answer_id:
+      if scriptVersionId:
         self.collection.update_one(
           {"execution_id": self.execution_id},
-          {"$set": {"answerId": answer_id}}
+          {"$set": {"scriptVersionId": scriptVersionId,"userId":userId}}
         )
 
       self.collection.update_one(
