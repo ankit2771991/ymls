@@ -1,0 +1,46 @@
+---
+- name: Fast Upgrade of Avail Validator
+  hosts: all
+  become: true
+  vars:
+    binary_version: "v2.2.5.1"  # Set your desired binary version here
+
+  tasks:
+    - name: Stop Avail node
+      ansible.builtin.systemd:
+        name: avail.service
+        state: stopped
+
+    - name: Backup current Avail binary
+      ansible.builtin.command:
+        cmd: mv /root/avail/avail-node /root/avail/avail-node-backup
+      when: ansible_facts['os_family'] == "Debian"
+
+    - name: Determine the Ubuntu version format
+      ansible.builtin.set_fact:
+        ubuntu_version_formatted: "{{ ansible_distribution_major_version }}{{ ansible_distribution_version.split('.')[0][2:] }}{{ ansible_distribution_version.split('.')[1] }}"
+
+    - name: Set download URL based on formatted OS version
+      ansible.builtin.set_fact:
+        avail_download_url: "https://github.com/availproject/avail/releases/download/{{ binary_version }}/x86_64-ubuntu-{{ ubuntu_version_formatted }}-avail-node.tar.gz"
+
+    - name: Download the latest Avail binary
+      ansible.builtin.command:
+        cmd: wget {{ avail_download_url }} -P /root/avail
+      when: ansible_facts['os_family'] == "Debian"
+
+    - name: Extract the new Avail binary
+      ansible.builtin.command:
+        cmd: tar -xf /root/avail/x86_64-ubuntu-{{ ubuntu_version_formatted }}-avail-node.tar.gz -C /root/avail
+      when: ansible_facts['os_family'] == "Debian"
+
+    - name: Remove the tar.gz file
+      ansible.builtin.file:
+        path: "/root/avail/x86_64-ubuntu-{{ ubuntu_version_formatted }}-avail-node.tar.gz"
+        state: absent
+
+    - name: Start Avail node
+      ansible.builtin.systemd:
+        name: avail.service
+        state: started
+
