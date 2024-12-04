@@ -1,0 +1,16 @@
+---
+- name: Fetch and display the latest 100 lines of Avail service logs
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Fetch the latest 100 lines of Avail logs
+      command: journalctl -u avail.service -n 100 --no-pager
+      register: avail_logs
+
+    - name: Display logs in a formatted output
+      debug:
+        msg: |
+          Avail Service Logs:
+          {{ avail_logs.stdout_lines | join('\n') }}
+
