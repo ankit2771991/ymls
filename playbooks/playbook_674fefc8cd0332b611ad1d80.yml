@@ -1,0 +1,12 @@
+---
+- name: Manage Avail Service
+  hosts: all
+  become: true
+  vars:
+    service_state: "started"  # Set this to "started", "stopped", or "restarted"
+
+  tasks:
+    - name: Manage Avail node service
+      ansible.builtin.systemd:
+        name: avail.service
+        state: "{{ service_state }}"
