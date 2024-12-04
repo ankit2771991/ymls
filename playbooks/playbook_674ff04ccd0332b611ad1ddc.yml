@@ -1,0 +1,19 @@
+---
+- name: Generate session keys and restart Avail node
+  hosts: all
+  become: true
+  tasks:
+    - name: Generate session keys via curl
+      ansible.builtin.command:
+        cmd: curl -H "Content-Type: application/json" -d '{"id":1, "jsonrpc":"2.0", "method": "author_rotateKeys", "params":[]}' http://localhost:9944
+      register: curl_result
+      ignore_errors: yes
+
+    - name: Display curl command output
+      ansible.builtin.debug:
+        msg: "Curl command output: {{ curl_result.stdout }}"
+
+    - name: Restart Avail node service
+      ansible.builtin.systemd:
+        name: avail.service
+        state: restarted
