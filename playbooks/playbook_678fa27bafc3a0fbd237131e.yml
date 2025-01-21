@@ -1,0 +1,171 @@
+---
+- name: Setup and start Opera Node
+  hosts: all
+  become: true
+  become_user: root  # Ensures the tasks below run as root for user creation
+
+  vars:
+    username: "mahesh"  # Replace with desired username
+    go_version: "1.22.0"
+    genesis_url: "https://asset-testnet.assetchain.org/genesis_new.g"
+    opera_repo: "https://github.com/xendfinance/assetchain-blockchain"
+
+  tasks:
+    - name: Update and upgrade the system
+      apt:
+        update_cache: yes
+        upgrade: dist
+
+    - name: Add new user
+      user:
+        name: "{{ username }}"
+        home: "/home/{{ username }}"
+        shell: /bin/bash
+        groups: sudo
+        append: yes
+
+    - name: Install required tools
+      apt:
+        name:
+          - apt-transport-https
+          - libc-bin
+          - gcc
+          - git
+          - musl
+          - ca-certificates
+          - curl
+          - zsh
+          - make
+          - unzip
+          - build-essential
+          - gawk
+          - wget
+          - bison
+          - flex
+        state: present
+
+    - name: Install Go
+      block:
+        - name: Download Go
+          get_url:
+            url: "https://go.dev/dl/go{{ go_version }}.linux-amd64.tar.gz"
+            dest: "/tmp/go{{ go_version }}.linux-amd64.tar.gz"
+
+        - name: Extract Go
+          unarchive:
+            src: "/tmp/go{{ go_version }}.linux-amd64.tar.gz"
+            dest: /usr/local
+            remote_src: yes
+
+        - name: Set up Go environment variables for the user
+          copy:
+            dest: "/home/{{ username }}/.bashrc"
+            content: |
+              export GOROOT=/usr/local/go
+              export GOPATH=/home/{{ username }}/go
+              export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+            owner: "{{ username }}"
+            group: "{{ username }}"
+            mode: '0644'
+
+        - name: Source Go environment variables for the user
+          shell: source /home/{{ username }}/.bashrc
+          args:
+            executable: /bin/bash
+            creates: /home/{{ username }}/go
+
+    - name: Clone Opera repository
+      git:
+        repo: "{{ opera_repo }}"
+        dest: "/home/{{ username }}/assetchain-blockchain"
+        version: HEAD
+
+    - name: Adjust permissions for Opera repository
+      file:
+        path: "/home/{{ username }}/assetchain-blockchain"
+        state: directory
+        owner: "{{ username }}"
+        group: "{{ username }}"
+        recurse: yes
+
+    - name: Build Opera
+      block:
+        - name: Clean Go mod cache
+          command: go clean -modcache
+          args:
+            chdir: /home/{{ username }}/assetchain-blockchain
+          environment:
+            GOROOT: "/usr/local/go"
+            GOPATH: "/home/{{ username }}/go"
+            PATH: "/home/{{ username }}/go/bin:/usr/local/go/bin:/usr/bin:/bin"
+          become_user: "{{ username }}"
+
+        - name: Run Go mod tidy
+          command: go mod tidy
+          args:
+            chdir: /home/{{ username }}/assetchain-blockchain
+          environment:
+            GOROOT: "/usr/local/go"
+            GOPATH: "/home/{{ username }}/go"
+            PATH: "/home/{{ username }}/go/bin:/usr/local/go/bin:/usr/bin:/bin"
+          become_user: "{{ username }}"
+
+        - name: Set Go proxy
+          shell: |
+            export GOPROXY="https://proxy.golang.org"
+          args:
+            executable: /bin/bash
+          become_user: "{{ username }}"
+
+        - name: Create build directory
+          file:
+            path: "/home/{{ username }}/assetchain-blockchain/build"
+            state: directory
+            owner: "{{ username }}"
+            group: "{{ username }}"
+          become_user: "{{ username }}"
+
+        - name: Mark repository directory as safe
+          command: git config --global --add safe.directory /home/{{ username }}/assetchain-blockchain
+          args:
+            chdir: /home/{{ username }}/assetchain-blockchain
+          become_user: "{{ username }}"
+
+        - name: Build Opera binary
+          command: go build -v -o build/opera -buildvcs=false ./cmd/opera
+          args:
+            chdir: /home/{{ username }}/assetchain-blockchain
+          environment:
+            GOROOT: "/usr/local/go"
+            GOPATH: "/home/{{ username }}/go"
+            PATH: "/home/{{ username }}/go/bin:/usr/local/go/bin:/usr/bin:/bin"
+          become_user: "{{ username }}"
+
+    - name: Start Opera Node
+      block:
+        - name: Download genesis file
+          get_url:
+            url: "{{ genesis_url }}"
+            dest: "/home/{{ username }}/assetchain-blockchain/genesis.g"
+          become_user: "{{ username }}"
+
+        - name: Start Opera Node in background
+          shell: |
+            nohup ./opera --port 3000 --nat any --genesis.allowExperimental \
+              --genesis ../genesis.g --http --http.addr="0.0.0.0" --http.port=4000 \
+              --http.corsdomain=* --http.vhosts=* --allow-insecure-unlock --http.api=eth,debug,net,admin,web3,personal,txpool,ftm,dag \
+              --bootnodes="enode://27c5f90bd11d2e5df3901c8f893cfcbe0e62c0edfda88170eff43a87eb54c333a1ddce3dc6765eeeccfd37f01e614373e2d0449512735e4a96f528ea53e87ddf@34.147.162.187:3000" > /home/{{ username }}/opera.log 2>&1 &
+            echo $! > /home/{{ username }}/opera.pid  # Store the PID to track the process
+          args:
+            chdir: "/home/{{ username }}/assetchain-blockchain/build"
+          become_user: "{{ username }}"
+
+
+    - name: Adjust permissions for all files and directories
+      file:
+        path: "/home/{{ username }}"
+        state: directory
+        owner: "{{ username }}"
+        group: "{{ username }}"
+        recurse: yes
+
