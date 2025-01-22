@@ -1,0 +1,27 @@
+---
+- name: Deploy Mainnet Staking Pool
+  hosts: all
+  gather_facts: no
+  vars:
+    staking_pool_id: "{{ staking_pool_id | default('') }}"
+    owner_id: "{{ owner_id | default('') }}"
+    stake_public_key: "{{ stake_public_key | default('') }}"
+    numerator: "{{ numerator | default(10) }}"
+    denominator: "{{ denominator | default(100) }}"
+    amount: "{{ amount | default(30) }}"
+    gas: "{{ gas | default(300000000000000) }}"
+  tasks:
+    - name: Deploy the staking pool with near-cli
+      command: >
+        near call poolv1.near create_staking_pool '{
+            "staking_pool_id": "{{ staking_pool_id }}",
+            "owner_id": "{{ owner_id }}",
+            "stake_public_key": "{{ stake_public_key }}",
+            "reward_fee_fraction": {"numerator": {{ numerator }}, "denominator": {{ denominator }}}
+        }' --account_id {{ owner_id }} --amount {{ amount }} --gas {{ gas }}
+      register: deploy_output
+
+    - name: Display the output of the command
+      debug:
+        msg: "{{ deploy_output.stdout }}"
+
