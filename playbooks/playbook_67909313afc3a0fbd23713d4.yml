@@ -1,0 +1,64 @@
+---
+- name: Sanity check
+  hosts: all
+  become: true
+  vars:
+    username: "{{ username }}"  # Dynamically pass username
+    ipc_file: "/home/{{ username }}/.opera/opera.ipc"  
+    sfcc_js_url: "https://raw.githubusercontent.com/xendfinance/assetchain-blockchain/refs/heads/testnet/abi/sfcc.js"
+    sfcc_js_file: "/home/{{ username }}/sfcc.js"  
+  tasks:
+
+    - name: Download sfcc.js file
+      get_url:
+        url: "{{ sfcc_js_url }}"
+        dest: "{{ sfcc_js_file }}"
+        mode: '0644'
+      become_user: "{{ username }}"
+
+    - name: Run blockchain command using opera ipc and load the sfcc.js script
+      shell: |
+        echo 'loadScript("/home/{{ username }}/sfcc.js"); sfcc = web3.ftm.contract(abi).at("0xfc00face00000000000000000000000000000000"); sfcc.lastValidatorID()' | /home/{{ username }}/assetchain-blockchain/build/opera attach {{ ipc_file }} | tail -n 2 | head -n 1
+      args:
+        chdir: "/home/{{ username }}/assetchain-blockchain/build"  
+      become_user: "{{ username }}"
+      register: command_output
+
+    - name: Print the output of the first blockchain command
+      debug:
+        msg: "Output: {{ command_output.stdout }}"
+
+    - name: Extract addresses from UTC files
+      ansible.builtin.find:
+        paths: "/home/{{ username }}/.opera/keystore"
+        patterns: "UTC*"
+        file_type: file
+      register: found_files
+
+    - name: Fail if no UTC files are found
+      ansible.builtin.fail:
+        msg: "No UTC files found in the directory /home/{{ username }}/.opera/keystore."
+      when: found_files.matched == 0
+
+    - name: Extract address from UTC files
+      ansible.builtin.command:
+        cmd: "grep -oP '\"address\":\\s*\"\\K[^\"]+' {{ item.path }}"
+      loop: "{{ found_files.files }}"
+      register: extracted_addresses
+
+    - name: Get the first extracted address and add '0x' prefix
+      set_fact:
+        validator_address: "0x{{ extracted_addresses.results[0].stdout }}"
+
+    - name: Run the blockchain command with validator address
+      shell: |
+        echo 'loadScript("/home/{{ username }}/sfcc.js"); sfcc = web3.ftm.contract(abi).at("0xfc00face00000000000000000000000000000000"); sfcc.getValidatorID("{{ validator_address }}")' | /home/{{ username }}/assetchain-blockchain/build/opera attach {{ ipc_file }} | tail -n 2 | head -n 1
+      args:
+        chdir: "/home/{{ username }}/assetchain-blockchain/build"  
+      become_user: "{{ username }}"
+      register: second_command_output
+
+    - name: Print the output of the second blockchain command
+      debug:
+        msg: "Output: {{ second_command_output.stdout }}"
+
