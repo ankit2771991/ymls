@@ -1,0 +1,41 @@
+---
+- name: Setup Systemd Service for NEAR Node
+  hosts: all
+  become: yes
+  tasks:
+    - name: Ensure systemd service file directory exists
+      file:
+        path: /etc/systemd/system
+        state: directory
+        mode: 0755
+
+    - name: Create systemd service file for neard
+      copy:
+        dest: /etc/systemd/system/neard.service
+        content: |
+          [Unit]
+          Description=NEARd Daemon Service
+
+          [Service]
+          Type=simple
+          User=root
+          WorkingDirectory=/root/.near
+          ExecStart=/root/nearcore/target/release/neard run
+          Restart=on-failure
+          RestartSec=30
+          KillSignal=SIGINT
+          TimeoutStopSec=45
+          KillMode=mixed
+
+          [Install]
+          WantedBy=multi-user.target
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: Reload systemd to apply changes
+      command: systemctl daemon-reload
+
+    - name: Enable neard service
+      command: systemctl enable neard
+
