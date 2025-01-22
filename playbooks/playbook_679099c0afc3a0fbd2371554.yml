@@ -1,0 +1,100 @@
+---
+- name: Install Go
+  hosts: all
+  become: yes
+  vars:
+    go_download_url: "https://dl.google.com/go/go1.23.4.linux-amd64.tar.gz"
+  tasks:
+
+    - name: Install curl
+      package:
+        name: curl
+        state: present
+          
+    - name: Check if user provided a custom download URL
+      set_fact:
+        go_final_url: "{{ go_download_url }}"
+      when: go_download_url is defined and go_download_url != ""
+
+    - name: Use default Go download URL if none provided
+      set_fact:
+        go_final_url: "https://dl.google.com/go/go1.23.4.linux-amd64.tar.gz"
+      when: go_download_url is not defined or go_download_url == ""
+
+    - name: Download Go tarball
+      get_url:
+        url: "{{ go_final_url }}"
+        dest: /tmp/go_latest.tar.gz
+        mode: '0644'
+
+    - name: Remove existing Go installation
+      file:
+        path: /usr/local/go
+        state: absent
+
+    - name: Extract Go tarball to /usr/local
+      ansible.builtin.unarchive:
+        src: /tmp/go_latest.tar.gz
+        dest: /usr/local
+        remote_src: yes
+
+    - name: Add Go binary to PATH in /etc/profile
+      lineinfile:
+        path: /etc/profile
+        line: 'export PATH=$PATH:/usr/local/go/bin'
+        state: present
+
+    - name: Source /etc/profile
+      shell: source /etc/profile
+      args:
+        executable: /bin/bash
+
+    - name: Verify Go installation
+      shell: . /etc/profile && go version
+      register: go_version
+      failed_when: go_version.rc != 0
+      changed_when: false
+
+    - name: Display Go version
+      debug:
+        msg: "{{ go_version.stdout }}"
+
+
+    - name: Install Git
+      apt:
+        name: git
+        state: present
+
+    - name: Download and install Foundry script
+      shell: curl -L https://foundry.paradigm.xyz | bash
+      args:
+        executable: /bin/bash
+
+    - name: Add Foundry to the PATH environment variable
+      lineinfile:
+        path: /etc/profile
+        line: 'export PATH=$PATH:$HOME/.foundry/bin'
+        state: present
+
+    - name: Source /etc/profile to update PATH for the current session
+      shell: |
+        export PATH=$PATH:$HOME/.foundry/bin
+      args:
+        executable: /bin/bash
+
+    - name: Install Foundry using foundryup
+      shell: |
+        export PATH=$PATH:$HOME/.foundry/bin && foundryup
+      args:
+        executable: /bin/bash
+
+    - name: Verify Foundry installation
+      shell: |
+        export PATH=$PATH:$HOME/.foundry/bin && forge --version
+      register: foundry_version
+      failed_when: foundry_version.rc != 0
+      changed_when: false
+
+    - name: Display Foundry version
+      debug:
+        msg: "{{ foundry_version.stdout }}"
