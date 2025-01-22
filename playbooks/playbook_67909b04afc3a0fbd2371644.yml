@@ -1,0 +1,60 @@
+---
+- name: Configure BeaconKit
+  hosts: all
+  become: yes
+  vars:
+    moniker_name: "YOUR_NODE_MONIKER" 
+    wor_dir: "/root/beacon-kit" 
+  tasks:
+    - name: Download genesis.json
+      get_url:
+        url: "https://raw.githubusercontent.com/berachain/beacon-kit/main/testing/networks/80084/genesis.json"
+        dest: "{{ wor_dir }}/build/bin/config/beacond/config/genesis.json"
+
+    - name: Download kzg-trusted-setup.json
+      get_url:
+        url: "https://raw.githubusercontent.com/berachain/beacon-kit/main/testing/networks/80084/kzg-trusted-setup.json"
+        dest: "{{ wor_dir }}/build/bin/config/beacond/config/kzg-trusted-setup.json"
+
+    - name: Download app.toml
+      get_url:
+        url: "https://raw.githubusercontent.com/berachain/beacon-kit/main/testing/networks/80084/app.toml"
+        dest: "{{ wor_dir }}/build/bin/config/beacond/config/app.toml"
+
+    - name: Download config.toml
+      get_url:
+        url: "https://raw.githubusercontent.com/berachain/beacon-kit/main/testing/networks/80084/config.toml"
+        dest: "{{ wor_dir }}/build/bin/config/beacond/config/config.toml"
+
+    - name: Set the moniker in config.toml
+      lineinfile:
+        path: "{{ wor_dir }}/build/bin/config/beacond/config/config.toml"
+        regexp: '^moniker = ".*"'
+        line: 'moniker = "{{ moniker_name }}"'
+
+    - name: Set jwt.hex path in app.toml
+      lineinfile:
+        path: "{{ wor_dir }}/build/bin/config/beacond/config/app.toml"
+        regexp: '^jwt-secret-path = ".*"'
+        line: 'jwt-secret-path = "{{ wor_dir }}/build/bin/config/beacond/jwt.hex"'
+
+    - name: Fetch seeds
+      shell: |
+        curl -s https://raw.githubusercontent.com/berachain/beacon-kit/main/testing/networks/80084/cl-seeds.txt | tail -n +2 | tr '\n' ',' | sed 's/,$//'
+      register: seeds
+
+    - name: Update seeds in config.toml
+      lineinfile:
+        path: "{{ wor_dir }}/build/bin/config/beacond/config/config.toml"
+        regexp: '^seeds = ".*"'
+        line: 'seeds = "{{ seeds.stdout }}"'
+
+    - name: Update persistent_peers in config.toml
+      lineinfile:
+        path: "{{ wor_dir }}/build/bin/config/beacond/config/config.toml"
+        regexp: '^persistent_peers = ".*"'
+        line: 'persistent_peers = "{{ seeds.stdout }}"'
+
+    - name: Generate jwt.hex
+      command: "{{ wor_dir }}/build/bin/beacond jwt generate -o {{ wor_dir }}/build/bin/config/beacond/jwt.hex"
+
