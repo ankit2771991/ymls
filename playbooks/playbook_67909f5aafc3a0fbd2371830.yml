@@ -1,0 +1,25 @@
+---
+- name: Fetch Ethereum Block Number
+  hosts: all
+  become: no
+  vars:
+    rpc_endpoint: "http://localhost:8545"
+    rpc_method: "eth_blockNumber"
+    rpc_id: "{{ rpc_id | default(1) }}"
+  tasks:
+    - name: Fetch block number using curl
+      command: >
+        curl --location '{{ rpc_endpoint }}'
+        --header 'Content-Type: application/json'
+        --data '{
+          "jsonrpc": "2.0",
+          "method": "{{ rpc_method }}",
+          "params": [],
+          "id": {{ rpc_id }}
+        }'
+      register: curl_response
+
+    - name: Display the response
+      debug:
+        msg: "{{ curl_response.stdout }}"
+
