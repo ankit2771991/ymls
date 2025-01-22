@@ -1,0 +1,43 @@
+---
+- name: Extract addresses from keystore files
+  hosts: all
+  become: false
+  vars:
+    username: "{{ username }}"  
+
+  tasks:
+    - name: Check if keystore directory exists
+      ansible.builtin.stat:
+        path: "/home/{{ username }}/.opera/keystore"  
+      register: directory_status
+
+    - name: Fail if the keystore directory does not exist
+      ansible.builtin.fail:
+        msg: "The keystore directory /home/{{ username }}/.opera/keystore does not exist on the server."
+      when: not directory_status.stat.exists
+
+    - name: Find UTC files in the keystore directory
+      ansible.builtin.find:
+        paths: "/home/{{ username }}/.opera/keystore"
+        patterns: "UTC*"
+        file_type: file
+      register: found_files
+
+    - name: Fail if no UTC files are found
+      ansible.builtin.fail:
+        msg: "No UTC files found in the directory /home/{{ username }}/.opera/keystore."
+      when: found_files.matched == 0
+
+    - name: Extract addresses from UTC files
+      ansible.builtin.command:
+        cmd: "grep -oP '\"address\":\\s*\"\\K[^\"]+' {{ item.path }}"
+      loop: "{{ found_files.files }}"
+      register: extracted_addresses
+
+    - name: Display extracted addresses
+      ansible.builtin.debug:
+        msg: "Extracted address: {{ item.stdout }}"
+      loop: "{{ extracted_addresses.results }}"
+      loop_control:
+        label: "{{ item.item.path }}"
+
