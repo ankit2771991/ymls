@@ -1,0 +1,31 @@
+---
+- name: Initialize Beacon Node
+  hosts: all
+  become: yes
+  vars:
+    moniker_name: "DefaultNodeMoniker"
+    chain_id: "bartio-beacon-80084"
+    consensus_key_algo: "bls12_381"
+    beacon_home_dir: "/root/beacon-kit/build/bin/config/beacond"
+
+  tasks:
+    - name: Ensure configuration directories exist
+      file:
+        path: "{{ item }}"
+        state: directory
+        mode: '0755'
+      loop:
+        - /root/beacon-kit/build/bin/config
+        - /root/beacon-kit/build/bin/config/beacond
+        - /root/beacon-kit/build/bin/config/reth
+
+    - name: Initialize Beacon Node
+      shell: |
+        MONIKER_NAME={{ moniker_name }};
+        ./build/bin/beacond init $MONIKER_NAME \
+          --chain-id {{ chain_id }} \
+          --consensus-key-algo {{ consensus_key_algo }} \
+          --home {{ beacon_home_dir }};
+      args:
+        chdir: /root/beacon-kit
+
