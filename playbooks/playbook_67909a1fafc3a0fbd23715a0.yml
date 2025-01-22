@@ -1,0 +1,35 @@
+---
+- name: Clone and Build BeaconKit
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install git and make
+      apt:
+        name:
+          - git
+          - make
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Clone BeaconKit repository
+      git:
+        repo: https://github.com/berachain/beacon-kit
+        dest: /root/beacon-kit
+        update: no
+
+    - name: Build BeaconKit binary
+      shell: make build
+      args:
+        chdir: /root/beacon-kit
+
+    - name: Verify BeaconKit binary
+      shell: ./build/bin/beacond version
+      args:
+        chdir: /root/beacon-kit
+      register: beacon_version
+      failed_when: beacon_version.rc != 0
+
+    - name: Display BeaconKit version
+      debug:
+        msg: "{{ beacon_version.stdout }}"
+
