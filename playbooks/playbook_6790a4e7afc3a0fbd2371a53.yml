@@ -1,0 +1,27 @@
+---
+- name: Compare SHA1 checksums of local and remote config.json
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Calculate SHA1 checksum of local config.json
+      shell: sha1sum ~/.near/config.json
+      register: local_sha1
+
+    - name: Calculate SHA1 checksum of remote config.json
+      shell: |
+        curl -s https://s3-us-west-1.amazonaws.com/build.nearprotocol.com/nearcore-deploy/mainnet/validator/config.json | sha1sum
+      register: remote_sha1
+
+    - name: Display local config.json SHA1 checksum
+      debug:
+        msg: "Local SHA1 checksum: {{ local_sha1.stdout }}"
+
+    - name: Display remote config.json SHA1 checksum
+      debug:
+        msg: "Remote SHA1 checksum: {{ remote_sha1.stdout }}"
+
+    - name: Compare local and remote SHA1 checksums
+      debug:
+        msg: >
+          Checksums match: {{ local_sha1.stdout.split()[0] == remote_sha1.stdout.split()[0] }}
+
