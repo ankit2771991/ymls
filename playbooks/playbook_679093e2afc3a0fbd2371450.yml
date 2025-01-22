@@ -1,0 +1,92 @@
+---
+- name: Create Validator on Blockchain
+  hosts: all
+  become: true
+  vars:
+    username: "{{ username }}"  # Dynamically pass username
+    ipc_file: "/home/{{ username }}/.opera/opera.ipc"
+    sfcc_js_url: "https://raw.githubusercontent.com/xendfinance/assetchain-blockchain/refs/heads/testnet/abi/sfcc.js"
+    sfcc_js_file: "/home/{{ username }}/sfcc.js"
+    password_file: "/home/{{ username }}/password.txt"
+    validator_keystore_dir: "/home/{{ username }}/.opera/keystore/validator"
+  tasks:
+
+    - name: Download sfcc.js file
+      get_url:
+        url: "{{ sfcc_js_url }}"
+        dest: "{{ sfcc_js_file }}"
+        mode: '0644'
+      become_user: "{{ username }}"
+
+    - name: Extract password from password file
+      shell: "cat {{ password_file }}"
+      become_user: "{{ username }}"
+      register: password
+      no_log: true
+
+    - name: Locate the validator keystore file
+      ansible.builtin.find:
+        paths: "{{ validator_keystore_dir }}"
+        patterns: "*"
+        file_type: file
+      register: validator_keystore_files
+
+    - name: Fail if no validator keystore file is found
+      ansible.builtin.fail:
+        msg: "No keystore file found in the directory {{ validator_keystore_dir }}."
+      when: validator_keystore_files.matched == 0
+
+    - name: Extract pubkey from the validator keystore file
+      shell: "jq -r '.pubkey' {{ item.path }}"
+      loop: "{{ validator_keystore_files.files }}"
+      loop_control:
+        loop_var: item
+      register: pubkey_results
+
+    - name: Set pubkey fact
+      set_fact:
+        pubkey: "0x{{ pubkey_results.results[0].stdout }}"
+
+    - name: Debug pubkey for verification
+      debug:
+        msg: "Extracted pubkey: {{ pubkey }}"
+
+    - name: Extract addresses from UTC files
+      ansible.builtin.find:
+        paths: "/home/{{ username }}/.opera/keystore"
+        patterns: "UTC*"
+        file_type: file
+      register: found_files
+
+    - name: Fail if no UTC files are found
+      ansible.builtin.fail:
+        msg: "No UTC files found in the directory /home/{{ username }}/.opera/keystore."
+      when: found_files.matched == 0
+
+    - name: Extract address from UTC files
+      ansible.builtin.command:
+        cmd: "grep -oP '\"address\":\\s*\"\\K[^\"]+' {{ item.path }}"
+      loop: "{{ found_files.files }}"
+      register: extracted_addresses
+
+    - name: Get the first extracted address and add '0x' prefix
+      set_fact:
+        validator_address: "0x{{ extracted_addresses.results[0].stdout }}"
+
+    - name: Unlock validator account and create validator in one IPC call
+      shell: |
+        echo 'loadScript("/home/{{ username }}/sfcc.js");
+              sfcc = web3.ftm.contract(abi).at("0xfc00face00000000000000000000000000000000");
+              personal.unlockAccount("{{ validator_address }}", "{{ password.stdout }}", 60);
+              tx = sfcc.createValidator("{{ pubkey }}", {from: "{{ validator_address }}", value: web3.toWei("200000.0", "ftm")});
+              ftm.getTransactionReceipt(tx);' |
+          /home/{{ username }}/assetchain-blockchain/build/opera attach {{ ipc_file }}
+      args:
+        chdir: "/home/{{ username }}/assetchain-blockchain/build"
+      become_user: "{{ username }}"
+      register: create_validator_output
+
+        #    - name: Print the create validator transaction output
+        # debug:
+        # msg: "Validator Creation Transaction: {{ create_validator_output.stdout }}"
+
