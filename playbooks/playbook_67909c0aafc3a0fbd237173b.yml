@@ -1,0 +1,59 @@
+---
+- name: Create and configure Reth service
+  hosts: all
+  become: yes
+  vars:
+    wor_dir: "/root/beacon-kit"
+  tasks:
+    - name: Retrieve bootnode URLs
+      shell: |
+        bootnodes_url="https://raw.githubusercontent.com/berachain/beacon-kit/main/testing/networks/80084/el-bootnodes.txt"
+        curl -s "$bootnodes_url" | grep '^enode://' | tr '\n' ',' | sed 's/,$//'
+      register: bootnodes
+
+    - name: Create systemd service file for Reth
+      copy:
+        dest: /etc/systemd/system/reth.service
+        content: |
+          [Unit]
+          Description=Reth Client
+          After=network.target
+
+          [Service]
+          User=root
+          WorkingDirectory={{ wor_dir }}
+          ExecStart={{ wor_dir }}/reth node \
+            --authrpc.jwtsecret={{ wor_dir }}/build/bin/config/beacond/jwt.hex \
+            --chain={{ wor_dir }}/build/bin/config/reth/eth-genesis.json \
+            --datadir={{ wor_dir }}/build/bin/config/reth \
+            --port=30303 \
+            --http \
+            --http.addr=0.0.0.0 \
+            --http.api="eth,net,web3,txpool,debug" \
+            --http.port=8545 \
+            --http.corsdomain="*" \
+            --bootnodes={{ bootnodes.stdout }} \
+            --trusted-peers={{ bootnodes.stdout }} \
+            --ws \
+            --ws.addr=0.0.0.0 \
+            --ws.port=8546 \
+            --ws.origins="*" \
+            --authrpc.addr=0.0.0.0 \
+            --authrpc.port=8551 \
+            --log.file.directory={{ wor_dir }}/build/bin/config/reth/logs \
+            --metrics=0.0.0.0:6060
+          Restart=always
+          LimitNOFILE=65536
+
+          [Install]
+          WantedBy=multi-user.target
+
+    - name: Reload systemd daemon
+      command: systemctl daemon-reload
+
+    - name: Enable and start Reth service
+      systemd:
+        name: reth
+        enabled: yes
+        state: started
+
