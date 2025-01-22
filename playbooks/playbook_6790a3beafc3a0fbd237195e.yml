@@ -1,0 +1,41 @@
+---
+- name: Initialize NEAR validator node
+  hosts: all
+  become: yes
+  vars:
+    pool_id: ""
+    neard_binary_path: "/root/neard"
+
+  tasks:
+    - name: Initialize the node
+      shell: |
+        {{ neard_binary_path }} init --chain-id=mainnet --account-id="{{ pool_id }}.poolv1.near"
+      args:
+        executable: /bin/bash
+
+    - name: Verify that the validator_key.json file is created
+      stat:
+        path: /root/.near/validator_key.json
+      register: validator_key_file
+
+    - name: Debug validator key status
+      debug:
+        msg: "The validator_key.json {{ 'exists' if validator_key_file.stat.exists else 'does not exist' }} at /root/.near/validator_key.json"
+        
+    - name: Extract the validator's public key
+      shell: |
+        grep public_key /root/.near/validator_key.json
+      register: validator_public_key
+      when: validator_key_file.stat.exists
+
+    - name: Show validator public key
+      debug:
+        msg: "The validator public key is: {{ validator_public_key.stdout }}"
+      when: validator_key_file.stat.exists
+
+  post_tasks:
+    - name: Provide completion message
+      debug:
+        msg: "NEAR validator node initialized successfully. Backup the validator_key.json file for security."
+      when: validator_key_file.stat.exists
+
