@@ -1,0 +1,112 @@
+---
+- name: Install require packages
+  hosts: all
+  become: yes
+  tasks:
+
+    - name: Update and upgrade the Debian machine
+      apt:
+        update_cache: yes
+        upgrade: dist
+      ignore_errors: yes
+
+    - name: Install additional developer tools
+      apt:
+        name:
+          - coreutils
+          - git
+          - binutils-dev
+          - libcurl4-openssl-dev
+          - zlib1g-dev
+          - libdw-dev
+          - libiberty-dev
+          - cmake
+          - gcc
+          - g++
+          - python3
+          - docker.io
+          - protobuf-compiler
+          - libssl-dev
+          - pkg-config
+          - clang
+          - llvm
+          - cargo
+          - clang
+          - build-essential
+          - make
+        state: present
+      ignore_errors: yes
+
+    - name: Install Python pip
+      apt:
+        name: python3-pip
+        state: present
+      ignore_errors: yes
+
+    - name: Download and install NVM
+      shell: >
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+      args:
+        executable: /bin/bash
+      environment:
+        HOME: "{{ ansible_env.HOME }}"
+      changed_when: false
+
+    - name: Load NVM
+      shell: . {{ ansible_env.HOME }}/.nvm/nvm.sh
+      args:
+        executable: /bin/bash
+      changed_when: false
+
+    - name: Install Node.js version 18 with NVM
+      shell: >
+        . {{ ansible_env.HOME }}/.nvm/nvm.sh && nvm install 18
+      args:
+        executable: /bin/bash
+
+    - name: Set Node.js version 18 as default
+      shell: >
+        . {{ ansible_env.HOME }}/.nvm/nvm.sh && nvm alias default 18
+      args:
+        executable: /bin/bash
+#near-cli
+    - name: Locate nvm.sh dynamically
+      shell: |
+        find / -type f -name nvm.sh 2>/dev/null | grep .nvm | head -n 1
+      register: nvm_path
+
+    - name: Debug located nvm.sh path
+      debug:
+        msg: "Found nvm.sh at: {{ nvm_path.stdout }}"
+
+    - name: Install near-cli using located nvm.sh
+      shell: |
+        source {{ nvm_path.stdout }}
+        npm install -g near-cli
+      args:
+        executable: /bin/bash
+      when: nvm_path.stdout != ""
+#
+
+    - name: Download and install Rust and Cargo
+      shell: |
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+      args:
+        executable: /bin/bash
+      environment:
+        CARGO_HOME: "{{ ansible_env.HOME }}/.cargo"
+      register: rustup_installation
+
+    - name: Verify Rust installation
+      shell: |
+        source {{ ansible_env.HOME }}/.cargo/env && rustc --version
+      args:
+        executable: /bin/bash
+      register: rust_version_check
+      changed_when: rust_version_check.rc != 0
+
+    - name: Display Rust version
+      debug:
+        msg: "Rust version installed: {{ rust_version_check.stdout }}"
+
+
