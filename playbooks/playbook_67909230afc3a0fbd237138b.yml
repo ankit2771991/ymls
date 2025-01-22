@@ -1,0 +1,57 @@
+---
+- name: Create and Fund Validator Wallet
+  hosts: all
+  become: true
+  vars:
+    username: "mahesh"
+    password_file: "/home/{{ username }}/password.txt"
+    wallet_log: "/home/{{ username }}/validator_wallet.log"
+    validator_key_log: "/home/{{ username }}/validator_key.log"
+  tasks:
+
+    - name: Generate a random password
+      shell: |
+        openssl rand -base64 32 > {{ password_file }}
+      become_user: "{{ username }}"
+
+    - name: Ensure password file permissions
+      file:
+        path: "{{ password_file }}"
+        owner: "{{ username }}"
+        group: "{{ username }}"
+        mode: "0600"
+
+    - name: Create a new validator wallet
+      shell: |
+        ./opera account new --password {{ password_file }} > {{ wallet_log }} 2>&1
+      args:
+        chdir: "/home/{{ username }}/assetchain-blockchain/build"
+      become_user: "{{ username }}"
+
+    - name: Display wallet creation log path
+      debug:
+        msg: "Validator wallet creation log saved to {{ wallet_log }}. Ensure it is funded with at least 200,000 RWA."
+
+          #    - name: Pause for funding the wallet
+          #pause:
+          #prompt: "Fund the validator wallet with at least 200,000 RWA before proceeding. Press Enter to continue."
+
+    - name: Create a new validator key
+      shell: |
+        ./opera validator new --password {{ password_file }} > {{ validator_key_log }} 2>&1
+      args:
+        chdir: "/home/{{ username }}/assetchain-blockchain/build"
+      become_user: "{{ username }}"
+
+    - name: Display validator key creation log path
+      debug:
+        msg: "Validator key creation log saved to {{ validator_key_log }}."
+
+    - name: Display next steps
+      debug:
+        msg: |
+          Next steps:
+          1. Verify the wallet details in {{ wallet_log }}.
+          2. Confirm the validator key in {{ validator_key_log }}.
+          3. Continue with validator registration as per your protocol's instructions.
+
