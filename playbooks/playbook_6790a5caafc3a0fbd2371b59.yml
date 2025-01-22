@@ -1,0 +1,16 @@
+---
+- name: Fetch latest logs from neard service
+  hosts: all
+  become: yes
+  vars:
+    log_lines: "{{ log_lines | default(100) }}"
+  
+  tasks:
+    - name: Fetch the latest {{ log_lines }} lines from neard service logs
+      command: "journalctl -u neard -n {{ log_lines }} --no-pager"
+      register: neard_logs
+
+    - name: Show the fetched logs
+      debug:
+        msg: "{{ neard_logs.stdout }}"
+
