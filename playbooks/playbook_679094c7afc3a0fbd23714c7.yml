@@ -1,0 +1,124 @@
+---
+- name: Create and Enable Opera Validator Service with Dynamic ID and Pubkey
+  hosts: all
+  become: true
+  vars:
+    username: "{{ username }}"  # Dynamically pass username
+    ipc_file: "/home/{{ username }}/.opera/opera.ipc"
+    sfcc_js_url: "https://raw.githubusercontent.com/xendfinance/assetchain-blockchain/refs/heads/testnet/abi/sfcc.js"
+    sfcc_js_file: "/home/{{ username }}/sfcc.js"
+    opera_executable_path: "/home/{{ username }}/assetchain-blockchain/build/opera" 
+    validator_keystore_dir: "/home/{{ username }}/.opera/keystore/validator"
+    password_file: "/home/{{ username }}/password.txt"  # Path to the validator's password file
+    bootnodes: "enode://27c5f90bd11d2e5df3901c8f893cfcbe0e62c0edfda88170eff43a87eb54c333a1ddce3dc6765eeeccfd37f01e614373e2d0449512735e4a96f528ea53e87ddf@34.147.162.187:3000"
+    service_name: "opera-validator"
+
+  tasks:
+
+    - name: Download sfcc.js file
+      get_url:
+        url: "{{ sfcc_js_url }}"
+        dest: "{{ sfcc_js_file }}"
+        mode: '0644'
+      become_user: "{{ username }}"
+
+    - name: Locate the validator keystore file
+      ansible.builtin.find:
+        paths: "{{ validator_keystore_dir }}"
+        patterns: "*"
+        file_type: file
+      register: validator_keystore_files
+
+    - name: Fail if no validator keystore file is found
+      ansible.builtin.fail:
+        msg: "No keystore file found in the directory {{ validator_keystore_dir }}."
+      when: validator_keystore_files.matched == 0
+
+    - name: Extract pubkey from the validator keystore file
+      shell: "jq -r '.pubkey' {{ item.path }}"
+      loop: "{{ validator_keystore_files.files }}"
+      loop_control:
+        loop_var: item
+      register: pubkey_results
+
+    - name: Set pubkey fact
+      set_fact:
+        pubkey: "0x{{ pubkey_results.results[0].stdout }}"
+
+    - name: Debug pubkey for verification
+      debug:
+        msg: "Extracted pubkey: {{ pubkey }}"
+
+    - name: Extract addresses from UTC files
+      ansible.builtin.find:
+        paths: "/home/{{ username }}/.opera/keystore"
+        patterns: "UTC*"
+        file_type: file
+      register: found_files
+
+    - name: Fail if no UTC files are found
+      ansible.builtin.fail:
+        msg: "No UTC files found in the directory /home/{{ username }}/.opera/keystore."
+      when: found_files.matched == 0
+
+    - name: Extract address from UTC files
+      ansible.builtin.command:
+        cmd: "grep -oP '\"address\":\\s*\"\\K[^\"]+' {{ item.path }}"
+      loop: "{{ found_files.files }}"
+      register: extracted_addresses
+
+    - name: Get the first extracted address and add '0x' prefix
+      set_fact:
+        validator_address: "0x{{ extracted_addresses.results[0].stdout }}"
+
+    - name: Execute sfcc.getValidatorID command via IPC
+      shell: |
+        echo 'loadScript("/home/{{ username }}/sfcc.js");
+              sfcc = web3.ftm.contract(abi).at("0xfc00face00000000000000000000000000000000");
+              sfcc.getValidatorID("{{ validator_address }}");' |
+          /home/{{ username }}/assetchain-blockchain/build/opera attach {{ ipc_file }}
+      args:
+        chdir: "/home/{{ username }}/assetchain-blockchain/build"
+      become_user: "{{ username }}"
+      register: validator_id_output
+
+    - name: Extract numeric Validator ID from the command output
+      set_fact:
+        #extracted_validator_id: "{{ validator_id_output.stdout | regex_search('>\\s*(\\d+)\\n', '\\1') }}"
+        extracted_validator_id: "{{ validator_id_output.stdout | regex_search('>\\s*(\\d+)', '\\1') | first }}"
+    - name: Debug pubkey and validator ID for verification
+      debug:
+        msg:
+          - "Extracted Pubkey: {{ pubkey }}"
+          - "Extracted Validator ID: {{ extracted_validator_id }}"
+
+    - name: Create systemd service file for Opera Validator
+      ansible.builtin.template:
+        src: opera-validator.service.j2
+        dest: "/etc/systemd/system/{{ service_name }}.service"
+        mode: '0644'
+
+    - name: Reload systemd daemon
+      ansible.builtin.systemd:
+        daemon_reload: yes
+
+    - name: Kill opera process
+      shell: "ps aux | grep './opera' | grep -v 'grep' | awk '{print $2}' | xargs kill -9"
+      ignore_errors: yes          
+
+    - name: Enable the Opera Validator service
+      ansible.builtin.systemd:
+        name: "{{ service_name }}"
+        enabled: true
+
+    - name: Start the Opera Validator service
+      ansible.builtin.systemd:
+        name: "{{ service_name }}"
+        state: started
+
+    - name: Verify the Opera Validator service status
+      ansible.builtin.systemd:
+        name: "{{ service_name }}"
+        state: started
+        enabled: true
+
