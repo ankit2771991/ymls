@@ -1,0 +1,62 @@
+---
+- name: Build mainnet validator node daemon
+  hosts: all
+  become: yes
+  vars:
+    checkout_version: "2.4.0"
+    ansible_user: "root"
+
+  tasks:
+    - name: Ensure required packages are installed
+      package:
+        name:
+          - git
+          - make
+          - build-essential
+          - rustc   # Ensure rustc (rust compiler) is installed
+        state: present
+
+    - name: Clone the nearcore repository
+      git:
+        repo: https://github.com/near/nearcore.git
+        dest: /root/nearcore
+        clone: yes
+        update: no
+
+    - name: Check out the specified version
+      shell: |
+        cd /root/nearcore
+        git checkout {{ checkout_version }}
+      args:
+        executable: /bin/bash
+
+    - name: Source cargo environment
+      shell: |
+        source $HOME/.cargo/env
+        echo "Cargo sourced"
+      args:
+        executable: /bin/bash
+
+    - name: Build the neard binary
+      shell: |
+        source $HOME/.cargo/env
+        cd /root/nearcore
+        make neard
+      args:
+        executable: /bin/bash
+
+    - name: Verify the neard binary
+      stat:
+        path: /root/nearcore/target/release/neard
+      register: neard_binary
+
+    - name: Debug binary status
+      debug:
+        msg: "The neard binary {{ 'exists' if neard_binary.stat.exists else 'does not exist' }} at /root/nearcore/target/release/neard"
+
+  post_tasks:
+    - name: Provide completion message
+      debug:
+        msg: "Mainnet validator node daemon built successfully at /root/nearcore/target/release/neard"
+      when: neard_binary.stat.exists
+
