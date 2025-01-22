@@ -1,0 +1,13 @@
+---
+- name: Fetch public key from validator_key.json
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Get public_key from validator_key.json
+      command: grep public_key ~/.near/validator_key.json
+      register: public_key_output
+
+    - name: Display the public_key
+      debug:
+        msg: "{{ public_key_output.stdout }}"
+
