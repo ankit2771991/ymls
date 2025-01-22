@@ -1,0 +1,16 @@
+---
+- name: Fetch latest logs from a specified service
+  hosts: all
+  become: yes
+  vars:
+    log_lines: "{{ log_lines | default(100) }}"
+    service_name: "{{ service_name | default('reth') }}"  # Default to 'reth' if not provided
+
+  tasks:
+    - name: Fetch the latest {{ log_lines }} lines from {{ service_name }} service logs
+      command: "journalctl -u {{ service_name }} -n {{ log_lines }} --no-pager"
+      register: service_logs
+
+    - name: Show the fetched logs
+      debug:
+        msg: "{{ service_logs.stdout }}"
