@@ -1,0 +1,64 @@
+---
+- name: Get Validator ID from Blockchain and Extract Output
+  hosts: all
+  become: true
+  vars:
+    username: "{{ username }}"  # Dynamically pass username
+    ipc_file: "/home/{{ username }}/.opera/opera.ipc"
+    sfcc_js_url: "https://raw.githubusercontent.com/xendfinance/assetchain-blockchain/refs/heads/testnet/abi/sfcc.js"
+    sfcc_js_file: "/home/{{ username }}/sfcc.js"
+    keystore_dir: "/home/{{ username }}/.opera/keystore"
+  tasks:
+
+    - name: Download sfcc.js file
+      get_url:
+        url: "{{ sfcc_js_url }}"
+        dest: "{{ sfcc_js_file }}"
+        mode: '0644'
+      become_user: "{{ username }}"
+
+    - name: Locate the wallet keystore files
+      ansible.builtin.find:
+        paths: "{{ keystore_dir }}"
+        patterns: "UTC*"
+        file_type: file
+      register: keystore_files
+
+    - name: Fail if no keystore files are found
+      ansible.builtin.fail:
+        msg: "No keystore files found in the directory {{ keystore_dir }}."
+      when: keystore_files.matched == 0
+
+    - name: Extract wallet address from keystore file
+      ansible.builtin.command:
+        cmd: "grep -oP '\"address\":\\s*\"\\K[^\"]+' {{ item.path }}"
+      loop: "{{ keystore_files.files }}"
+      register: wallet_addresses
+
+    - name: Get the first extracted wallet address and add '0x' prefix
+      set_fact:
+        validator_wallet_address: "0x{{ wallet_addresses.results[0].stdout }}"
+
+    - name: Execute sfcc.getValidatorID command via IPC
+      shell: |
+        echo 'loadScript("/home/{{ username }}/sfcc.js");
+              sfcc = web3.ftm.contract(abi).at("0xfc00face00000000000000000000000000000000");
+              sfcc.getValidatorID("{{ validator_wallet_address }}");' |
+          /home/{{ username }}/assetchain-blockchain/build/opera attach {{ ipc_file }}
+      args:
+        chdir: "/home/{{ username }}/assetchain-blockchain/build"
+      become_user: "{{ username }}"
+      register: validator_id_output
+
+    - name: Debug the output of validator_id_output
+      debug:
+        msg: "{{ validator_id_output.stdout }}"
+
+    - name: Extract numeric result from the command output
+      set_fact:
+        extracted_number: "{{ validator_id_output.stdout | regex_search('>\\s*(\\d+)', '\\1') | first }}"
+
+    - name: Print the extracted Validator ID without brackets or quotes
+      debug:
+        msg: "Extracted Validator ID Number: {{ extracted_number }}"
+
