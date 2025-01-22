@@ -1,0 +1,56 @@
+---
+- name: Configure and Initiate Reth
+  hosts: all
+  become: yes
+  vars:
+    reth_version: "1.1.5"
+    reth_tar: "reth-v{{ reth_version }}-x86_64-unknown-linux-gnu.tar.gz"
+    reth_url: "https://github.com/paradigmxyz/reth/releases/download/v{{ reth_version }}/{{ reth_tar }}"
+    wor_dir: "/root/beacon-kit"
+  tasks:
+    - name: Create working directory
+      file:
+        path: "{{ wor_dir }}"
+        state: directory
+        mode: '0755'
+
+    - name: Download Reth binary tarball
+      get_url:
+        url: "{{ reth_url }}"
+        dest: "{{ wor_dir }}/{{ reth_tar }}"
+
+    - name: Extract Reth tarball
+      ansible.builtin.unarchive:
+        src: "{{ wor_dir }}/{{ reth_tar }}"
+        dest: "{{ wor_dir }}"
+        remote_src: yes
+
+    - name: Verify Reth installation
+      command: "{{ wor_dir }}/reth --version"
+      register: reth_version_output
+      failed_when: reth_version_output.rc != 0
+      changed_when: false
+
+
+    - name: Create destination directory for eth-genesis.json
+      file:
+        path: "{{ wor_dir }}/build/bin/config/reth"
+        state: directory
+        mode: '0755'
+
+    - name: Download eth-genesis.json
+      get_url:
+        url: "https://raw.githubusercontent.com/berachain/beacon-kit/main/testing/networks/80084/eth-genesis.json"
+        dest: "{{ wor_dir }}/build/bin/config/reth/eth-genesis.json"
+
+    - name: Generate Reth configuration files
+      command: >
+        {{ wor_dir }}/reth init
+        --datadir {{ wor_dir }}/build/bin/config/reth
+        --chain={{ wor_dir }}/build/bin/config/reth/eth-genesis.json
+      register: reth_init_output
+
+    - name: Display Reth init output
+      debug:
+        msg: "{{ reth_init_output.stdout }}"
+
