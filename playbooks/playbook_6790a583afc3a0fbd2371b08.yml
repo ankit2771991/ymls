@@ -1,0 +1,22 @@
+---
+- name: Manage NEARd Service
+  hosts: all
+  become: yes
+  vars:
+    state: ""
+
+  tasks:
+    - name: Perform the action on the neard service
+      service:
+        name: neard
+        state: "{{ state }}"
+
+    - name: Display service status
+      service_facts:
+
+    - name: Debug service status
+      debug:
+        msg: >
+          The NEARd service is currently {{
+          (ansible_facts.services['neard.service'].state == 'running') | ternary('running', 'stopped') }}.
+
