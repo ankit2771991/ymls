@@ -1,0 +1,21 @@
+---
+- name: Get BeaconKit client status
+  hosts: all
+  become: yes
+  vars:
+    wor_dir: "/root/beacon-kit"
+  tasks:
+
+    - name: Install Git
+      apt:
+        name: jq
+        state: present
+
+    - name: Check status of BeaconKit client
+      shell: |
+        {{ wor_dir }}/build/bin/beacond --home={{ wor_dir }}/build/bin/config/beacond status | jq
+      register: beacond_status
+
+    - name: Display BeaconKit client status
+      debug:
+        var: beacond_status.stdout
