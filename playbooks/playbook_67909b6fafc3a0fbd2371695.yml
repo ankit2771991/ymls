@@ -1,0 +1,47 @@
+---
+- name: Create a systemd service for BeaconKit
+  hosts: all
+  become: yes
+  vars:
+    service_name: "beacond"
+    wor_dir: "/root/beacon-kit"
+  tasks:
+    - name: Create the systemd service file
+      copy:
+        dest: "/etc/systemd/system/{{ service_name }}.service"
+        content: |
+          [Unit]
+          Description=BeaconKit Beacond Service
+          After=network.target
+
+          [Service]
+          User=root
+          WorkingDirectory={{ wor_dir }}
+          ExecStart={{ wor_dir }}/build/bin/beacond start --home {{ wor_dir }}/build/bin/config/beacond
+          Restart=on-failure
+          RestartSec=5
+          StandardOutput=journal
+          StandardError=journal
+
+          [Install]
+          WantedBy=multi-user.target
+      notify: restart systemd
+
+    - name: Reload systemd manager configuration
+      command: systemctl daemon-reload
+      when: ansible_facts.os_family == "Debian" or ansible_facts.os_family == "RedHat"
+
+    - name: Enable the service to start on boot
+      systemd:
+        name: "{{ service_name }}"
+        enabled: yes
+
+    - name: Start the service
+      systemd:
+        name: "{{ service_name }}"
+        state: started
+
+  handlers:
+    - name: restart systemd
+      command: systemctl daemon-reload
+
