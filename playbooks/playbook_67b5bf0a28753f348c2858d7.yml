@@ -1,0 +1,56 @@
+---
+- name: Extract Node Info and Add Validator to L1 Chain
+  hosts: all
+  become: yes
+  vars:
+    node_ip: "{{ node_ip | default('localhost') }}"
+    l1_ip: "{{ l1_ip | default('10.40.0.89') }}"
+
+  tasks:
+    - name: Install curl if not present
+      ansible.builtin.package:
+        name: curl
+        state: present
+    
+    - name: Extract Node ID
+      ansible.builtin.shell: |
+        curl -s -X POST --data '{"jsonrpc":"2.0","id":1,"method":"info.getNodeID"}' \
+        -H 'content-type:application/json;' http://localhost:9650/ext/info | \
+        grep -Eo '"nodeID":"[^"]+"' | cut -d':' -f2 | tr -d '"'
+      register: node_id
+
+    - name: Extract Proof of Possession
+      ansible.builtin.shell: |
+        curl -s -X POST --data '{"jsonrpc":"2.0","id":1,"method":"info.getNodeID"}' \
+        -H 'content-type:application/json;' http://localhost:9650/ext/info | \
+        grep -Eo '"proofOfPossession":"[^"]+"' | cut -d':' -f2 | tr -d '"'
+      register: proof_of_possession
+
+    - name: Extract BLS Public Key
+      ansible.builtin.shell: |
+        curl -s -X POST --data '{"jsonrpc":"2.0","id":1,"method":"info.getNodeID"}' \
+        -H 'content-type:application/json;' http://localhost:9650/ext/info | \
+        grep -Eo '"publicKey":"[^"]+"' | cut -d':' -f2 | tr -d '"'
+      register: bls_public_key
+
+    - name: Display Extracted Values
+      ansible.builtin.debug:
+        msg: |
+          Node ID: {{ node_id.stdout }}
+          Proof of Possession: {{ proof_of_possession.stdout }}
+          BLS Public Key: {{ bls_public_key.stdout }}
+
+    - name: Add Validator using RPC Call
+      ansible.builtin.shell: |
+        curl -X POST "http://10.40.0.91:8000/add-validator" \
+        -H "Content-Type: application/json" \
+        -d '{
+          "bls_public_key": "{{ bls_public_key.stdout }}",
+          "bls_proof_of_possession": "{{ proof_of_possession.stdout }}",
+          "node_id": "{{ node_id.stdout }}"
+        }'
+      register: rpc_response
+
+    - name: Display RPC Response
+      ansible.builtin.debug:
+        msg: "RPC Response: {{ rpc_response.stdout }}"
