@@ -1,0 +1,27 @@
+---
+- name: List Validators from Node
+  hosts: all
+  gather_facts: no
+  vars:
+    rpc_endpoint: "http://10.40.0.91:8000/list-validators"
+
+  tasks:
+    - name: Call List Validators RPC
+      uri:
+        url: "{{ rpc_endpoint }}"
+        method: POST
+        headers:
+          Content-Type: "application/json"
+        body: |
+          {
+            "jsonrpc": "2.0",
+            "id": 1,
+            "method": "platform.getCurrentValidators"
+          }
+        body_format: json
+        return_content: yes
+      register: rpc_response
+
+    - name: Print Validators List
+      debug:
+        msg: "Validators List: {{ rpc_response.content }}"
