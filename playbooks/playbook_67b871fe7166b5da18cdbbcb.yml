@@ -9,7 +9,7 @@
     - name: Call List Validators RPC
       uri:
         url: "{{ rpc_endpoint }}"
-        method: POST
+        method: GET
         headers:
           Content-Type: "application/json"
         body: |
