@@ -1,0 +1,45 @@
+---
+- name: Remove Validator from Node
+  hosts: all
+  gather_facts: no
+  vars:
+    rpc_endpoint: "http://10.40.0.91:8000/remove-validator"
+
+  tasks:
+    - name: Extract Node ID
+      ansible.builtin.shell: |
+        curl -s -X POST --data '{"jsonrpc":"2.0","id":1,"method":"info.getNodeID"}' \
+        -H 'content-type:application/json;' http://10.40.0.89:9650/ext/info | \
+        grep -Eo '"nodeID":"[^"]+"' | cut -d':' -f2 | tr -d '"'
+      register: node_id
+
+    - name: Debug Node ID
+      debug:
+        msg: "Extracted Node ID: {{ node_id.stdout }}"
+
+    - name: Remove Validator using RPC
+      uri:
+        url: "{{ rpc_endpoint }}"
+        method: POST
+        headers:
+          Content-Type: "application/json"
+        body: |
+          {
+            "node_id": "{{ node_id.stdout }}"
+          }
+        body_format: json
+        return_content: yes
+      register: rpc_response
+      ignore_errors: yes   # Continue even if the status code is not 200
+
+    - name: Force Status Code 200
+      set_fact:
+        custom_status_code: "{{ rpc_response.status | default(200) }}"
+
+    - name: Show Forced Status Code
+      debug:
+        msg: "Forced Status Code: {{ custom_status_code }}"
+
+    - name: Show RPC Response
+      debug:
+        msg: "RPC Response: {{ rpc_response.content }}"
