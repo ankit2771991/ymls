@@ -1,0 +1,94 @@
+---
+- name: Update Heimdall config in config.toml and heimdall-config.toml file in validator
+  hosts: validator
+  vars_files:
+    - ../../group_vars/validator_heimdall.yml
+  tasks:
+    - name: Update moniker
+      lineinfile:
+        path: /var/lib/heimdall/config/config.toml
+        regexp: '^moniker ='
+        line: 'moniker = "{{ moniker_name }}"'
+
+    - name: Update persistent_peers
+      lineinfile:
+        path: /var/lib/heimdall/config/config.toml
+        regexp: '^persistent_peers ='
+        line: 'persistent_peers = "{{ persistent_peers }}"'
+
+    - name: Update prometheus
+      lineinfile:
+        path: /var/lib/heimdall/config/config.toml
+        regexp: '^prometheus ='
+        line: 'prometheus = {{ prometheus }}'
+
+    - name: Update max_open_connections
+      lineinfile:
+        path: /var/lib/heimdall/config/config.toml
+        regexp: '^max_open_connections ='
+        line: 'max_open_connections = {{ max_open_connections }}'
+
+    - name: Update max_num_inbound_peers
+      lineinfile:
+        path: /var/lib/heimdall/config/config.toml
+        regexp: '^max_num_inbound_peers ='
+        line: 'max_num_inbound_peers = {{ max_num_inbound_peers }}'
+
+    - name: Update max_num_outbound_peers
+      lineinfile:
+        path: /var/lib/heimdall/config/config.toml
+        regexp: '^max_num_outbound_peers ='
+        line: 'max_num_outbound_peers = {{ max_num_outbound_peers }}'
+
+    - name: Update pex
+      lineinfile:
+        path: /var/lib/heimdall/config/config.toml
+        regexp: '^pex ='
+        line: 'pex = {{ pex }}'
+
+    - name: Update eth_rpc_url
+      lineinfile:
+        path: /var/lib/heimdall/config/heimdall-config.toml
+        regexp: '^eth_rpc_url ='
+        line: 'eth_rpc_url = "{{ eth_rpc_url }}"'
+
+    - name: Update heimdall_rest_server
+      lineinfile:
+        path: /var/lib/heimdall/config/heimdall-config.toml
+        regexp: '^heimdall_rest_server ='
+        line: 'heimdall_rest_server = "{{ heimdall_rest_server }}"'
+
+- name: Get seeds from sentry and update the seeds manually
+  hosts: sentry
+  gather_facts: no
+  tasks:
+    - name: Execute shell command to get ID and IP
+      shell: |
+        m1=$(heimdalld tendermint show-node-id)
+        ip1=$(hostname -I | awk {'print $1'} | tr -d '[:space:]')
+        echo "$m1@$ip1:26656"
+      register: node_info
+
+- name: Update seeds in config file on validator
+  hosts: validator
+  gather_facts: no
+  vars_files:
+    - ../../group_vars/validator_heimdall.yml
+  tasks:
+    - name: Convert manual seeds to quoted strings
+      set_fact:
+        quoted_manual_seeds: "{{ manual_seeds.split(',') | map('trim') | map('quote') | join(',') }}"
+
+    - name: Update seeds in config file on validator
+      lineinfile:
+        path: /var/lib/heimdall/config/config.toml
+        regexp: '^seeds ='
+        line: 'seeds = "{{ hostvars["sentry"]["node_info"]["stdout"] }}{% if quoted_manual_seeds %},{{ quoted_manual_seeds }}{% endif %}"'
+
+    - name: start Heimdall service
+      systemd:
+        state: restarted
+        daemon-reload: yes
+        name: heimdalld.service
+      become: yes
+
