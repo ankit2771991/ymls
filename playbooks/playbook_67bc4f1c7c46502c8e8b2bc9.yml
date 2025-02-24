@@ -1,0 +1,22 @@
+---
+- name: Manage Heimdalld and Bor services
+  hosts: all
+  become: yes
+
+  vars:
+    node_type: "{{ node_type | default('sentry') }}"
+    state: "{{ state | default('start') }}"
+    services:
+      - name: heimdalld
+        description: "Heimdalld Service"
+      - name: bor
+        description: "Bor Service"
+
+  tasks:
+    - name: Start or Stop services
+      systemd:
+        name: "{{ item.name }}"
+        state: "{{ state }}"
+      loop: "{{ services }}"
+      when: (service_name == 'both' or service_name == item.name) and (node_type == 'sentry' or node_type == 'validator')
+
