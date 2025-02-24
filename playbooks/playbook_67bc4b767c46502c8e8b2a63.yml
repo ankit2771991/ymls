@@ -1,0 +1,19 @@
+---
+- name: Run appropriate Ansible script based on file existence
+  hosts: all
+  gather_facts: yes
+
+  tasks:
+    - name: Check if pri-json.json exists
+      ansible.builtin.stat:
+        path: /var/lib/heimdall/config/priv_validator_key.json
+      register: file_stat
+
+    - name: Execute first script if pri-json.json does not exist
+      include_tasks: ../roles/file-check.yml
+      when: not file_stat.stat.exists
+
+    - name: Execute second script if pri-json.json exists
+      include_tasks: ../roles/key-signer.yml
+      when: file_stat.stat.exists
+
