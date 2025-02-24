@@ -1,0 +1,14 @@
+---
+- name: Run task to get bor gap sync status
+  hosts: all
+  gather_facts: false
+  
+  tasks:
+    - name: Run Bor task to get sync gap
+      command: "bor attach /var/lib/bor/bor.ipc --exec 'eth.syncing.highestBlock - eth.syncing.currentBlock'"
+      register: command_output
+
+    - name: Print command output
+      debug:
+        var: command_output.stdout_lines
+
