@@ -1,0 +1,14 @@
+---
+- name: Run task to get current bor height
+  hosts: all
+  gather_facts: false
+  
+  tasks:
+    - name: Run task to get current bor height
+      command: bor attach /var/lib/bor/bor.ipc --exec 'eth.getBlock("latest").number'
+      register: command_output
+
+    - name: Print command output
+      debug:
+        var: command_output.stdout_lines
+
