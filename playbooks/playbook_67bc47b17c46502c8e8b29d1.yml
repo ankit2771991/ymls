@@ -1,0 +1,52 @@
+---
+- name: Remove comments from specific lines and update the bootnode and static-nodes in validator bor configuration file
+  hosts: validator
+  vars_files:
+    - ../../group_vars/validator_bor.yml
+  tasks:
+    - name: Remove comments from specific lines in configuration file
+      lineinfile:
+        path: /var/lib/bor/config.toml
+        regexp: '^(\s*)#(\s*){{ item.name }}'
+        line: '\1{{ item.name }}'
+        backrefs: yes
+      loop:
+        - { name: 'identity = "node_name"' }
+          #       - { name: 'bind = "0.0.0.0"' }
+          #       - { name: 'nodiscover = false' }
+          #       - { name: 'url = "http://localhost:1317"' }
+          #       - { name: 'port = 8546' }
+          #       - { name: 'host = "localhost"' }
+
+
+    - name: Replace bor bootnodes in configuration file
+      lineinfile:
+        path: /var/lib/bor/config.toml
+        regexp: '^(\s*)bootnodes = '
+        line: 'bootnodes = [{{ enode_values | join('','') }}]'
+
+    - name: Replace bor static-nodes line in configuration file
+      lineinfile:
+        path: /var/lib/bor/config.toml
+        regexp: '^(\s*)static-nodes = '
+        line: 'static-nodes = [{{ senode_values | join('','') }}]'
+
+    - name: Replace bor trusted-nodes line in configuration file
+      lineinfile:
+        path: /var/lib/bor/config.toml
+        regexp: '^(\s*)trusted-nodes = '
+        line: 'trusted-nodes = [{{ tenode_values | join('','') }}]'
+
+    - name: Update identity
+      lineinfile:
+        path: /var/lib/bor/config.toml
+        regexp: '^identity ='
+        line: 'identity = "{{ bor_identity }}"'
+
+          # - name: start bor service
+          # systemd:
+          # state: restarted
+          # daemon-reload: yes
+          # name: bor.service
+          # become: yes
+
